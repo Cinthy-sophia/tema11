@@ -8,7 +8,7 @@ public class CocheCambioManual extends Coche{
     }
 
     @Override
-    public void cambiarMarcha(int m) {
+    public void cambiarMarcha(char m) {
         super.cambiarMarcha(m);
     }
 }

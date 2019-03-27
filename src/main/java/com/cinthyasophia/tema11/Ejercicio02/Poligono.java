@@ -3,16 +3,17 @@ package com.cinthyasophia.tema11.Ejercicio02;
 import com.cinthyasophia.tema11.Ejercicio01.Punto;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Poligono {
-    ArrayList<Punto> puntos;
+    private ArrayList<Punto> puntos;
 
     public ArrayList<Punto> getPuntos() {
         return puntos;
     }
 
-    public void setPuntos(ArrayList<Punto> puntos) {
-        this.puntos = puntos;
+    public void setPuntos(Punto... puntos) {
+        this.puntos.addAll(Arrays.asList(puntos));
     }
 
     public Poligono(ArrayList<Punto> puntos) {
@@ -20,7 +21,10 @@ public class Poligono {
     }
 
     public void traslada(double x, double y) {
+        for (Punto p:puntos) {
+            puntos.set(puntos.indexOf(p),new Punto(p.getX()+x,p.getY()+y));
 
+        }
 
     }
 
@@ -50,7 +54,7 @@ public class Poligono {
     @Override
     public String toString() {
         StringBuilder s= new StringBuilder();
-        String m= new String();
+        String m;
         for (Punto p: puntos) {
             s.append('\n').append(p.toString());
         }
