@@ -5,4 +5,17 @@ public class CocheCambioAutomatico extends Coche{
     public CocheCambioAutomatico(String matricula) {
         super(matricula);
     }
+
+    protected void cambiarMarcha() {
+        if (getVelocidad() == 0) {
+            cambiarMarcha('P');
+
+        } else if (getVelocidad() > 10) {
+            cambiarMarcha('D');
+
+        } else if(getVelocidad() == 10 ){
+            cambiarMarcha('N');
+        }
+
+    }
 }
