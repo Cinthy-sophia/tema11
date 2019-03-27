@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Poligono {
-    ArrayList<Punto> puntos;
+    private ArrayList<Punto> puntos;
 
     public ArrayList<Punto> getPuntos() {
         return puntos;
