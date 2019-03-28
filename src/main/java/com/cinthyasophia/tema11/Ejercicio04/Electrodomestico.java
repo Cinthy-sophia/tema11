@@ -1,19 +1,33 @@
 package com.cinthyasophia.tema11.Ejercicio04;
 
 public class Electrodomestico {
-    private enum Consumo{ A,B,C,D,E,F }
-    private enum Color{ BLANCO,ROJO,NEGRO,AZUL,GRIS }
+    private static final double PRECIO_BASE=100;
+    private static final String COLOR_DEFAULT= Color.BLANCO.getColor();
+    private static final char CONSUMO_DEFAULT= Consumo.F.getLetra();
+    private static final double PESO_DEFAULT= 5;
 
-    protected static final double PRECIO_BASE=100;
-    protected static final Color COLOR_DEFAULT= Color.BLANCO;
-    protected static final Consumo CONSUMO_DEFAULT= Consumo.F;
-    protected static final double PESO_DEFAULT= 5;
-
-    protected Color color;
-    protected Consumo consumoEnergetico;
+    protected String color;
+    protected char consumoEnergetico;
     protected double peso;
     protected double precio;
 
+    public Electrodomestico(String color, char consumoEnergetico, double peso, double precio) {
+        this.color = color;
+        this.consumoEnergetico = consumoEnergetico;
+        this.peso = peso;
+        this.precio = precio;
+    }
 
+    public Electrodomestico() {
+        this.color = COLOR_DEFAULT;
+        this.consumoEnergetico = CONSUMO_DEFAULT;
+        this.peso = PESO_DEFAULT;
+        this.precio = PRECIO_BASE;
+    }
+
+    public Electrodomestico(double peso, double precio) {
+        this.peso = peso;
+        this.precio = precio;
+    }
 
 }
