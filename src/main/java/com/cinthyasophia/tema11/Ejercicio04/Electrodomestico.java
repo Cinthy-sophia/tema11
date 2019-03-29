@@ -1,8 +1,6 @@
 package com.cinthyasophia.tema11.Ejercicio04;
 
 
-import java.util.HashMap;
-
 public class Electrodomestico {
     public enum Consumo {A,B,C,D,E,F}
     public enum Color {BLANCO,ROJO,NEGRO,AZUL,GRIS}
@@ -11,7 +9,6 @@ public class Electrodomestico {
     private static final String COLOR_DEFAULT= Color.BLANCO.toString();
     private static final char CONSUMO_DEFAULT= Consumo.F.toString().charAt(0);
     private static final double PESO_DEFAULT= 5;
-
 
 
     protected String color;
@@ -81,22 +78,68 @@ public class Electrodomestico {
         switch (consumoEnergetico){
             case 'A':
                 precio+=100;
+                precio= precioPeso(precio);
             break;
 
             case 'B':
+                precio+=80;
+                precio= precioPeso(precio);
+            break;
+
+            case 'C':
+                precio+=60;
+                precio= precioPeso(precio);
+            break;
+
+            case 'D':
+                precio+=50;
+                precio= precioPeso(precio);
+            break;
+
+            case 'E':
+                precio+=30;
+                precio= precioPeso(precio);
+            break;
+
+            case 'F':
+                precio+=10;
+                precio= precioPeso(precio);
+            break;
+
+            default:
+                System.out.println("Error");
+            break;
 
         }
 
         return precio;
     }
+    private double precioPeso(double p){
+        double precio=0;
+
+        if (getPeso()>=0&& getPeso()<=19){
+            precio= p+10;
+
+        }else if(getPeso()<=49){
+            precio= p+50;
+
+        }else if (getPeso()<=79){
+            precio = p+80;
+        }else if (getPeso()>=80){
+            precio = p+100;
+        }
+
+        return precio;
+
+    }
 
     @Override
     public String toString() {
-        return "Electrodomestico{" +
-                "color='" + color + '\'' +
-                ", consumoEnergetico=" + consumoEnergetico +
-                ", peso=" + peso +
-                ", precio=" + precio +
-                '}';
+        return "\nElectrodomestico:" +
+                "\nColor: " + color +
+                ".\nConsumo energetico: " + consumoEnergetico +
+                ".\nPeso: " + peso +
+                "kg.\nPrecio: " + precio +
+                "€.";
     }
 }

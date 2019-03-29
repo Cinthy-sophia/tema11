@@ -1,10 +1,17 @@
 package com.cinthyasophia.tema11.Ejercicio04;
 
+import java.util.ArrayList;
+import com.cinthyasophia.tema10.Util.Lib;
 public class Ejercicio4 {
+    Lib lib = new Lib();
     public Ejercicio4(){
-        Electrodomestico e = new Electrodomestico("azul",'G',3,12);
-        Electrodomestico p = new Electrodomestico("azul",'A',3,12);
-        System.out.println(e.toString());
-        System.out.println(p.toString());
+        ArrayList<Electrodomestico> electrodomesticos = new ArrayList<>(10);
+        for (int i = 0; i < 10; i++) {
+            electrodomesticos.add(new Lavadora());
+            electrodomesticos.add(new Television());
+
+
+        }
+
     }
 }
