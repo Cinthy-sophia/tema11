@@ -28,7 +28,6 @@ public class Ejercicio4 {
             col=color[lib.aleatorio(0,4)].toString();
             electrodomesticos.add(new Television(col,consum,lib.aleatorio(0,90),lib.aleatorio(10,50),lib.aleatorio(20,70),faker.bool().bool()));
 
-
         }
 
         for (Electrodomestico e:electrodomesticos) {

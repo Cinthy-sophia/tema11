@@ -25,7 +25,7 @@ public class Lib {
     /**
      * Ordena el vector de enteros que reciba y lo devuelve ordenado
      * @param vector
-     * @return int[]
+     * @return vector
      */
     public int[] ordernarCombinacion(int[] vector) {
         boolean hayCambios = true;
