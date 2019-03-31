@@ -2,10 +2,7 @@ package com.cinthyasophia.tema11.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Lib {
     private Scanner lector = new Scanner(System.in);
@@ -122,6 +119,27 @@ public class Lib {
         }
         fechaN.setTime(d);
         return fechaN;
+    }
+    public int validarOpcion(int opcionMin, int opcionMax){
+        int opcion=0;
+        boolean isNumber;
+        do {
+            try {
+                opcion = lector.nextInt();
+                isNumber = true;
+            } catch (InputMismatchException ime) {
+                System.out.println("Debes introducir numeros, no letras.");
+                isNumber = false;
+            } finally {
+                lector.nextLine();
+            }
+            if (opcion < opcionMin || opcion > opcionMax) {
+                System.out.println("Opcion incorrecta.");
+            }
+
+        } while (!isNumber || opcion < opcionMin || opcion > opcionMax);
+
+        return opcion;
     }
 
 

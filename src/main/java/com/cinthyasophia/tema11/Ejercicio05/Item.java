@@ -1,15 +1,24 @@
 package com.cinthyasophia.tema11.Ejercicio05;
 
 public class Item {
-    protected static final int CANTIDAD_DEFAULT_MAX= 64;
-    protected static final int CANTIDAD_DEFAULT_MIN=16;
+    //public enum Colores{MARRON,GRIS,BLANCO}
 
-    protected String color;
-    protected int cantidadApilable;
+    private String color;
+    protected boolean apilable;
 
-    public Item(String color) {
-        this.color=color;
-        cantidadApilable= CANTIDAD_DEFAULT_MAX;
 
+    public Item() {
+        this.color="color";
+        apilable=false;
     }
+
+    public boolean isApilable() {
+        return apilable;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
 }
+

@@ -2,21 +2,20 @@ package com.cinthyasophia.tema11.Ejercicio05;
 
 import java.util.ArrayList;
 
-public class Casilla implements ICola<Item> {
-    protected ArrayList<Item> items;
+public class Casilla implements ICola<Item>  {
+    private ArrayList<Item> items;
 
-    public Casilla(int cantidad){
-        items= new ArrayList<>(cantidad);
+    public Casilla(){
+        items= new ArrayList<>();
     }
 
     @Override
     public boolean add(Item e) {
-        if (items.size()==e.cantidadApilable){
-            return false;
-        }else{
+        if (e.isApilable()){
             return items.add(e);
+        }else{
+            return false;
         }
-
     }
 
     @Override
