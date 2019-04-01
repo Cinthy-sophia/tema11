@@ -9,12 +9,11 @@ public class Casilla implements ICola<Item> {
         items = new ArrayList<>();
     }
 
-
     @Override
     public boolean add(Item e) {
 
         if (e.isApilable()){
-            Apilable a=(Apilable) e;
+            Apilable a= (Apilable) e;
             if (items.size()<a.getCantidadApilable()){
                 return items.add(a);
             }else {

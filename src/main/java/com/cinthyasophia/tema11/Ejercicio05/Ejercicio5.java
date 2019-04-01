@@ -4,8 +4,9 @@ import java.util.Scanner;
 
 public class Ejercicio5 {
     public Scanner lector = new Scanner(System.in);
-    public Lib lib = new Lib();
-    private Inventario inventario= new Inventario();
+    private Lib lib = new Lib();
+    private final int INVENTARIO_SIZE=7;
+    private Casilla[] inventario;
 
     public Ejercicio5(){
         int opcion;
@@ -13,16 +14,16 @@ public class Ejercicio5 {
             opcion= menuPrincipal();
             switch (opcion){
                 case 1:
-                    //todo añadirItem
+                    //todo agregarItem()
                     //verificar la cantidad de items apilables
                     break;
 
                 case 2:
-                    //todo eliminarItem
+                    //todo eliminarItem()
                     break;
 
                 case 3:
-                    //todo mostrarInventario
+                    //todo mostrarInventario()
                     break;
 
                 case 0:
@@ -37,7 +38,7 @@ public class Ejercicio5 {
         }while (opcion!=0);
 
     }
-    public void añadirItem(){
+    public void agregarItem(){
         int opcion;
         do {
             opcion=listaItems();
@@ -65,13 +66,13 @@ public class Ejercicio5 {
             }
         }while(opcion!=0);
     }
+
     public void eliminarItem(){
         int opcion;
         do {
             opcion=listaItems();
             switch (opcion){
                 case 1:
-
                     break;
                 case 2:
                     break;
@@ -93,6 +94,7 @@ public class Ejercicio5 {
         }while(opcion!=0);
 
     }
+
     public int menuPrincipal(){
         int opcion;
         System.out.println("************");
