@@ -7,6 +7,7 @@ package com.cinthyasophia.tema11;
 
 import com.cinthyasophia.tema11.Ejercicio05.Casilla;
 import com.cinthyasophia.tema11.Ejercicio05.Huevo;
+import com.cinthyasophia.tema11.Ejercicio05.Pico;
 import com.cinthyasophia.tema11.Ejercicio05.Piedra;
 
 public class Main {
@@ -18,9 +19,14 @@ public class Main {
         Casilla[] casillas= new Casilla[7];
         casillas[0]= new Casilla();
         casillas[1]= new Casilla();
+        //casillas[0].add(new Huevo());
         for (int i = 0; i < 69; i++) {
             System.out.println(i+": "+casillas[0].add(new Huevo()));
-            System.out.println(i+": "+casillas[1].add(new Piedra()));
+            System.out.println(i+"Pico: "+casillas[1].add(new Pico()));
+
+
         }
     }
 }
+
+

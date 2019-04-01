@@ -1,12 +1,11 @@
 package com.cinthyasophia.tema11.Ejercicio05;
-
 import com.cinthyasophia.tema11.Util.Lib;
-
 import java.util.Scanner;
 
 public class Ejercicio5 {
     public Scanner lector = new Scanner(System.in);
     public Lib lib = new Lib();
+    private Inventario inventario= new Inventario();
 
     public Ejercicio5(){
         int opcion;
@@ -36,6 +35,62 @@ public class Ejercicio5 {
             }
 
         }while (opcion!=0);
+
+    }
+    public void añadirItem(){
+        int opcion;
+        do {
+            opcion=listaItems();
+            switch (opcion){
+                case 1:
+
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 0:
+                    System.out.println(lib.volverMenu());
+                    break;
+                default:
+                    System.out.println("Error.");
+
+                    break;
+            }
+        }while(opcion!=0);
+    }
+    public void eliminarItem(){
+        int opcion;
+        do {
+            opcion=listaItems();
+            switch (opcion){
+                case 1:
+
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 0:
+                    System.out.println(lib.volverMenu());
+                    break;
+                default:
+                    System.out.println("Error.");
+                    break;
+            }
+        }while(opcion!=0);
 
     }
     public int menuPrincipal(){

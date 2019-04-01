@@ -1,17 +1,12 @@
 package com.cinthyasophia.tema11.Ejercicio05;
 
-public class Huevo extends Apilable {
+public class PerlaDeEnder extends Apilable {
 
-    public Huevo(){
+    public PerlaDeEnder(){
         super();
-        material= Materiales.ORGANICO.name();
-        durabilidad= Materiales.ORGANICO.getDurabilidad();
         cantidadApilable= CANTIDAD_DEFAULT_MIN;
-    }
-
-    @Override
-    public int getCantidadApilable() {
-        return cantidadApilable;
+        material= Materiales.MINERAL.name();
+        durabilidad= Materiales.MINERAL.getDurabilidad();
     }
 
     @Override
@@ -25,8 +20,13 @@ public class Huevo extends Apilable {
     }
 
     @Override
+    public int getCantidadApilable() {
+        return cantidadApilable;
+    }
+
+    @Override
     public String toString() {
-        return "Huevo{" +
+        return "PerlaDeEnder{" +
                 "cantidadApilable=" + cantidadApilable +
                 ", material='" + material + '\'' +
                 ", durabilidad=" + durabilidad +

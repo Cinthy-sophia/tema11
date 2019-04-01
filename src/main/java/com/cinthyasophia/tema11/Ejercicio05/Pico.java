@@ -4,6 +4,8 @@ public class Pico extends Item {
 
     public Pico() {
         super();
+        material= Materiales.HIERRO.name();
+        durabilidad= Materiales.HIERRO.getDurabilidad();
     }
 
     @Override
@@ -12,9 +14,21 @@ public class Pico extends Item {
     }
 
     @Override
+    public String getMaterial() {
+        return material;
+    }
+
+    @Override
+    public int getDurabilidad() {
+        return durabilidad;
+    }
+
+    @Override
     public String toString() {
         return "Pico{" +
-                "apilable=" + apilable +
+                "material='" + material + '\'' +
+                ", durabilidad=" + durabilidad +
+                ", apilable=" + apilable +
                 '}';
     }
 }

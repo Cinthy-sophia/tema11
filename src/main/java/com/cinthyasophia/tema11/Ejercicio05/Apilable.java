@@ -7,7 +7,6 @@ public abstract class Apilable extends Item{
     protected int cantidadApilable;
 
     public Apilable() {
-        super();
         apilable= true;
         cantidadApilable= CANTIDAD_DEFAULT_MAX;
     }
@@ -16,6 +15,7 @@ public abstract class Apilable extends Item{
     public boolean isApilable() {
         return apilable;
     }
+
 
     public int getCantidadApilable() {
         return cantidadApilable;
