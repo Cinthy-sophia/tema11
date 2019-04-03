@@ -46,7 +46,6 @@ public class Inventario {
         for (Casilla casilla:inventario) {
             System.out.println(casilla.toString());
         }
-        
     }
 
     public void agregar(){
@@ -174,6 +173,9 @@ public class Inventario {
         opcion= lib.validarOpcion(0,6);
 
         return opcion;
+
+    }
+    public void datosAleatorios(){
 
     }
 
