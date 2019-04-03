@@ -1,11 +1,16 @@
 package com.cinthyasophia.tema11.Ejercicio05;
 
 public class Pico extends Item {
+    private final String NOMBRE= "PICO";
 
     public Pico() {
         super();
         material= Materiales.HIERRO.name();
-        durabilidad= Materiales.HIERRO.getDurabilidad();
+    }
+
+    @Override
+    public String getNOMBRE() {
+        return NOMBRE;
     }
 
     @Override
@@ -19,15 +24,9 @@ public class Pico extends Item {
     }
 
     @Override
-    public int getDurabilidad() {
-        return durabilidad;
-    }
-
-    @Override
     public String toString() {
         return "Pico{" +
                 "material='" + material + '\'' +
-                ", durabilidad=" + durabilidad +
                 ", apilable=" + apilable +
                 '}';
     }

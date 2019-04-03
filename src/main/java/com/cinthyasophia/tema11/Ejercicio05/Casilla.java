@@ -2,16 +2,14 @@ package com.cinthyasophia.tema11.Ejercicio05;
 
 import java.util.ArrayList;
 
-public class Casilla implements ICola<Item> {
+public class Casilla {
     private ArrayList<Item> items;
 
     public Casilla() {
         items = new ArrayList<>();
     }
 
-    @Override
     public boolean add(Item e) {
-
         if (e.isApilable()){
             Apilable a= (Apilable) e;
             if (items.size()<a.getCantidadApilable()){
@@ -29,23 +27,28 @@ public class Casilla implements ICola<Item> {
         }
     }
 
-    @Override
-    public Item remove() {
-        return items.remove(0);
+    public boolean remove(Item e) {
+        return items.remove(e);
     }
 
-    @Override
     public int size() {
         return items.size();
     }
 
-    @Override
     public Item peek() {
         return items.get(0);
     }
 
-    @Override
     public boolean isEmpty() {
         return items.isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        if (isEmpty()){
+            return "VACIO"+'\t'+size();
+        }else{
+            return peek().getNOMBRE()+'\t'+size();
+        }
     }
 }

@@ -1,19 +1,23 @@
 package com.cinthyasophia.tema11.Ejercicio05;
 
 public class Espada extends Item{
+    private final String NOMBRE="ESPADA";
+
     public Espada(){
         super();
         material= Materiales.HIERRO.name();
-        durabilidad= Materiales.HIERRO.getDurabilidad();
     }
+
+    @Override
+    public String getNOMBRE() {
+        return NOMBRE;
+    }
+
     @Override
     public boolean isApilable() {
         return super.isApilable();
     }
 
-    public int getDurabilidad(){
-        return durabilidad;
-    }
 
     @Override
     public String getMaterial() {
@@ -22,10 +26,8 @@ public class Espada extends Item{
 
     @Override
     public String toString() {
-        return "Espada{" +
-                "material='" + material + '\'' +
-                ", durabilidad=" + durabilidad +
-                ", apilable=" + apilable +
-                '}';
+        return "Espada:" +
+                "material:" + material +
+                "apilable:" + apilable;
     }
 }

@@ -1,12 +1,17 @@
 package com.cinthyasophia.tema11.Ejercicio05;
 
 public class Huevo extends Apilable {
+    private final String NOMBRE= "HUEVO";
 
     public Huevo(){
         super();
         material= Materiales.ORGANICO.name();
-        durabilidad= Materiales.ORGANICO.getDurabilidad();
         cantidadApilable= CANTIDAD_DEFAULT_MIN;
+    }
+
+    @Override
+    public String getNOMBRE() {
+        return NOMBRE;
     }
 
     @Override
@@ -19,17 +24,12 @@ public class Huevo extends Apilable {
         return material;
     }
 
-    @Override
-    public int getDurabilidad() {
-        return durabilidad;
-    }
 
     @Override
     public String toString() {
         return "Huevo{" +
                 "cantidadApilable=" + cantidadApilable +
                 ", material='" + material + '\'' +
-                ", durabilidad=" + durabilidad +
                 ", apilable=" + apilable +
                 '}';
     }

@@ -1,15 +1,16 @@
 package com.cinthyasophia.tema11.Ejercicio05;
 
 public class Piedra extends Apilable {
+    private final String NOMBRE="PIEDRA";
+
     public Piedra() {
         super();
         material= Materiales.PIEDRA.name();
-        durabilidad= Materiales.PIEDRA.getDurabilidad();
     }
 
     @Override
-    public int getDurabilidad() {
-        return durabilidad;
+    public String getNOMBRE() {
+        return NOMBRE;
     }
 
     @Override
@@ -22,7 +23,6 @@ public class Piedra extends Apilable {
         return "Piedra{" +
                 "cantidadApilable=" + cantidadApilable +
                 ", material='" + material + '\'' +
-                ", durabilidad=" + durabilidad +
                 ", apilable=" + apilable +
                 '}';
     }

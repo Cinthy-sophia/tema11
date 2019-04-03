@@ -1,14 +1,16 @@
 package com.cinthyasophia.tema11.Ejercicio05;
 
 public class Madera extends Apilable{
+    private final String NOMBRE= "MADERA";
+
     public Madera(){
         super();
         material= Materiales.MADERA.name();
-        durabilidad= Materiales.MADERA.getDurabilidad();
     }
+
     @Override
-    public int getDurabilidad(){
-        return durabilidad;
+    public String getNOMBRE() {
+        return NOMBRE;
     }
 
     @Override
@@ -18,11 +20,8 @@ public class Madera extends Apilable{
 
     @Override
     public String toString() {
-        return "Madera{" +
-                "cantidadApilable=" + cantidadApilable +
-                ", material='" + material + '\'' +
-                ", durabilidad=" + durabilidad +
-                ", apilable=" + apilable +
-                '}';
+        return "Madera:" +
+                "material:" + material  +
+                "apilable:" + apilable;
     }
 }

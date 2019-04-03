@@ -1,12 +1,17 @@
 package com.cinthyasophia.tema11.Ejercicio05;
 
 public class PerlaDeEnder extends Apilable {
+    public final String NOMBRE= "PERLA DE ENDER";
 
     public PerlaDeEnder(){
         super();
         cantidadApilable= CANTIDAD_DEFAULT_MIN;
         material= Materiales.MINERAL.name();
-        durabilidad= Materiales.MINERAL.getDurabilidad();
+    }
+
+    @Override
+    public String getNOMBRE() {
+        return NOMBRE;
     }
 
     @Override
@@ -14,10 +19,6 @@ public class PerlaDeEnder extends Apilable {
         return material;
     }
 
-    @Override
-    public int getDurabilidad() {
-        return durabilidad;
-    }
 
     @Override
     public int getCantidadApilable() {
@@ -29,7 +30,6 @@ public class PerlaDeEnder extends Apilable {
         return "PerlaDeEnder{" +
                 "cantidadApilable=" + cantidadApilable +
                 ", material='" + material + '\'' +
-                ", durabilidad=" + durabilidad +
                 ", apilable=" + apilable +
                 '}';
     }
