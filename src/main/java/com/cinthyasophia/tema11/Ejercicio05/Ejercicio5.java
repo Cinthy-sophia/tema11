@@ -4,7 +4,6 @@ public class Ejercicio5 {
 
     public Ejercicio5(){
         Inventario inventario = new Inventario();
-
     }
 
 }
