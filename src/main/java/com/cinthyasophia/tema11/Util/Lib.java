@@ -120,6 +120,13 @@ public class Lib {
         fechaN.setTime(d);
         return fechaN;
     }
+
+    /**
+     *
+     * @param opcionMin
+     * @param opcionMax
+     * @return
+     */
     public int validarOpcion(int opcionMin, int opcionMax){
         int opcion=0;
         boolean isNumber;
