@@ -12,7 +12,7 @@ public class Lib {
      * @return String
      */
     public String toString(int[] vector){
-        String cadena= new String();
+        String cadena= "";
         for (int i = 0; i <vector.length ; i++) {
             cadena= cadena.concat(Integer.toString(vector[i]))+" ";
         }
@@ -91,8 +91,15 @@ public class Lib {
         lector.nextLine();
     }
 
-    public int[] numeroMenos(int[] vectorP){
-        int[] vector = new int[6];
+    /**
+     * Le resta el ultimo numero al vectori que recibe y lo mueve a otro array
+     * @param vectorP
+     * @param num
+     * @return
+     * Devuelve el array con el numero menos
+     */
+    public int[] numeroMenos(int[] vectorP, int num){
+        int[] vector = new int[num];
         for (int i = 0; i < vector.length; i++) {
 
             vector[i]=vectorP[i];
@@ -107,6 +114,13 @@ public class Lib {
         Random r = new Random();
         return r.nextDouble()*(max - min);
     }
+
+    /**
+     * Cambia la fecha de string a GregorianCalendar
+     * @param f
+     * @return
+     * Devuelve la fecha en GregorianCalendar
+     */
     public GregorianCalendar getFecha(String f){
 
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
@@ -116,16 +130,17 @@ public class Lib {
             d= format.parse(f);
         }catch (ParseException pe){
 
+            fechaN.setTime(d);
         }
-        fechaN.setTime(d);
         return fechaN;
     }
 
     /**
-     *
+     *Valida la opcion del menu.
      * @param opcionMin
      * @param opcionMax
      * @return
+     * Devuelve la opcion que el usuario haya elegido.
      */
     public int validarOpcion(int opcionMin, int opcionMax){
         int opcion=0;
@@ -135,13 +150,13 @@ public class Lib {
                 opcion = lector.nextInt();
                 isNumber = true;
             } catch (InputMismatchException ime) {
-                System.out.println("Debes introducir numeros, no letras.");
+                errorDatos();
                 isNumber = false;
             } finally {
                 lector.nextLine();
             }
             if (opcion < opcionMin || opcion > opcionMax) {
-                System.out.println("Opcion incorrecta.");
+                System.out.println(errorMenu());
             }
 
         } while (!isNumber || opcion < opcionMin || opcion > opcionMax);

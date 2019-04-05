@@ -1,21 +1,25 @@
 package com.cinthyasophia.tema11.Ejercicio06;
 
 
+import com.cinthyasophia.tema11.Util.Lib;
+
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class Multimedia {
-
+    protected Lib lib= new Lib();
     protected String titulo;
     protected String autor;
     protected String formato;
-    protected GregorianCalendar year;
+    protected String year;
 
-    public Multimedia(String titulo, String autor, Formato formato, GregorianCalendar year) {
+    public Multimedia(String titulo, String autor, Formato formato, String fecha) {
         this.titulo = titulo;
         this.autor = autor;
         this.formato = formato.name();
-        this.year = year;
+        setYear(fecha);
+        this.year = getYear();
     }
 
     public String getTitulo() {
@@ -42,12 +46,13 @@ public class Multimedia {
         this.formato = formato;
     }
 
-    public GregorianCalendar getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(GregorianCalendar year) {
-        this.year = year;
+    public void setYear(GregorianCalendar fecha) {
+        SimpleDateFormat fechaFormat = new SimpleDateFormat("yyyy");
+        this.year = fechaFormat.format(fecha);
     }
 
     public boolean equals(Object o) {
