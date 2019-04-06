@@ -18,8 +18,7 @@ public class Multimedia {
         this.titulo = titulo;
         this.autor = autor;
         this.formato = formato.name();
-        setYear(fecha);
-        this.year = getYear();
+        setYear(lib.getFecha(fecha));
     }
 
     public String getTitulo() {

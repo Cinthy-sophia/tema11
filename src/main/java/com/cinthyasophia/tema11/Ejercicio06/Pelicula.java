@@ -7,7 +7,7 @@ public class Pelicula extends Multimedia {
     protected String actrizPrincipal;
     protected String duracion;
 
-    public Pelicula(String titulo, String autor, Formato formato, GregorianCalendar year,String duracion, String actorPrincipal, String actrizPrincipal) {
+    public Pelicula(String titulo, String autor, Formato formato, String year,String duracion, String actorPrincipal, String actrizPrincipal) {
         super(titulo, autor, formato, year);
         this.actorPrincipal = actorPrincipal;
         this.actrizPrincipal = actrizPrincipal;

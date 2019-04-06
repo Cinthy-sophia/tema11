@@ -2,6 +2,8 @@ package com.cinthyasophia.tema11.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 public class Lib {
@@ -130,8 +132,8 @@ public class Lib {
             d= format.parse(f);
         }catch (ParseException pe){
 
-            fechaN.setTime(d);
         }
+        fechaN.setTime(d);
         return fechaN;
     }
 
@@ -162,6 +164,28 @@ public class Lib {
         } while (!isNumber || opcion < opcionMin || opcion > opcionMax);
 
         return opcion;
+    }
+
+    /**
+     *
+     * @param fechaNac
+     * @return
+     */
+    public int getEdad(GregorianCalendar fechaNac){
+        int year= fechaNac.get(Calendar.YEAR);
+        int month= fechaNac.get(Calendar.MONTH);
+        int day= fechaNac.get(Calendar.DAY_OF_MONTH);
+
+        LocalDate birth= LocalDate.of(year,month,day);
+        LocalDate now = LocalDate.now();
+        Period p;
+        p= Period.between(birth, now);
+
+        if (birth.isBefore(now)){
+            return p.getYears()-1;
+        }else{
+            return p.getYears();
+        }
     }
 
 
