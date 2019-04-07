@@ -5,6 +5,7 @@ package com.cinthyasophia.tema11;
 //import com.cinthyasophia.tema11.Ejercicio03.Ejercicio3;
 //import com.cinthyasophia.tema11.Ejercicio04.Ejercicio4;
 //import com.cinthyasophia.tema11.Ejercicio05.Ejercicio5;
+import com.cinthyasophia.tema11.Ejercicio06.Ejercicio6;
 
 
 public class Main {
@@ -14,6 +15,7 @@ public class Main {
         //Ejercicio3 ejercicio3 = new Ejercicio3();
         //Ejercicio4 ejercicio4 = new Ejercicio4();
         //Ejercicio5 ejercicio5 = new Ejercicio5();
+        Ejercicio6 ejercicio6 = new Ejercicio6();
     }
 }
 

@@ -16,8 +16,8 @@ public class Socio {
     private String poblacion;
     private int edad;
 
-    public Socio(int nif, String nombre, String fechaNac, String poblacion) {
-        this.nif = nif;
+    public Socio( String nombre, String fechaNac, String poblacion) {
+        this.nif = ++nif;
         this.nombre = nombre;
         this.fechaNac = lib.getFecha(fechaNac);
         this.poblacion = poblacion;
@@ -60,7 +60,6 @@ public class Socio {
     @Override
     public String toString() {
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
-
         return  "\nNIF:" + nif +
                 "\nNombre:" + nombre +
                 "\nFecha de nacimiento:" + format.format(fechaNac.getTime()) +
