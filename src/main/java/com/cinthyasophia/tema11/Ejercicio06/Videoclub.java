@@ -8,34 +8,47 @@ import java.util.HashMap;
 public class Videoclub {
     private final int PERIODO_MAX_DIAS=3;
     private final int PRECIO_BASE=4;
-    private final String REBAJA_PELICULA="2012";
-    private final String REBAJA_VIDEOJUEGO="2010";
+    private final int REBAJA_PELICULA= 2012;
+    private final int REBAJA_VIDEOJUEGO= 2010;
 
-    private ArrayList<Pelicula> peliculasDisponibles;
-    private ArrayList<Videojuego> videojuegosDisponibles;
+    private ArrayList<Multimedia> multimediaDisponible;
     private ArrayList<Socio> socios;
-
-    private HashMap<Integer,Multimedia> peliculasRentadas;
-    private HashMap<Integer,Multimedia> videojuegosRentados;
+    private HashMap<Integer,Multimedia> multimediaRentado;
 
     public Videoclub() {
-        peliculas = new ArrayList<>();
-        videojuegos = new ArrayList<>();
+        multimediaDisponible = new ArrayList<>();
+        socios = new ArrayList<>();
+        multimediaRentado= new HashMap<>();
     }
 
-    public void nuevaPelicula(Pelicula p){
-        peliculas.add(p);
+    public boolean nuevoMultimedia(Multimedia m){
+
+        if (m instanceof Pelicula){
+            if (m.year<REBAJA_PELICULA){
+                m.setPrecio(PRECIO_BASE-1);
+            }
+
+        } else if(m instanceof Videojuego){
+            if (m.year<REBAJA_VIDEOJUEGO){
+                m.setPrecio(PRECIO_BASE-1);
+            }
+
+        } else {
+            m.setPrecio(PRECIO_BASE);
+        }
+        return multimediaDisponible.add(m);
+
     }
-    public void nuevoVideojuego(Videojuego v){
-        videojuegos.add(v);
+    public boolean nuevoSocio(Socio s){
+        if (s.getEdad()<18){
+            return false;
+        } else{
+            return socios.add(s);
+        }
     }
 
     public int alquilar(Socio s, Multimedia m ){
 
-        peliculasRentadas.put(s.getNif(),m);
-
-
-
-
+        return 0;
     }
 }

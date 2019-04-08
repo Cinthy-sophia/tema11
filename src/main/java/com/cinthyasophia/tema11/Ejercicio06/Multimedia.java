@@ -56,6 +56,13 @@ public abstract class Multimedia {
         this.year = year;
     }
 
+    public abstract void setFechaAlquiler(String fecha);
+    public abstract GregorianCalendar getFechaAlquiler();
+
+    public abstract void setPrecio(int precio);
+    public abstract int getPrecio();
+
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

@@ -10,41 +10,25 @@ import java.util.GregorianCalendar;
 
 public class Socio {
     private Lib lib= new Lib();
+    private static int id;
     private int nif;
     private String nombre;
     private GregorianCalendar fechaNac;
     private String poblacion;
     private int edad;
 
-    public Socio( String nombre, String fechaNac, String poblacion) {
-        this.nif = ++nif;
+    public Socio(String nombre, String fechaNac, String poblacion) {
+        ++id;
+        this.nif = id;
         this.nombre = nombre;
         this.fechaNac = lib.getFecha(fechaNac);
         this.poblacion = poblacion;
-        this.edad= getEdad(this.fechaNac);
-
+        this.edad= lib.getEdad(this.fechaNac);
     }
 
-    public int getEdad(GregorianCalendar fechaNac){
-        int year= fechaNac.get(Calendar.YEAR);
-        int month= fechaNac.get(Calendar.MONTH);
-        int day= fechaNac.get(Calendar.DAY_OF_MONTH);
-
-        LocalDate birth= LocalDate.of(year,month,day);
-        LocalDate now = LocalDate.now();
-        Period p;
-        p= Period.between(birth, now);
-
-        if (birth.isBefore(now)){
-            return p.getYears()-1;
-        }else{
-            return p.getYears();
-        }
-    }
     public int getNif() {
         return nif;
     }
-
     public String getNombre() {
         return nombre;
     }
@@ -55,6 +39,10 @@ public class Socio {
 
     public String getPoblacion() {
         return poblacion;
+    }
+
+    public int getEdad(){
+        return edad;
     }
 
     @Override

@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class Ejercicio6 {
     private Lib lib= new Lib();
     public Scanner lector= new Scanner(System.in);
-
     private Videoclub videoclub= new Videoclub();
+
     public Ejercicio6(){
         int opcion;
         do {
@@ -42,10 +42,10 @@ public class Ejercicio6 {
             opcion=menuAltas();
             switch (opcion){
                 case 1:
-                    nuevaPelicula();
+                    altaPelicula();
                     break;
                 case 2:
-                    nuevoVideojuego();
+                    altaVideojuego();
                     break;
                 case 3:
                     //todo nuevoSocio()
@@ -59,7 +59,7 @@ public class Ejercicio6 {
             }
         }while(opcion!=0);
     }
-    public void nuevaPelicula(){
+    public void altaPelicula(){
         boolean validado;
         String titulo;
         String autor;
@@ -128,15 +128,22 @@ public class Ejercicio6 {
             }
         }while(!validado);
 
-        videoclub.nuevaPelicula(new Pelicula(titulo, autor, formato, duracion, actorPrincipal,actrizPrincipal, year));
+
+         if (videoclub.nuevoMultimedia(new Pelicula(titulo, autor, formato, year, duracion, actorPrincipal,actrizPrincipal))){
+             System.out.println(titulo+" añadida correctamente.");
+         } else {
+             System.out.println("No pudo ser añadida.");
+         }
     }
 
-    public void nuevoVideojuego(){
+    public void altaVideojuego(){
         boolean validado;
         String titulo;
         String autor;
         String formato;
         int year;
+        String plataforma;
+
         do {
             System.out.println("Indique el titulo:");
             titulo= lector.nextLine();
@@ -168,15 +175,62 @@ public class Ejercicio6 {
             }
         }while(!validado);
 
+        plataforma= menuPlataformas().name();
 
+        if (videoclub.nuevoMultimedia(new Videojuego(titulo,autor,formato,year,plataforma))){
+            System.out.println(titulo+" añadido correctamente.");
+        }else{
+            System.out.println("No ha sido añadido correctamente.");
+
+        }
     }
+    public void altaSocio(){
+        boolean validado;
+        String nombre;
+        String fecha;
+        String poblacion;
+
+        do {
+            System.out.println("Indique el nombre: ");
+            nombre= lector.nextLine();
+            validado= nombre.length()>5;
+            if (!validado){
+                System.out.println("El nombre es muy corto, intente de nuevo.");
+            }
+        }while(!validado);
+        do {
+            System.out.println("Indique la fecha de nacimiento: ");
+            fecha= lector.nextLine();
+            validado= !fecha.isEmpty();
+            if (!validado){
+                System.out.println("La fecha es incorrecta.");
+            }
+        }while(!validado);
+
+        do {
+            System.out.println("Indique la poblacion donde vive: ");
+            poblacion= lector.nextLine();
+            validado= poblacion.length()>2;
+            if (!validado){
+                System.out.println("El nombre de la poblacion es muy corto, intente de nuevo.");
+            }
+        }while(!validado);
+
+
+        if (videoclub.nuevoSocio(new Socio(nombre,fecha,poblacion))){
+            System.out.println(nombre+" añadido/a correctamente.");
+        } else{
+            System.out.println(nombre+" no ha podido ser añadido.");
+        }
+    }
+
     public Formato menuFormato(){
         int opcion;
         Formato opFormato;
         Formato[] formato=Formato.values();
         System.out.println("*FORMATOS*");
-        for (Formato f:formato) {
-            System.out.println(f.ordinal()+"."+f.name());
+        for (int i = 0; i < formato.length; i++) {
+            System.out.println(++i+"."+formato[i].name());
         }
         System.out.println("Selecciona el formato de la pelicula:");
         opcion= lib.validarOpcion(0,formato.length);
@@ -184,6 +238,21 @@ public class Ejercicio6 {
         opFormato= formato[opcion];
 
         return opFormato;
+    }
+    public Videojuego.Plataformas menuPlataformas(){
+        int opcion;
+        Videojuego.Plataformas opPlataforma;
+        Videojuego.Plataformas[] plataformas= Videojuego.Plataformas.values();
+        System.out.println("*PLATAFORMAS*");
+        for (int i = 0; i < plataformas.length; i++) {
+            System.out.println(++i+"."+plataformas[i].name());
+        }
+        System.out.println("Selecciona el formato de la pelicula:");
+        opcion= lib.validarOpcion(0,plataformas.length);
+
+        opPlataforma= plataformas[opcion];
+
+        return opPlataforma;
     }
 
     public void devolverMultimedia(){

@@ -94,7 +94,7 @@ public class Lib {
     }
 
     /**
-     * Le resta el ultimo numero al vectori que recibe y lo mueve a otro array
+     * Le resta el ultimo numero al vector que recibe y lo mueve a otro array con un tamaño menor
      * @param vectorP
      * @param num
      * @return
@@ -167,14 +167,15 @@ public class Lib {
     }
 
     /**
-     *
+     *Recibe la fecha y regresa la edad.
      * @param fechaNac
-     * @return
+     * @return edad
      */
     public int getEdad(GregorianCalendar fechaNac){
         int year= fechaNac.get(Calendar.YEAR);
         int month= fechaNac.get(Calendar.MONTH);
         int day= fechaNac.get(Calendar.DAY_OF_MONTH);
+        int edad;
 
         LocalDate birth= LocalDate.of(year,month,day);
         LocalDate now = LocalDate.now();
@@ -182,10 +183,11 @@ public class Lib {
         p= Period.between(birth, now);
 
         if (birth.isBefore(now)){
-            return p.getYears()-1;
+            edad= p.getYears()-1;
         }else{
-            return p.getYears();
+            edad= p.getYears();
         }
+        return edad;
     }
 
 
