@@ -1,11 +1,7 @@
 package com.cinthyasophia.tema11.Ejercicio06;
 
 import com.cinthyasophia.tema11.Util.Lib;
-
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Socio {

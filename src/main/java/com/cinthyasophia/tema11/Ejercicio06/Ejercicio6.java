@@ -17,7 +17,7 @@ public class Ejercicio6 {
                     altas();
                     break;
                 case 2:
-                    //todo alquilarSocios()
+                    //todo alquilarMultimedia()
                     break;
                 case 3:
                     //todo devolverMultimedia()
@@ -48,7 +48,7 @@ public class Ejercicio6 {
                     altaVideojuego();
                     break;
                 case 3:
-                    //todo nuevoSocio()
+                    altaSocio();
                     break;
                 case 0:
                     lib.volverMenu();
@@ -223,7 +223,56 @@ public class Ejercicio6 {
             System.out.println(nombre+" no ha podido ser añadido.");
         }
     }
+    public void alquilarMultimedia(){
+        int nif;
+        String multimedia;
+        boolean validado=false;
+        for (Socio s: videoclub.getSocios()) {
+            System.out.println(s.toString());
+        }
+        do {
+            System.out.println("Indique el NIF de un socio:");
+            nif= lector.nextInt();
+            lector.nextLine();
+            for (Socio s: videoclub.getSocios()) {
+                validado= s.getNif() == nif;
+            }
+            if (!validado){
+                System.out.println("Indique el NIF de un socio existente.");
 
+            }
+
+        }while(!validado);
+
+        do {
+            System.out.println("Indique P si desea alquilar una pelicula, o V si desea alquilar un videojuego:");
+            multimedia= lector.nextLine();
+            validado= multimedia.equalsIgnoreCase("p") || multimedia.equalsIgnoreCase("v");
+            if (!validado){
+                System.out.println("Opcion no valida.");
+
+            }
+
+        }while(!validado);
+
+        if (multimedia.equalsIgnoreCase("p")){
+            for (Multimedia m: videoclub.getMultimedia()) {
+                if (m instanceof Pelicula){
+                    System.out.println(m.toString());
+                }
+
+            }
+        }
+
+
+
+
+
+    }
+
+    public void devolverMultimedia(){
+        //todo verificar la fecha de retorno y ver si hay que cobrar algun recargo al socio
+    }
     public Formato menuFormato(){
         int opcion;
         Formato opFormato;
@@ -255,16 +304,13 @@ public class Ejercicio6 {
         return opPlataforma;
     }
 
-    public void devolverMultimedia(){
-        //todo verificar la fecha de retorno y ver si hay que cobrar algun recargo al socio
-    }
     public void listados(){
         int opcion;
         do {
             opcion= menuListados();
             switch (opcion){
                 case 1:
-                    //todo listadoTodosLosMultimedias()
+                    listadoTodosLosMultimedias();
                     break;
                 case 2:
                     //todo listadoTodosLasPeliculasPorTitulo()
@@ -288,21 +334,11 @@ public class Ejercicio6 {
             }
         }while(opcion!=0);
     }
-    public int menuListados(){
-        System.out.println("**********");
-        System.out.println("*LISTADOS*");
-        System.out.println("**********");
-        System.out.println("1. Listado de todos los multimedias.");
-        System.out.println("2. Listado de todas las peliculas ordenadas por titulo.");
-        System.out.println("3. Listado de todos los videojuegos ordenados por año.");
-        System.out.println("4. Listado de alquileres de un socio ordenados por fecha.");
-        System.out.println("5. Listado de alquileres actuales de un socio.");
-        System.out.println("6. Listado de los socios con recargos pendientes.");
-        System.out.println("0. Volver al menu principal.");
-        System.out.println("**************");
-        System.out.println("Selecciona una opcion del menu: ");
+    public void listadoTodosLosMultimedias(){
+        for (Multimedia m: videoclub.getMultimedia()) {
+            System.out.println(m.toString());
+        }
 
-        return lib.validarOpcion(0,6);
     }
     public int menuPrincipal(){
         System.out.println("***********");
@@ -330,5 +366,21 @@ public class Ejercicio6 {
         System.out.println("Selecciona una opcion del menu: ");
 
         return lib.validarOpcion(0,3);
+    }
+    public int menuListados(){
+        System.out.println("**********");
+        System.out.println("*LISTADOS*");
+        System.out.println("**********");
+        System.out.println("1. Listado de todos los multimedias.");
+        System.out.println("2. Listado de todas las peliculas ordenadas por titulo.");
+        System.out.println("3. Listado de todos los videojuegos ordenados por año.");
+        System.out.println("4. Listado historico de los alquileres de un socio ordenados por fecha.");
+        System.out.println("5. Listado de alquileres actuales de un socio.");
+        System.out.println("6. Listado de los socios con recargos pendientes.");
+        System.out.println("0. Volver al menu principal.");
+        System.out.println("**************");
+        System.out.println("Selecciona una opcion del menu: ");
+
+        return lib.validarOpcion(0,6);
     }
 }

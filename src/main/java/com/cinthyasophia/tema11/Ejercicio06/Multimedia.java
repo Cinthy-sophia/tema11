@@ -2,22 +2,21 @@ package com.cinthyasophia.tema11.Ejercicio06;
 
 
 import com.cinthyasophia.tema11.Util.Lib;
-
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.time.Period;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public abstract class Multimedia {
     protected Lib lib= new Lib();
+    private static int id;
+    protected int codigo;
     protected String titulo;
     protected String autor;
     protected String formato;
     protected int year;
 
     public Multimedia(String titulo, String autor, String formato, int year) {
+        ++id;
+        this.codigo= id;
         this.titulo = titulo;
         this.autor = autor;
         this.formato = formato ;
@@ -56,7 +55,7 @@ public abstract class Multimedia {
         this.year = year;
     }
 
-    public abstract void setFechaAlquiler(String fecha);
+    public abstract boolean setFechaAlquiler(String fecha);
     public abstract GregorianCalendar getFechaAlquiler();
 
     public abstract void setPrecio(int precio);
@@ -73,7 +72,8 @@ public abstract class Multimedia {
 
     @Override
     public String toString() {
-        return  "\nTitulo:" + titulo +
+        return  "\nCodigo:"+codigo+
+                "\nTitulo:" + titulo +
                 "\nAutor:" + autor +
                 "\nFormato:" + formato +
                 "\nAño:" + year;

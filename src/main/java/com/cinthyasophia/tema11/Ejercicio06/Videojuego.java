@@ -1,8 +1,6 @@
 package com.cinthyasophia.tema11.Ejercicio06;
 
 
-import java.util.GregorianCalendar;
-
 public class Videojuego extends Alquilable {
     public enum Plataformas{PLAYSTATION_4,X_BOX,NINTENDO_SWITCH}
 
