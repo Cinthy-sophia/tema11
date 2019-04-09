@@ -129,11 +129,8 @@ public class Ejercicio6 {
         }while(!validado);
 
 
-         if (videoclub.nuevoMultimedia(new Pelicula(titulo, autor, formato, year, duracion, actorPrincipal,actrizPrincipal))){
-             System.out.println(titulo+" añadida correctamente.");
-         } else {
-             System.out.println("No pudo ser añadida.");
-         }
+        System.out.println(videoclub.nuevoMultimedia(new Pelicula(titulo, autor, formato, year, duracion, actorPrincipal,actrizPrincipal)));
+
     }
 
     public void altaVideojuego(){
@@ -144,6 +141,7 @@ public class Ejercicio6 {
         int year;
         String plataforma;
 
+        System.out.println("**NUEVO VIDEOJUEGO**");
         do {
             System.out.println("Indique el titulo:");
             titulo= lector.nextLine();
@@ -177,12 +175,8 @@ public class Ejercicio6 {
 
         plataforma= menuPlataformas().name();
 
-        if (videoclub.nuevoMultimedia(new Videojuego(titulo,autor,formato,year,plataforma))){
-            System.out.println(titulo+" añadido correctamente.");
-        }else{
-            System.out.println("No ha sido añadido correctamente.");
+        System.out.println(videoclub.nuevoMultimedia(new Videojuego(titulo,autor,formato,year,plataforma)));
 
-        }
     }
     public void altaSocio(){
         boolean validado;
@@ -190,6 +184,7 @@ public class Ejercicio6 {
         String fecha;
         String poblacion;
 
+        System.out.println("**NUEVO SOCIO**");
         do {
             System.out.println("Indique el nombre: ");
             nombre= lector.nextLine();
@@ -223,10 +218,16 @@ public class Ejercicio6 {
             System.out.println(nombre+" no ha podido ser añadido.");
         }
     }
+
     public void alquilarMultimedia(){
         int nif;
-        String multimedia;
+        String multimediaS;
         boolean validado=false;
+        String titulo;
+        String autor;
+        String fecha;
+
+        //Muestra la lista de los socios afiliados al videoclub
         for (Socio s: videoclub.getSocios()) {
             System.out.println(s.toString());
         }
@@ -234,11 +235,16 @@ public class Ejercicio6 {
             System.out.println("Indique el NIF de un socio:");
             nif= lector.nextInt();
             lector.nextLine();
+
             for (Socio s: videoclub.getSocios()) {
                 validado= s.getNif() == nif;
             }
+
             if (!validado){
                 System.out.println("Indique el NIF de un socio existente.");
+
+            }else if(!videoclub.comprobarSocio(nif)){
+                System.out.println("El socio tiene un recargo pendiente por pagar.");
 
             }
 
@@ -246,8 +252,8 @@ public class Ejercicio6 {
 
         do {
             System.out.println("Indique P si desea alquilar una pelicula, o V si desea alquilar un videojuego:");
-            multimedia= lector.nextLine();
-            validado= multimedia.equalsIgnoreCase("p") || multimedia.equalsIgnoreCase("v");
+            multimediaS= lector.nextLine();
+            validado= multimediaS.equalsIgnoreCase("p") || multimediaS.equalsIgnoreCase("v");
             if (!validado){
                 System.out.println("Opcion no valida.");
 
@@ -255,17 +261,48 @@ public class Ejercicio6 {
 
         }while(!validado);
 
-        if (multimedia.equalsIgnoreCase("p")){
-            for (Multimedia m: videoclub.getMultimedia()) {
-                if (m instanceof Pelicula){
-                    System.out.println(m.toString());
-                }
-
-            }
+        //Muestra el inventario de peliculas o videojuegos disponibles segun sea el caso
+        if (multimediaS.equalsIgnoreCase("p")){
+            //todo listadoPeliculasPorTitulo();
+        }else{
+            //todo listadoVideojuegosPorAño();
         }
 
 
+        do {
+            System.out.println("Indique el titulo y el autor del multimedia que desea alquilar:");
+            System.out.print("Titulo:");
+            titulo= lector.nextLine();
+            System.out.print("\nAutor:");
+            autor= lector.nextLine();
+            validado= titulo.length()>1 && autor.length()>5;
 
+        }while(!validado);
+
+        do {
+
+            System.out.println("Indica la fecha de hoy:");
+            fecha= lector.nextLine();
+            validado= !fecha.isEmpty();
+            if (!validado){
+                System.out.println("La fecha es incorrecta.");
+            }
+        }while(!validado);
+
+        //todo
+        if (multimediaS.equalsIgnoreCase("p")){
+            for (Multimedia m: videoclub.getMultimedia()) {
+                if (m instanceof Pelicula && !m.isAlquilado() && m.equals(new Pelicula(titulo,autor,null,0,null,null,null))){
+                    System.out.println(videoclub.alquilar(nif,m,fecha));
+                }
+            }
+        }else{
+            for (Multimedia m: videoclub.getMultimedia()) {
+                if (m instanceof Videojuego && !m.isAlquilado() && m.equals(new Videojuego(titulo,autor,null,0,null))){
+                    System.out.println(videoclub.alquilar(nif,m,fecha));
+                }
+            }
+        }
 
 
     }
@@ -313,10 +350,10 @@ public class Ejercicio6 {
                     listadoTodosLosMultimedias();
                     break;
                 case 2:
-                    //todo listadoTodosLasPeliculasPorTitulo()
+                    //todo listadoPeliculasPorTitulo()
                     break;
                 case 3:
-                    //todo listadoTodosLosVideojuegosPorAño()
+                    //todo listadoVideojuegosPorAño()
                     break;
                 case 4:
                     //todo listadoAlquileresDeSocioPorFecha()

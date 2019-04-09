@@ -8,6 +8,7 @@ public abstract class Alquilable extends Multimedia {
     private GregorianCalendar fechaAlquiler;
     protected boolean alquilado;
 
+
     public Alquilable(String titulo, String autor, String formato, int year) {
         super(titulo, autor, formato, year);
         this.fechaAlquiler= null;
@@ -30,11 +31,9 @@ public abstract class Alquilable extends Multimedia {
         return fechaAlquiler;
     }
 
-
     public void setPrecio(int precio) {
         this.precio= precio;
     }
-
 
     public int getPrecio() {
         return precio;
@@ -55,8 +54,8 @@ public abstract class Alquilable extends Multimedia {
 
         }
         return  super.toString()+
-                "\nPrecio:" + precio +
                 "\n"+ alquilado +
+                "\nPrecio:" + precio +
                 "\nFecha de alquiler:" + format.format(fechaAlquiler.getTime());
     }
 }

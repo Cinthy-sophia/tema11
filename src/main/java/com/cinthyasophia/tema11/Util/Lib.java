@@ -189,6 +189,21 @@ public class Lib {
         }
         return edad;
     }
+    public int getDias(GregorianCalendar fecha){
+        int year= fecha.get(Calendar.YEAR);
+        int month= fecha.get(Calendar.MONTH);
+        int day= fecha.get(Calendar.DAY_OF_MONTH);
+        int dias;
+
+        LocalDate date= LocalDate.of(year,month,day);
+        LocalDate now = LocalDate.now();
+        Period p;
+        p= Period.between(date, now);
+
+        dias= p.getDays();
+        return dias;
+
+    }
 
 
 }
