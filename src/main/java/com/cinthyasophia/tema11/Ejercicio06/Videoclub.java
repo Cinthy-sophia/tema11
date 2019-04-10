@@ -10,6 +10,7 @@ import java.util.*;
 public class Videoclub {
     private final int PERIODO_MAX_DIAS=3;
     private final int PRECIO_BASE=4;
+    private final int PRECIO_RECARGO=2;
     private final int MAYOR_EDAD=18;
     private final int REBAJA_PELICULA= 2012;
     private final int REBAJA_VIDEOJUEGO= 2010;
@@ -38,13 +39,6 @@ public class Videoclub {
 
     public String nuevoMultimedia(Multimedia m){
         int precioTotal= PRECIO_BASE;
-
-        for (Multimedia multimedia: multimedia) {
-            if (m.equals(multimedia)){
-                return "Ya se encuentra en el inventario.";
-            }
-        }
-
         if (m instanceof Pelicula){
             if (m.year<REBAJA_PELICULA){
                 precioTotal-=1;
@@ -74,53 +68,59 @@ public class Videoclub {
             return socios.add(s);
         }
     }
-    public boolean comprobarSocio(Socio socio){
+    public boolean comprobarSocio(int nif){
         Set<Multimedia> multimedia= multimediaRentado.keySet();
-        for (Multimedia m:multimedia) {
-            if (multimediaRentado.get(m).getNif()==socio.getNif()){
+        for (Multimedia m : multimedia) {
+            if (multimediaRentado.get(m).getNif()==nif){
                 if (lib.getDias(m.getFechaAlquiler())>PERIODO_MAX_DIAS){
-                    return false;
+                    return true;
                 }
-            }else{
-                return false;
             }
         }
-        return true;
+        return false;
     }
     public boolean comprobarMultimedia(Multimedia m){
         for (Multimedia mul: multimedia) {
             if (mul.equals(m)){
                 if (m.isAlquilado()){
-                    return false;
+                    return true;
                 }
-            }else{
-                return false;
             }
         }
-        return true;
+        return false;
+    }
+    public int calcularRecargo(Multimedia m){
+        int cantidadRecargo=0;
+        if (lib.getDias(m.getFechaAlquiler())>PERIODO_MAX_DIAS){
+            cantidadRecargo = (lib.getDias(m.getFechaAlquiler()) - PERIODO_MAX_DIAS) * PRECIO_RECARGO;
+        }
+
+        return cantidadRecargo;
     }
 
     public String alquilar(Socio socio, Multimedia m, String fechaAl){
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
-        GregorianCalendar fechaDevolucion= new GregorianCalendar();
+        GregorianCalendar fechaDevolucion = new GregorianCalendar();
 
         for (Multimedia mul: multimedia) {
             if (mul.equals(m)){
                 mul.setFechaAlquiler(fechaAl);
                 fechaDevolucion= mul.getFechaAlquiler();
                 fechaDevolucion.add(GregorianCalendar.DAY_OF_MONTH,PERIODO_MAX_DIAS);
+                m.setFechaDevolucion(format.format(fechaDevolucion.getTime()));
+                //todo verificar lo de los dias
                 multimediaRentado.put(mul,socio);
             }
         }
         return "Multimedia rentado, fecha de devolucion:"+format.format(fechaDevolucion.getTime());
     }
+    public void devolver(){
+
+    }
+
     public void datosAleatorio(){
         Faker faker = new Faker(new Locale("es"));
         faker.book().title();
         faker.book().author();
-    }
-
-    public void devolver(){
-
     }
 }

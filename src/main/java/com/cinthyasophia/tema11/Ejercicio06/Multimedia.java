@@ -2,10 +2,12 @@ package com.cinthyasophia.tema11.Ejercicio06;
 
 
 import com.cinthyasophia.tema11.Util.Lib;
+
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-public abstract class Multimedia{
+public abstract class Multimedia implements Comparable<Multimedia>{
     protected Lib lib= new Lib();
     protected String titulo;
     protected String autor;
@@ -74,5 +76,18 @@ public abstract class Multimedia{
                 "\nAutor:" + autor +
                 "\nFormato:" + formato +
                 "\nAño:" + year;
+    }
+
+    @Override
+    public int compareTo(Multimedia multimedia) {
+        return this.getTitulo().compareTo(multimedia.getTitulo());
+    }
+
+    public static class ComparatorYear implements Comparator<Multimedia>{
+
+        @Override
+        public int compare(Multimedia multimedia, Multimedia t1) {
+            return multimedia.getYear()-t1.getYear();
+        }
     }
 }

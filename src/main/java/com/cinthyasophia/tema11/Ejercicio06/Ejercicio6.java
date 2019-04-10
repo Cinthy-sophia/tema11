@@ -89,6 +89,13 @@ public class Ejercicio6 {
             }
         }while(!validado);
 
+        for (Multimedia m: videoclub.getMultimedia()) {
+            if (m.equals(new Pelicula(titulo,autor))){
+                System.out.println("Ya se encuentra en el inventario, intente con otro.");
+                return;
+            }
+        }
+
         formato=menuFormato().name();
 
         do {
@@ -161,6 +168,12 @@ public class Ejercicio6 {
             }
         }while(!validado);
 
+        for (Multimedia m: videoclub.getMultimedia()) {
+            if (m.equals(new Pelicula(titulo,autor))){
+                System.out.println("Ya se encuentra en el inventario, intente con otro.");
+                return;
+            }
+        }
         formato=menuFormato().name();
 
         do {
@@ -247,7 +260,7 @@ public class Ejercicio6 {
             if (!validado){
                 System.out.println("Indique el NIF de un socio existente.");
 
-            }else if(!videoclub.comprobarSocio(socio)){
+            }else if(videoclub.comprobarSocio(socio.getNif())){
                 System.out.println("El socio tiene un recargo pendiente por pagar.");
                 return;
 
@@ -343,10 +356,10 @@ public class Ejercicio6 {
                     listadoTodosLosMultimedias();
                     break;
                 case 2:
-                    //todo listadoPeliculasPorTitulo();
+                    listadoPeliculasPorTitulo();
                     break;
                 case 3:
-                    //todo listadoVideojuegos();
+                    listadoVideojuegos();
                     break;
                 case 4:
                     //todo listadoHistoricoDeAlquileres();
@@ -355,7 +368,7 @@ public class Ejercicio6 {
                     listadoAlquileresActualesSocio();
                     break;
                 case 6:
-                    //todo listadoSociosConRecargosPendientes();
+                    listadoSociosRecargosPendientes();
                     break;
                 case 0:
                     lib.volverMenu();
@@ -374,11 +387,27 @@ public class Ejercicio6 {
 
     }
     public void listadoVideojuegos(){
-        //Listado de los videojuegos ordenados por año
+        videoclub.getMultimedia().sort(new Multimedia.ComparatorYear());
+        for (Multimedia m: videoclub.getMultimedia()) {
+            if (m instanceof Videojuego){
+                System.out.println(m.toString());
+
+            }
+        }
+
     }
+
     public void listadoPeliculasPorTitulo(){
-        // Listado de las peliculas ordenadas por titulo
+        Collections.sort(videoclub.getMultimedia());
+
+        for (Multimedia m: videoclub.getMultimedia()) {
+            if (m instanceof Pelicula){
+                System.out.println(m.toString());
+            }
+
+        }
     }
+
     public void listadoAlquileresActualesSocio(){
         HashMap<Multimedia,Socio> mR= videoclub.getMultimediaRentado();
         Set<Multimedia> multimedia= videoclub.getMultimediaRentado().keySet();
@@ -405,6 +434,20 @@ public class Ejercicio6 {
             }
         }
     }
+
+    public void listadoSociosRecargosPendientes(){
+        HashMap<Multimedia,Socio> mR= videoclub.getMultimediaRentado();
+        Set<Multimedia> multimedia= mR.keySet();
+
+        for (Multimedia m: multimedia) {
+            if (m.getFechaDevolucion()!=null){
+                System.out.println(mR.get(m).toString()+"\nRecargo de:"+videoclub.calcularRecargo(m)+"Multimedia alquilado:"+m.getTitulo());
+            }
+        }
+
+    }
+
+
 
     public int menuPrincipal(){
         System.out.println("***********");
