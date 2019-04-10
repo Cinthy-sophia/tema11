@@ -11,6 +11,9 @@ public class Videojuego extends Alquilable {
         this.plataforma= plataforma;
 
     }
+    public Videojuego(String titulo, String autor){
+        this(titulo,autor,null,0,null);
+    }
 
     public String getPlataforma() {
         return plataforma;

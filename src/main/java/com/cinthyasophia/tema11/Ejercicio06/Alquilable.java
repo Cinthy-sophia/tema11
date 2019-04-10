@@ -6,27 +6,31 @@ import java.util.GregorianCalendar;
 public abstract class Alquilable extends Multimedia {
     protected int precio;
     private GregorianCalendar fechaAlquiler;
+    private GregorianCalendar fechaDevolucion;
     protected boolean alquilado;
 
 
     public Alquilable(String titulo, String autor, String formato, int year) {
         super(titulo, autor, formato, year);
+        this.fechaDevolucion= null;
         this.fechaAlquiler= null;
         this.precio= 0;
         this.alquilado= false;
 
     }
 
-    public boolean setFechaAlquiler(String fecha) {
-        if (fecha==null){
-            alquilado= false;
-        } else {
-            this.fechaAlquiler= lib.getFecha(fecha);
-            alquilado = true;
-        }
-        return alquilado;
+    public void setFechaAlquiler(String fecha) {
+        this.fechaAlquiler= lib.getFecha(fecha);
+        alquilado = true;
+    }
+    public void setFechaDevolucion(String fecha) {
+        this.fechaDevolucion= lib.getFecha(fecha);
+        alquilado = false;
     }
 
+    public GregorianCalendar getFechaDevolucion(){
+        return fechaDevolucion;
+    }
     public GregorianCalendar getFechaAlquiler() {
         return fechaAlquiler;
     }
@@ -53,6 +57,7 @@ public abstract class Alquilable extends Multimedia {
             alquilado= "DISPONIBLE";
 
         }
+
         return  super.toString()+
                 "\n"+ alquilado +
                 "\nPrecio:" + precio +

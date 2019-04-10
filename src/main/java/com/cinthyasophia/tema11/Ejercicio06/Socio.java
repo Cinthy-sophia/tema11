@@ -21,6 +21,14 @@ public class Socio {
         this.poblacion = poblacion;
         this.edad= lib.getEdad(this.fechaNac);
     }
+    public Socio(){
+        ++id;
+        this.nif = id;
+        this.nombre = null;
+        this.fechaNac = null;
+        this.poblacion = null;
+        this.edad= 0;
+    }
 
     public int getNif() {
         return nif;

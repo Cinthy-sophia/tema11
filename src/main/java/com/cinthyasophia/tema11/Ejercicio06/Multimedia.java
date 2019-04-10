@@ -5,7 +5,7 @@ import com.cinthyasophia.tema11.Util.Lib;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-public abstract class Multimedia {
+public abstract class Multimedia{
     protected Lib lib= new Lib();
     protected String titulo;
     protected String autor;
@@ -51,8 +51,10 @@ public abstract class Multimedia {
         this.year = year;
     }
 
-    public abstract boolean setFechaAlquiler(String fecha);
+    public abstract void setFechaAlquiler(String fecha);
     public abstract GregorianCalendar getFechaAlquiler();
+    public abstract void setFechaDevolucion(String fecha);
+    public abstract GregorianCalendar getFechaDevolucion();
     public abstract boolean isAlquilado();
     public abstract void setPrecio(int precio);
     public abstract int getPrecio();

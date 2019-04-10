@@ -2,7 +2,7 @@ package com.cinthyasophia.tema11.Ejercicio06;
 
 
 import com.cinthyasophia.tema11.Util.Lib;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+import com.github.javafaker.Faker;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -16,7 +16,7 @@ public class Videoclub {
     private Lib lib;
     private ArrayList<Multimedia> multimedia;
     private ArrayList<Socio> socios;
-    private HashMap<Multimedia,Integer> multimediaRentado;
+    private HashMap<Multimedia,Socio> multimediaRentado;
 
     public Videoclub() {
         multimedia = new ArrayList<>();
@@ -30,6 +30,10 @@ public class Videoclub {
 
     public ArrayList<Socio> getSocios() {
         return socios;
+    }
+
+    public HashMap<Multimedia, Socio> getMultimediaRentado() {
+        return multimediaRentado;
     }
 
     public String nuevoMultimedia(Multimedia m){
@@ -51,9 +55,16 @@ public class Videoclub {
                 precioTotal-=1;
             }
         }
+
         m.setPrecio(precioTotal);
-        multimedia.add(m);
-        return "Añadido correctamente";
+
+        if (multimedia.add(m)){
+            return "Añadido correctamente.";
+
+        }else{
+
+            return "No ha podido ser añadido.";
+        }
 
     }
     public boolean nuevoSocio(Socio s){
@@ -63,38 +74,50 @@ public class Videoclub {
             return socios.add(s);
         }
     }
-    public boolean comprobarSocio(int nif){
-        Collection<Integer> socios= multimediaRentado.values();
+    public boolean comprobarSocio(Socio socio){
         Set<Multimedia> multimedia= multimediaRentado.keySet();
-
-        for (int i : socios){
-            if (nif== i){
-                for (Multimedia m : multimedia) {
-                    if (lib.getDias(m.getFechaAlquiler())>3){
-                        return false;
-
-                    }
-
+        for (Multimedia m:multimedia) {
+            if (multimediaRentado.get(m).getNif()==socio.getNif()){
+                if (lib.getDias(m.getFechaAlquiler())>PERIODO_MAX_DIAS){
+                    return false;
                 }
+            }else{
+                return false;
             }
-
+        }
+        return true;
+    }
+    public boolean comprobarMultimedia(Multimedia m){
+        for (Multimedia mul: multimedia) {
+            if (mul.equals(m)){
+                if (m.isAlquilado()){
+                    return false;
+                }
+            }else{
+                return false;
+            }
         }
         return true;
     }
 
-    public String alquilar(int nif, Multimedia m, String fechaAl){
+    public String alquilar(Socio socio, Multimedia m, String fechaAl){
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
-        GregorianCalendar fechaDevolucion;
+        GregorianCalendar fechaDevolucion= new GregorianCalendar();
 
-        if (m.isAlquilado()){
-            return "El multimedia ya se encuentra alquilado, no esta disponible.";
-        }else{
-            m.setFechaAlquiler(fechaAl);
-            fechaDevolucion= m.getFechaAlquiler();
-            fechaDevolucion.add(GregorianCalendar.DAY_OF_MONTH,3);
-            multimediaRentado.put(m,nif);
-            return "Multimedia rentado, fecha de devolucion:"+format.format(fechaDevolucion.getTime());
+        for (Multimedia mul: multimedia) {
+            if (mul.equals(m)){
+                mul.setFechaAlquiler(fechaAl);
+                fechaDevolucion= mul.getFechaAlquiler();
+                fechaDevolucion.add(GregorianCalendar.DAY_OF_MONTH,PERIODO_MAX_DIAS);
+                multimediaRentado.put(mul,socio);
+            }
         }
+        return "Multimedia rentado, fecha de devolucion:"+format.format(fechaDevolucion.getTime());
+    }
+    public void datosAleatorio(){
+        Faker faker = new Faker(new Locale("es"));
+        faker.book().title();
+        faker.book().author();
     }
 
     public void devolver(){

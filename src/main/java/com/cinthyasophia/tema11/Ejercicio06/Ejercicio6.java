@@ -1,7 +1,8 @@
 package com.cinthyasophia.tema11.Ejercicio06;
 import com.cinthyasophia.tema11.Util.Lib;
 
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Ejercicio6 {
     private Lib lib= new Lib();
@@ -17,13 +18,13 @@ public class Ejercicio6 {
                     altas();
                     break;
                 case 2:
-                    //todo alquilarMultimedia()
+                    alquilarMultimedia();
                     break;
                 case 3:
                     //todo devolverMultimedia()
                     break;
                 case 4:
-                    //todo listados()
+                    listados();
                     break;
                 case 0:
                     System.out.println("Adios :)");
@@ -221,16 +222,16 @@ public class Ejercicio6 {
 
     public void alquilarMultimedia(){
         int nif;
+        Socio socio= new Socio();
         String multimediaS;
-        boolean validado=false;
+        boolean validado=true;
         String titulo;
         String autor;
+        SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
+        GregorianCalendar ahora = new GregorianCalendar();
         String fecha;
 
-        //Muestra la lista de los socios afiliados al videoclub
-        for (Socio s: videoclub.getSocios()) {
-            System.out.println(s.toString());
-        }
+        System.out.println("**ALQUILAR**");
         do {
             System.out.println("Indique el NIF de un socio:");
             nif= lector.nextInt();
@@ -238,13 +239,17 @@ public class Ejercicio6 {
 
             for (Socio s: videoclub.getSocios()) {
                 validado= s.getNif() == nif;
+                if (validado){
+                    socio=s;
+                }
             }
 
             if (!validado){
                 System.out.println("Indique el NIF de un socio existente.");
 
-            }else if(!videoclub.comprobarSocio(nif)){
+            }else if(!videoclub.comprobarSocio(socio)){
                 System.out.println("El socio tiene un recargo pendiente por pagar.");
+                return;
 
             }
 
@@ -261,55 +266,43 @@ public class Ejercicio6 {
 
         }while(!validado);
 
-        //Muestra el inventario de peliculas o videojuegos disponibles segun sea el caso
-        if (multimediaS.equalsIgnoreCase("p")){
-            //todo listadoPeliculasPorTitulo();
-        }else{
-            //todo listadoVideojuegosPorAño();
-        }
-
-
         do {
             System.out.println("Indique el titulo y el autor del multimedia que desea alquilar:");
-            System.out.print("Titulo:");
-            titulo= lector.nextLine();
-            System.out.print("\nAutor:");
-            autor= lector.nextLine();
-            validado= titulo.length()>1 && autor.length()>5;
+            do {
+                System.out.print("Titulo:");
+                titulo= lector.nextLine();
+                System.out.print("\nAutor:");
+                autor= lector.nextLine();
+                validado= autor.length()>5 && titulo.length()>1;
+                if (!validado){
+                    System.out.println("Datos incorrectos, es posible que el titulo o el autor sean muy cortos.");
+                }
+            }while(!validado);
 
-        }while(!validado);
+            if (multimediaS.equalsIgnoreCase("p")){
+                validado=videoclub.comprobarMultimedia(new Pelicula(titulo,autor));
+            }else{
+                validado=videoclub.comprobarMultimedia(new Videojuego(titulo,autor));
+            }
 
-        do {
-
-            System.out.println("Indica la fecha de hoy:");
-            fecha= lector.nextLine();
-            validado= !fecha.isEmpty();
             if (!validado){
-                System.out.println("La fecha es incorrecta.");
+                System.out.println("El multimedia no esta disponible, o no existe. Indique otro.");
             }
         }while(!validado);
 
-        //todo
-        if (multimediaS.equalsIgnoreCase("p")){
-            for (Multimedia m: videoclub.getMultimedia()) {
-                if (m instanceof Pelicula && !m.isAlquilado() && m.equals(new Pelicula(titulo,autor,null,0,null,null,null))){
-                    System.out.println(videoclub.alquilar(nif,m,fecha));
-                }
-            }
-        }else{
-            for (Multimedia m: videoclub.getMultimedia()) {
-                if (m instanceof Videojuego && !m.isAlquilado() && m.equals(new Videojuego(titulo,autor,null,0,null))){
-                    System.out.println(videoclub.alquilar(nif,m,fecha));
-                }
-            }
-        }
+        fecha= format.format(ahora.getTime());
 
-
+       if (multimediaS.equalsIgnoreCase("p")){
+            System.out.println(videoclub.alquilar(socio,new Pelicula(titulo,autor),fecha));
+       }else{
+            System.out.println(videoclub.alquilar(socio,new Videojuego(titulo,autor),fecha));
+       }
     }
 
     public void devolverMultimedia(){
-        //todo verificar la fecha de retorno y ver si hay que cobrar algun recargo al socio
+        //todo verificar la fecha de devolucion y ver si hay que cobrar algun recargo al socio
     }
+
     public Formato menuFormato(){
         int opcion;
         Formato opFormato;
@@ -350,16 +343,19 @@ public class Ejercicio6 {
                     listadoTodosLosMultimedias();
                     break;
                 case 2:
-                    //todo listadoPeliculasPorTitulo()
+                    //todo listadoPeliculasPorTitulo();
                     break;
                 case 3:
-                    //todo listadoVideojuegosPorAño()
+                    //todo listadoVideojuegos();
                     break;
                 case 4:
-                    //todo listadoAlquileresDeSocioPorFecha()
+                    //todo listadoHistoricoDeAlquileres();
                     break;
                 case 5:
-                    //todo listadoSociosConRecargosPendientes()
+                    listadoAlquileresActualesSocio();
+                    break;
+                case 6:
+                    //todo listadoSociosConRecargosPendientes();
                     break;
                 case 0:
                     lib.volverMenu();
@@ -377,6 +373,39 @@ public class Ejercicio6 {
         }
 
     }
+    public void listadoVideojuegos(){
+        //Listado de los videojuegos ordenados por año
+    }
+    public void listadoPeliculasPorTitulo(){
+        // Listado de las peliculas ordenadas por titulo
+    }
+    public void listadoAlquileresActualesSocio(){
+        HashMap<Multimedia,Socio> mR= videoclub.getMultimediaRentado();
+        Set<Multimedia> multimedia= videoclub.getMultimediaRentado().keySet();
+        int nif;
+        boolean validado=true;
+        do {
+            System.out.println("Indique el NIF de un socio:");
+            nif= lector.nextInt();
+            lector.nextLine();
+
+            for (Socio s: videoclub.getSocios()) {
+                validado= s.getNif() == nif;
+
+            }
+            if (!validado){
+                System.out.println("Indique el NIF de un socio existente.");
+            }
+
+        }while(!validado);
+
+        for (Multimedia m:multimedia) {
+            if (mR.get(m).getNif()==nif){
+                System.out.println(m.toString()+"\nAlquilado a:"+mR.get(m).getNombre());
+            }
+        }
+    }
+
     public int menuPrincipal(){
         System.out.println("***********");
         System.out.println("*VIDEOCLUB*");

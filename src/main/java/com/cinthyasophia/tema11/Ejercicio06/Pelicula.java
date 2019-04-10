@@ -14,6 +14,9 @@ public class Pelicula extends Alquilable {
         this.duracion= duracion;
 
     }
+    public Pelicula(String titulo,String autor){
+        this(titulo,autor, null,0,null,null,null);
+    }
 
     public String getDuracion() {
         return duracion;
