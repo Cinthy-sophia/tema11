@@ -244,7 +244,7 @@ public class Ejercicio6 {
         GregorianCalendar ahora = new GregorianCalendar();
         String fecha;
 
-        System.out.println("**ALQUILAR**");
+        System.out.println("**ALQUILAR MULTIMEDIA**");
         do {
             System.out.println("Indique el NIF de un socio:");
             nif= lector.nextInt();
@@ -313,7 +313,56 @@ public class Ejercicio6 {
     }
 
     public void devolverMultimedia(){
-        //todo verificar la fecha de devolucion y ver si hay que cobrar algun recargo al socio
+        String titulo;
+        String autor;
+        String multimediaS;
+        boolean validado= true;
+        int nif;
+
+        System.out.println("**DEVOLVER MULTIMEDIA**");
+        do {
+            System.out.println("Indique el NIF de un socio:");
+            nif= lector.nextInt();
+            lector.nextLine();
+
+            for (Socio s: videoclub.getSocios()) {
+                validado = s.getNif() == nif;
+
+            }
+            if (!validado){
+                System.out.println("Indique el NIF de un socio existente.");
+            }
+        }while(!validado);
+
+        do {
+            System.out.println("Indique el titulo y el autor del multimedia que desea devolver:");
+            System.out.print("Titulo:");
+            titulo= lector.nextLine();
+            System.out.print("\nAutor:");
+            autor= lector.nextLine();
+            validado= autor.length()>5 && titulo.length()>1;
+            if (!validado){
+                System.out.println("Datos incorrectos, es posible que el titulo o el autor sean muy cortos.");
+            }
+        }while(!validado);
+        do {
+            System.out.println("Indique P si es una pelicula, o V si es un videojuego:");
+            multimediaS= lector.nextLine();
+            validado= multimediaS.equalsIgnoreCase("p") || multimediaS.equalsIgnoreCase("v");
+            if (!validado){
+                System.out.println("Opcion no valida.");
+
+            }
+
+        }while(!validado);
+
+        if (multimediaS.equalsIgnoreCase("p")){
+            System.out.println(videoclub.devolver(nif,new Pelicula(titulo,autor)));
+
+        }else{
+            System.out.println(videoclub.devolver(nif,new Pelicula(titulo,autor)));
+        }
+
     }
 
     public Formato menuFormato(){
@@ -428,7 +477,7 @@ public class Ejercicio6 {
 
         }while(!validado);
 
-        for (Multimedia m:multimedia) {
+        for (Multimedia m : multimedia) {
             if (mR.get(m).getNif()==nif){
                 System.out.println(m.toString()+"\nAlquilado a:"+mR.get(m).getNombre());
             }
@@ -441,13 +490,21 @@ public class Ejercicio6 {
 
         for (Multimedia m: multimedia) {
             if (m.getFechaDevolucion()!=null){
-                System.out.println(mR.get(m).toString()+"\nRecargo de:"+videoclub.calcularRecargo(m)+"Multimedia alquilado:"+m.getTitulo());
+                System.out.println(mR.get(m).toString()+"\nRecargo de:"+videoclub.calcularRecargo(m)+"\nMultimedia alquilado:"+m.getTitulo());
             }
         }
 
     }
+    public void listadoHistoricoDeAlquileres(){
+        videoclub.getHistorialMultimediaRentado().sort(new Alquilable.ComparatorFecha());
+        for (Multimedia m: videoclub.getMultimedia()) {
 
+            if (m instanceof Videojuego){
+                System.out.println(m.toString());
 
+            }
+        }
+    }
 
     public int menuPrincipal(){
         System.out.println("***********");

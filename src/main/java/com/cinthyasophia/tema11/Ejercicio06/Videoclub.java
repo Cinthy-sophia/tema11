@@ -18,11 +18,13 @@ public class Videoclub {
     private ArrayList<Multimedia> multimedia;
     private ArrayList<Socio> socios;
     private HashMap<Multimedia,Socio> multimediaRentado;
+    private HashMap<Multimedia,Socio> historialMultimediaRentado;
 
     public Videoclub() {
         multimedia = new ArrayList<>();
         socios = new ArrayList<>();
         multimediaRentado= new HashMap<>();
+        historialMultimediaRentado= new HashMap<>();
     }
 
     public ArrayList<Multimedia> getMultimedia() {
@@ -35,6 +37,10 @@ public class Videoclub {
 
     public HashMap<Multimedia, Socio> getMultimediaRentado() {
         return multimediaRentado;
+    }
+
+    public HashMap<Multimedia, Socio> getHistorialMultimediaRentado() {
+        return historialMultimediaRentado;
     }
 
     public String nuevoMultimedia(Multimedia m){
@@ -89,11 +95,13 @@ public class Videoclub {
         }
         return false;
     }
+
     public int calcularRecargo(Multimedia m){
         int cantidadRecargo=0;
-        if (lib.getDias(m.getFechaAlquiler())>PERIODO_MAX_DIAS){
+        if (m.getFechaAlquiler()!=null && lib.getDias(m.getFechaAlquiler())>PERIODO_MAX_DIAS){
             cantidadRecargo = (lib.getDias(m.getFechaAlquiler()) - PERIODO_MAX_DIAS) * PRECIO_RECARGO;
         }
+
 
         return cantidadRecargo;
     }
@@ -114,7 +122,34 @@ public class Videoclub {
         }
         return "Multimedia rentado, fecha de devolucion:"+format.format(fechaDevolucion.getTime());
     }
-    public void devolver(){
+    public String devolver(int nif, Multimedia m){
+        Socio socio= new Socio();
+        Multimedia multi = null;
+
+        Set<Multimedia> multimedia= multimediaRentado.keySet();
+        for (Multimedia mul : multimedia) {
+            if (mul.getClass().equals(m.getClass())){
+                if (mul.equals(m)){
+                    if (multimediaRentado.get(mul).getNif()==nif){
+                        System.out.println(mul.toString()+"\nAlquilado a:"+multimediaRentado.get(mul).getNombre());
+                        System.out.println("Recargo:"+calcularRecargo(mul));
+                        mul.setPrecio(calcularRecargo(mul));
+                        System.out.println("Precio final:"+mul.getPrecio());
+
+                        socio= multimediaRentado.get(mul);
+                        multi= mul;
+                        historialMultimediaRentado.put(multi,socio);
+                    }
+                }
+            }
+        }
+
+        if(multimediaRentado.remove(multi,socio)){
+            return "Devuelto con exito. Hasta la proxima!";
+
+        }else{
+            return "No ha podido ser retornado.";
+        }
 
     }
 

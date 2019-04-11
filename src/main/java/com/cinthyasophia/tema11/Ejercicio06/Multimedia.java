@@ -20,6 +20,9 @@ public abstract class Multimedia implements Comparable<Multimedia>{
         this.formato = formato ;
         this.year= year;
     }
+    public Multimedia(String titulo,String autor){
+        this(titulo,autor,null,0);
+    }
 
     public String getTitulo() {
         return titulo;
