@@ -21,7 +21,7 @@ public class Ejercicio6 {
                     alquilarMultimedia();
                     break;
                 case 3:
-                    //todo devolverMultimedia()
+                    devolverMultimedia();
                     break;
                 case 4:
                     listados();
@@ -193,6 +193,7 @@ public class Ejercicio6 {
         System.out.println(videoclub.nuevoMultimedia(new Videojuego(titulo,autor,formato,year,plataforma)));
 
     }
+
     public void altaSocio(){
         boolean validado;
         String nombre;
@@ -252,7 +253,7 @@ public class Ejercicio6 {
             lector.nextLine();
 
             for (Socio s: videoclub.getSocios()) {
-                validado= s.getNif() == nif;
+                validado=  nif!=0 && s.getNif() == nif;
                 if (validado){
                     socio=s;
                 }
@@ -326,26 +327,16 @@ public class Ejercicio6 {
             nif= lector.nextInt();
             lector.nextLine();
 
-            for (Socio s: videoclub.getSocios()) {
-                validado = s.getNif() == nif;
+            for (Socio s : videoclub.getSocios()) {
+                validado =  nif!=0 && s.getNif() == nif ;
 
             }
             if (!validado){
                 System.out.println("Indique el NIF de un socio existente.");
             }
+
         }while(!validado);
 
-        do {
-            System.out.println("Indique el titulo y el autor del multimedia que desea devolver:");
-            System.out.print("Titulo:");
-            titulo= lector.nextLine();
-            System.out.print("\nAutor:");
-            autor= lector.nextLine();
-            validado= autor.length()>5 && titulo.length()>1;
-            if (!validado){
-                System.out.println("Datos incorrectos, es posible que el titulo o el autor sean muy cortos.");
-            }
-        }while(!validado);
         do {
             System.out.println("Indique P si es una pelicula, o V si es un videojuego:");
             multimediaS= lector.nextLine();
@@ -355,6 +346,18 @@ public class Ejercicio6 {
 
             }
 
+        }while(!validado);
+
+        do {
+            System.out.println("Indique el titulo y el autor:");
+            System.out.print("Titulo:");
+            titulo= lector.nextLine();
+            System.out.print("\nAutor:");
+            autor= lector.nextLine();
+            validado= autor.length()>5 && titulo.length()>1;
+            if (!validado){
+                System.out.println("Datos incorrectos, es posible que el titulo o el autor sean muy cortos.");
+            }
         }while(!validado);
 
         if (multimediaS.equalsIgnoreCase("p")){
@@ -371,8 +374,9 @@ public class Ejercicio6 {
         Formato opFormato;
         Formato[] formato=Formato.values();
         System.out.println("*FORMATOS*");
+
         for (int i = 0; i < formato.length; i++) {
-            System.out.println(++i+"."+formato[i].name());
+            System.out.println(formato[i].ordinal()+". "+formato[i].name());
         }
         System.out.println("Selecciona el formato de la pelicula:");
         opcion= lib.validarOpcion(0,formato.length);
@@ -385,9 +389,10 @@ public class Ejercicio6 {
         int opcion;
         Videojuego.Plataformas opPlataforma;
         Videojuego.Plataformas[] plataformas= Videojuego.Plataformas.values();
+
         System.out.println("*PLATAFORMAS*");
         for (int i = 0; i < plataformas.length; i++) {
-            System.out.println(++i+"."+plataformas[i].name());
+            System.out.println(plataformas[i].ordinal()+"."+plataformas[i].name());
         }
         System.out.println("Selecciona el formato de la pelicula:");
         opcion= lib.validarOpcion(0,plataformas.length);
@@ -412,7 +417,7 @@ public class Ejercicio6 {
                     listadoVideojuegos();
                     break;
                 case 4:
-                    //todo listadoHistoricoDeAlquileres();
+                    listadoHistoricoDeAlquileres();
                     break;
                 case 5:
                     listadoAlquileresActualesSocio();
@@ -459,8 +464,6 @@ public class Ejercicio6 {
     }
 
     public void listadoAlquileresActualesSocio(){
-        HashMap<Multimedia,Socio> mR= videoclub.getMultimediaRentado();
-        Set<Multimedia> multimedia= videoclub.getMultimediaRentado().keySet();
         int nif;
         boolean validado=true;
         do {
@@ -478,32 +481,28 @@ public class Ejercicio6 {
 
         }while(!validado);
 
-        for (Multimedia m : multimedia) {
-            if (mR.get(m).getNif()==nif){
-                System.out.println(m.toString()+"\nAlquilado a:"+mR.get(m).getNombre());
+        for (Alquiler a : videoclub.getMultimediaRentado()) {
+            if (a.getSocio().getNif()==nif){
+                System.out.println(a.getMutimedia().toString()+"\nAlquilado a:"+a.getSocio().getNombre());
             }
         }
     }
 
     public void listadoSociosRecargosPendientes(){
-        HashMap<Multimedia,Socio> mR= videoclub.getMultimediaRentado();
-        Set<Multimedia> multimedia= mR.keySet();
-
-        for (Multimedia m: multimedia) {
-            if (m.getFechaDevolucion()!=null){
-                System.out.println(mR.get(m).toString()+"\nRecargo de:"+videoclub.calcularRecargo(m)+"\nMultimedia alquilado:"+m.getTitulo());
+        for (Alquiler a: videoclub.getMultimediaRentado()) {
+            if (a.getMutimedia().getFechaDevolucion()!=null){
+                if (videoclub.calcularRecargo(a.getMutimedia())!=0){
+                    System.out.println(a.getSocio().toString()+"\nRecargo de:"+videoclub.calcularRecargo(a.getMutimedia())+"\nMultimedia alquilado:"+a.getMutimedia().getTitulo());
+                }
             }
         }
 
     }
     public void listadoHistoricoDeAlquileres(){
-        videoclub.getHistorialMultimediaRentado().sort(new Alquilable.ComparatorFecha());
-        for (Multimedia m: videoclub.getMultimedia()) {
+        videoclub.getHistorialMultimediaRentado().sort(new Alquiler.ComparatorYear());
 
-            if (m instanceof Videojuego){
-                System.out.println(m.toString());
-
-            }
+        for (Alquiler a: videoclub.getHistorialMultimediaRentado()) {
+            System.out.println(a.toString());
         }
     }
 

@@ -36,9 +36,9 @@ public class Pelicula extends Alquilable {
     @Override
     public String toString() {
         return  super.toString() +
-                "\nActor principal:" + actorPrincipal +
-                "\nActriz principal:" + actrizPrincipal +
-                "\nDuracion:" + duracion;
+                "\nActor principal: " + actorPrincipal +
+                "\nActriz principal: " + actrizPrincipal +
+                "\nDuracion: " + duracion;
 
     }
 }

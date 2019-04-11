@@ -17,14 +17,14 @@ public class Videoclub {
     private Lib lib;
     private ArrayList<Multimedia> multimedia;
     private ArrayList<Socio> socios;
-    private HashMap<Multimedia,Socio> multimediaRentado;
-    private HashMap<Multimedia,Socio> historialMultimediaRentado;
+    private ArrayList<Alquiler> multimediaRentado;
+    private ArrayList<Alquiler> historialMultimediaRentado;
 
     public Videoclub() {
         multimedia = new ArrayList<>();
         socios = new ArrayList<>();
-        multimediaRentado= new HashMap<>();
-        historialMultimediaRentado= new HashMap<>();
+        multimediaRentado= new ArrayList<>();
+        historialMultimediaRentado= new ArrayList<>();
     }
 
     public ArrayList<Multimedia> getMultimedia() {
@@ -35,11 +35,11 @@ public class Videoclub {
         return socios;
     }
 
-    public HashMap<Multimedia, Socio> getMultimediaRentado() {
+    public ArrayList<Alquiler> getMultimediaRentado() {
         return multimediaRentado;
     }
 
-    public HashMap<Multimedia, Socio> getHistorialMultimediaRentado() {
+    public ArrayList<Alquiler> getHistorialMultimediaRentado() {
         return historialMultimediaRentado;
     }
 
@@ -76,10 +76,9 @@ public class Videoclub {
     }
 
     public boolean comprobarSocio(int nif){
-        Set<Multimedia> multimedia= multimediaRentado.keySet();
-        for (Multimedia m : multimedia) {
-            if (multimediaRentado.get(m).getNif()==nif){
-                if (lib.getDias(m.getFechaAlquiler())>PERIODO_MAX_DIAS){
+        for (Alquiler a: multimediaRentado) {
+            if (a.getSocio().getNif()==nif){
+                if (lib.getDias(a.getMutimedia().getFechaAlquiler())>PERIODO_MAX_DIAS){
                     return true;
                 }
             }
@@ -118,34 +117,34 @@ public class Videoclub {
                 fechaDevolucion.add(GregorianCalendar.DAY_OF_MONTH,PERIODO_MAX_DIAS);
                 m.setFechaDevolucion(format.format(fechaDevolucion.getTime()));
                 //todo verificar lo de los dias
-                multimediaRentado.put(mul,socio);
+                multimediaRentado.add(new Alquiler(mul,socio));
             }
         }
         return "Multimedia rentado, fecha de devolucion:"+format.format(fechaDevolucion.getTime());
     }
     public String devolver(int nif, Multimedia m){
-        Socio socio= new Socio();
-        Multimedia multi = null;
-
-        Set<Multimedia> multimedia= multimediaRentado.keySet();
-        for (Multimedia mul : multimedia) {
-            if (mul.getClass().equals(m.getClass())){
-                if (mul.equals(m)){
-                    if (multimediaRentado.get(mul).getNif()==nif){
-                        System.out.println(mul.toString()+"\nAlquilado a:"+multimediaRentado.get(mul).getNombre());
-                        System.out.println("Recargo:"+calcularRecargo(mul));
-                        mul.setPrecio(calcularRecargo(mul));
-                        System.out.println("Precio final:"+mul.getPrecio());
-
-                        socio= multimediaRentado.get(mul);
-                        multi= mul;
-                        historialMultimediaRentado.put(multi,socio);
+        Socio socio;
+        Multimedia multi;
+        Alquiler alElim = null;
+        for (Alquiler a: multimediaRentado) {
+            if (a.getMutimedia().getClass().equals(m.getClass())){
+                if (a.getMutimedia().equals(m)){
+                    multi=a.getMutimedia();
+                    if (a.getSocio().getNif()==nif){
+                        System.out.println(multi.toString()+"\nAlquilado a:"+a.getSocio().getNombre());
+                        multi.setPrecio(calcularRecargo(multi));
+                        System.out.println("Recargo:"+multi.getPrecio());
+                        System.out.println("Precio final:"+multi.getPrecio());
+                        socio= a.getSocio();
+                        historialMultimediaRentado.add(new Alquiler(multi,socio));
+                        alElim=a;
                     }
                 }
             }
+
         }
 
-        if(multimediaRentado.remove(multi,socio)){
+        if(multimediaRentado.remove(alElim)){
             return "Devuelto con exito. Hasta la proxima!";
 
         }else{

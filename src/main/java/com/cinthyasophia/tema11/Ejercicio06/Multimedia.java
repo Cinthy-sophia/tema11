@@ -75,10 +75,10 @@ public abstract class Multimedia implements Comparable<Multimedia>{
 
     @Override
     public String toString() {
-        return  "\nTitulo:" + titulo +
-                "\nAutor:" + autor +
-                "\nFormato:" + formato +
-                "\nAño:" + year;
+        return  "\nTitulo: " + titulo +
+                "\nAutor: " + autor +
+                "\nFormato: " + formato +
+                "\nAño: " + year;
     }
 
     @Override
@@ -87,10 +87,10 @@ public abstract class Multimedia implements Comparable<Multimedia>{
     }
 
     public static class ComparatorYear implements Comparator<Multimedia>{
-
         @Override
         public int compare(Multimedia multimedia, Multimedia t1) {
             return multimedia.getYear()-t1.getYear();
         }
     }
+
 }
