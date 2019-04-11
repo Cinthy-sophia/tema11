@@ -1,5 +1,6 @@
 package com.cinthyasophia.tema11.Ejercicio06;
 import com.cinthyasophia.tema11.Util.Lib;
+import com.github.javafaker.Faker;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -549,4 +550,5 @@ public class Ejercicio6 {
 
         return lib.validarOpcion(0,6);
     }
+
 }

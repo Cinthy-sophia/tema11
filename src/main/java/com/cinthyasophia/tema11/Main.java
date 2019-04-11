@@ -8,7 +8,6 @@ package com.cinthyasophia.tema11;
 import com.cinthyasophia.tema11.Ejercicio06.Ejercicio6;
 
 
-
 public class Main {
     public static void main (String[] args){
         //Ejercicio1 ejercicio1 = new Ejercicio1();

@@ -22,7 +22,7 @@ public class Videoclub {
 
     public Videoclub() {
         multimedia = new ArrayList<>();
-        socios = new ArrayList<>();
+        socios = datosAleatoriosSocio(20);
         multimediaRentado= new ArrayList<>();
         historialMultimediaRentado= new ArrayList<>();
     }
@@ -125,7 +125,7 @@ public class Videoclub {
     public String devolver(int nif, Multimedia m){
         Socio socio;
         Multimedia multi;
-        Alquiler alElim = null;
+        Alquiler alquiler = null;
         for (Alquiler a: multimediaRentado) {
             if (a.getMutimedia().getClass().equals(m.getClass())){
                 if (a.getMutimedia().equals(m)){
@@ -137,14 +137,14 @@ public class Videoclub {
                         System.out.println("Precio final:"+multi.getPrecio());
                         socio= a.getSocio();
                         historialMultimediaRentado.add(new Alquiler(multi,socio));
-                        alElim=a;
+                        alquiler=a;
                     }
                 }
             }
 
         }
 
-        if(multimediaRentado.remove(alElim)){
+        if(multimediaRentado.remove(alquiler)){
             return "Devuelto con exito. Hasta la proxima!";
 
         }else{
@@ -152,10 +152,30 @@ public class Videoclub {
         }
 
     }
-
-    public void datosAleatorio(){
+    public void datosAleatoriosMultimedia(){
         Faker faker = new Faker(new Locale("es"));
         faker.book().title();
         faker.book().author();
     }
+    public ArrayList<Socio> datosAleatoriosSocio(int cantidad){
+        Faker faker = new Faker(new Locale("es"));
+        SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
+        ArrayList<Socio> socios= new ArrayList<>();
+        String nombre;
+        GregorianCalendar fechaNac= new GregorianCalendar();
+        String fecha;
+        String poblacion;
+
+        for (int i = 0; i <cantidad ; i++) {
+            nombre=faker.name().name();
+            fechaNac.set(lib.aleatorio(1999,1940),lib.aleatorio(1,11),lib.aleatorio(1,29));
+            fecha= format.format(fechaNac.getTime());
+            poblacion= faker.pokemon().location();
+            socios.add(new Socio(nombre,fecha,poblacion));
+        }
+
+        return socios;
+    }
+
+
 }
