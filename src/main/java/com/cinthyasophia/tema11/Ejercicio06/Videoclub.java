@@ -74,6 +74,7 @@ public class Videoclub {
             return socios.add(s);
         }
     }
+
     public boolean comprobarSocio(int nif){
         Set<Multimedia> multimedia= multimediaRentado.keySet();
         for (Multimedia m : multimedia) {

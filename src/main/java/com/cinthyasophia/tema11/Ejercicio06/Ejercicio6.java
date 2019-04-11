@@ -174,6 +174,7 @@ public class Ejercicio6 {
                 return;
             }
         }
+
         formato=menuFormato().name();
 
         do {
