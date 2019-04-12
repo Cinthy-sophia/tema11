@@ -52,10 +52,10 @@ public class Socio {
     @Override
     public String toString() {
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
-        return  "\nNIF:" + nif +
-                "\nNombre:" + nombre +
-                "\nFecha de nacimiento:" + format.format(fechaNac.getTime()) +
-                "\nPoblacion:" + poblacion +
-                "\nEdad:" + edad;
+        return  "\nNIF: " + nif +
+                "\nNombre: " + nombre +
+                "\nFecha de nacimiento: " + format.format(fechaNac.getTime()) +
+                "\nPoblacion: " + poblacion +
+                "\nEdad: " + edad;
     }
 }

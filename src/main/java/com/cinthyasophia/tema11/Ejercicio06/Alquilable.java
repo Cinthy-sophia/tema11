@@ -3,7 +3,7 @@ package com.cinthyasophia.tema11.Ejercicio06;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
-public abstract class Alquilable extends Multimedia {
+public abstract class Alquilable extends Multimedia implements Alquilar {
     protected int precio;
     private GregorianCalendar fechaAlquiler;
     private GregorianCalendar fechaDevolucion;
@@ -59,21 +59,26 @@ public abstract class Alquilable extends Multimedia {
         if (isAlquilado()){
             alquilado= "ALQUILADO";
             fechaAl=format.format(fechaAlquiler.getTime());
-            fechaDev=format.format(fechaDevolucion.getTime());
+            if (fechaDevolucion==null){
+                fechaDev="";
+            }else{
+                fechaDev=format.format(fechaDevolucion.getTime());
+            }
+            return  super.toString()+
+                    "\n"+ alquilado +
+                    "\nPrecio: " + precio +
+                    "\nFecha de alquiler: " + fechaAl+
+                    "\nFecha de devolucion: " + fechaDev;
+
 
         }else{
             alquilado= "DISPONIBLE";
-            fechaAl= "";
-            fechaDev= "";
+            return  super.toString()+
+                    "\n"+ alquilado +
+                    "\nPrecio: " + precio ;
 
         }
 
-
-        return  super.toString()+
-                "\n"+ alquilado +
-                "\nPrecio: " + precio +
-                "\nFecha de alquiler: " + fechaAl+
-                "\nFecha de devolucion: " + fechaDev;
     }
 
 }

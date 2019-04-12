@@ -23,7 +23,7 @@ public class Videoclub {
     public Videoclub() {
         multimedia = datosAleatoriosMultimedia(10,15);
         socios = datosAleatoriosSocio(20);
-        multimediaRentado= new ArrayList<>();
+        multimediaRentado= datosAleatoriosAlquiler(5);
         historialMultimediaRentado= new ArrayList<>();
     }
 
@@ -43,6 +43,11 @@ public class Videoclub {
         return historialMultimediaRentado;
     }
 
+    /**
+     * Recibe el multimedia a añadir, le asigna un precio y lo añade.
+     * @param m
+     * @return String
+     */
     public String nuevoMultimedia(Multimedia m){
         int precioTotal= PRECIO_BASE;
         if (m instanceof Pelicula){
@@ -67,6 +72,12 @@ public class Videoclub {
         }
 
     }
+
+    /**
+     * Verifica que el socio sea mayor de edad, y si es asi lo añade, sino, devuelve false.
+     * @param s
+     * @return boolean
+     */
     public boolean nuevoSocio(Socio s){
         if (s.getEdad()<MAYOR_EDAD){
             return false;
@@ -75,19 +86,14 @@ public class Videoclub {
         }
     }
 
+    /**
+     * Recibe el nif de un socio y comprueba que es correcto, y si tiene algun recargo
+     * @param nif
+     * @return boolean
+     */
     public boolean comprobarSocio(int nif){
         for (Alquiler a: multimediaRentado) {
-            if (a.getSocio().getNif()==nif){
-                if (lib.obtenerDias(a.getMutimedia().getFechaAlquiler())>PERIODO_MAX_DIAS){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    public boolean comprobarMultimedia(Multimedia m){
-        for (Multimedia mul: multimedia) {
-            if (mul.equals(m)&& !m.isAlquilado()){
+            if (a.getSocio().getNif()==nif && lib.obtenerDias(a.getMutimedia().getFechaAlquiler())>PERIODO_MAX_DIAS){//Si el nif es correcto, y tiene un recargo pendienre por pagar devuelve true.
                 return true;
 
             }
@@ -95,6 +101,26 @@ public class Videoclub {
         return false;
     }
 
+    /**
+     * Recibe un multimedia y comprueba si los datos son correctos, y si esta alquilado.
+     * @param m
+     * @return boolean
+     */
+    public boolean comprobarMultimedia(Multimedia m){
+        for (Multimedia mul: multimedia) {
+            if (mul.equals(m) && !m.isAlquilado()){//Si los datos son correctos y no esta alquilado devuelve true.
+                return true;
+
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Recibe un multimedia y calcula el recargo a aplicar segun el periodo de dias que hayan pasado desde que el multimedia fue alquilado.
+     * @param m
+     * @return int
+     */
     public int calcularRecargo(Multimedia m){
         int cantidadRecargo=0;
         if (lib.obtenerDias(m.getFechaAlquiler())>PERIODO_MAX_DIAS){
@@ -103,7 +129,14 @@ public class Videoclub {
         return cantidadRecargo;
     }
 
+    /**
+     * Recibe el nif del socio, y el multimedia con el titulo y autor. Devuelve un String indicando si el multimedia ha podido ser alquilado.
+     * @param nif
+     * @param m
+     * @return String
+     */
     public String alquilar(int nif, Multimedia m){
+        multimediaRentado= new ArrayList<>();
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
         GregorianCalendar fechaDevolucion = new GregorianCalendar();
         GregorianCalendar fechaAl = new GregorianCalendar();
@@ -117,13 +150,19 @@ public class Videoclub {
         for (Multimedia mul: multimedia) {
             if (mul.equals(m)){
                 mul.setFechaAlquiler(format.format(fechaAl.getTime()));
-                fechaDevolucion= fechaAl;
                 fechaDevolucion.add(GregorianCalendar.DAY_OF_MONTH,PERIODO_MAX_DIAS);
                 multimediaRentado.add(new Alquiler(mul,socio));
             }
         }
         return "Multimedia rentado por: "+socio.getNombre()+", fecha maxima de devolucion :"+format.format(fechaDevolucion.getTime());
     }
+
+    /**
+     * Devuelve un String indicando si el multimedia pudo ser alquilado o no.
+     * @param nif
+     * @param m
+     * @return String
+     */
     public String devolver(int nif, Multimedia m){
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
         Socio socio;
@@ -133,28 +172,21 @@ public class Videoclub {
 
         for (Alquiler a: multimediaRentado) {
 
-                if (a.getMutimedia().equals(m)&& a.getSocio().getNif()==nif){
-                    multi=a.getMutimedia();
-
-                    System.out.println("\nTitulo:"+multi.getTitulo()+"\nAlquilado a:"+a.getSocio().getNombre());
-
+            if(a.getSocio().getNif()==nif) {//Comprueba que el nif sea correcto, y que el multimedia tenga los datos adecuados.
+                multi=a.getMutimedia();
+                if (multi.equals(m)){
+                    System.out.println("\nTitulo: "+multi.getTitulo()+"\nAlquilado a: "+a.getSocio().getNombre());
                     multi.setPrecio(multi.getPrecio()+calcularRecargo(multi));
-
-                    System.out.println("Recargo:"+calcularRecargo(multi));
-
-                    System.out.println("Precio final:"+multi.getPrecio());
-
+                    System.out.println("Recargo: "+calcularRecargo(multi));
+                    System.out.println("Precio final: "+multi.getPrecio());
                     multi.setFechaDevolucion(format.format(fechaDevolucion.getTime()));
-
-                    System.out.println("Fecha de devolucion:"+multi.getPrecio());
-
+                    System.out.println("Fecha de devolucion: "+format.format(multi.getFechaDevolucion().getTime()));
                     socio= a.getSocio();
-
                     historialMultimediaRentado.add(new Alquiler(multi,socio));
-
                     alquiler=a;
-
                 }
+
+            }
         }
 
         if(multimediaRentado.remove(alquiler)){
@@ -165,6 +197,13 @@ public class Videoclub {
         }
 
     }
+
+    /**
+     * Datos de los multimedias aleatorios. Recibe dos enteros indicando la cantidad deseada por cada tipo de multimedia.
+     * @param cantidadP
+     * @param cantidadV
+     * @return ArrayList<Multimedia>
+     */
     public ArrayList<Multimedia> datosAleatoriosMultimedia(int cantidadP, int cantidadV){
         Faker faker = new Faker(new Locale("es"));
         ArrayList<Multimedia> multimedia= new ArrayList<>();
@@ -218,6 +257,11 @@ public class Videoclub {
         return multimedia;
     }
 
+    /**
+     * Datos de los socios aleatorios. Recibe un int que indica la cantidad de socios que se van a generar.
+     * @param cantidad
+     * @return ArrayList<Socio>
+     */
     public ArrayList<Socio> datosAleatoriosSocio(int cantidad){
         Faker faker = new Faker(new Locale("es"));
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
@@ -237,6 +281,22 @@ public class Videoclub {
         }
 
         return socios;
+    }
+
+    /**
+     * Datos del alquiler aleatorios. Recibe un int indicando la cantidad de Alquileres que se van a generar.
+     * @param cantidad
+     * @return ArrayList<Alquiler>
+     */
+    public ArrayList<Alquiler> datosAleatoriosAlquiler(int cantidad){
+        ArrayList<Alquiler> alquileres =  new ArrayList<>();
+        Alquiler al;
+        for (int i = 0; i < cantidad; i++) {
+            al=new Alquiler(multimedia.get(lib.aleatorio(0,multimedia.size()-1)),socios.get(lib.aleatorio(0,socios.size()-1)));
+            alquilar(al.getSocio().getNif(),al.getMutimedia());
+            alquileres.add(al);
+        }
+        return alquileres;
     }
 
 

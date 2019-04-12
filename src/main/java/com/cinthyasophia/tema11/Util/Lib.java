@@ -24,7 +24,7 @@ public class Lib {
     /**
      * Ordena el vector de enteros que reciba y lo devuelve ordenado
      * @param vector
-     * @return vector
+     * @return int[]
      */
     public int[] ordernarCombinacion(int[] vector) {
         boolean hayCambios = true;
@@ -97,7 +97,7 @@ public class Lib {
      * Le resta el ultimo numero al vector que recibe y lo mueve a otro array con un tamaño menor
      * @param vectorP
      * @param num
-     * @return
+     * @return int[]
      * Devuelve el array con el numero menos
      */
     public int[] numeroMenos(int[] vectorP, int num){
@@ -120,7 +120,7 @@ public class Lib {
     /**
      * Cambia la fecha de string a GregorianCalendar
      * @param f
-     * @return
+     * @return GregorianCalendar
      * Devuelve la fecha en GregorianCalendar
      */
     public GregorianCalendar getFecha(String f){
@@ -140,7 +140,7 @@ public class Lib {
      *Valida la opcion del menu y devuelve la opcion que el usuario haya elegido.
      * @param opcionMin
      * @param opcionMax
-     * @return
+     * @return int
      */
     public int validarOpcion(int opcionMin, int opcionMax){
         int opcion=0;
@@ -167,7 +167,7 @@ public class Lib {
     /**
      *Recibe la fecha y regresa la edad.
      * @param fechaNac
-     * @return edad
+     * @return int
      */
     public int getEdad(GregorianCalendar fechaNac){
         int year= fechaNac.get(Calendar.YEAR);
@@ -191,7 +191,7 @@ public class Lib {
     /**
      * Obtiene los dias que hay entre la fecha actual del sistema y la que recibe.
      * @param fecha
-     * @return dias
+     * @return int
      */
     public int obtenerDias(GregorianCalendar fecha){
         int year= fecha.get(Calendar.YEAR);

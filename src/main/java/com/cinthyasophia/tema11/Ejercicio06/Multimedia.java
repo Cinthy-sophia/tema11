@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-public abstract class Multimedia {
+public class Multimedia  implements Alquilar{
     protected Lib lib= new Lib();
     protected String titulo;
     protected String autor;
@@ -56,18 +56,7 @@ public abstract class Multimedia {
         this.year = year;
     }
 
-    public abstract void setFechaAlquiler(String fecha);
-    public abstract GregorianCalendar getFechaAlquiler();
-    public abstract void setFechaDevolucion(String fecha);
-    public abstract GregorianCalendar getFechaDevolucion();
-    public abstract boolean isAlquilado();
-    public abstract void setPrecio(int precio);
-    public abstract int getPrecio();
-
-
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
         Multimedia that = (Multimedia) o;
         return Objects.equals(titulo, that.titulo) &&
                 Objects.equals(autor, that.autor);
@@ -81,13 +70,46 @@ public abstract class Multimedia {
                 "\nAño: " + year;
     }
 
-    public static class ComparatorYear implements Comparator<Multimedia>{
+    @Override
+    public void setFechaAlquiler(String fecha) {
+    }
+
+    @Override
+    public GregorianCalendar getFechaAlquiler() {
+        return null;
+    }
+
+    @Override
+    public void setFechaDevolucion(String fecha) {
+    }
+
+    @Override
+    public GregorianCalendar getFechaDevolucion() {
+        return null;
+    }
+
+    @Override
+    public boolean isAlquilado() {
+        return false;
+    }
+
+    @Override
+    public void setPrecio(int precio) {
+
+    }
+
+    @Override
+    public int getPrecio() {
+        return 0;
+    }
+
+    public static class ComparatorYear implements Comparator<Multimedia>{//Compara los multimedias por año.
         @Override
         public int compare(Multimedia multimedia, Multimedia t1) {
             return multimedia.getYear()-t1.getYear();
         }
     }
-    public static class ComparatorTitulo implements Comparator<Multimedia>{
+    public static class ComparatorTitulo implements Comparator<Multimedia>{//Compara los multimedia por titulo.
         @Override
         public int compare(Multimedia multimedia, Multimedia t1) {
             return multimedia.getTitulo().compareTo(t1.getTitulo());
