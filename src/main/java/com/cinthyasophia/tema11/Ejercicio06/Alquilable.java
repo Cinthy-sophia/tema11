@@ -21,11 +21,10 @@ public abstract class Alquilable extends Multimedia {
 
     public void setFechaAlquiler(String fecha) {
         this.fechaAlquiler= lib.getFecha(fecha);
-        alquilado = true;
+        setAlquilado(true);
     }
     public void setFechaDevolucion(String fecha) {
         this.fechaDevolucion= lib.getFecha(fecha);
-        alquilado = false;
     }
 
     public GregorianCalendar getFechaDevolucion(){
@@ -37,6 +36,10 @@ public abstract class Alquilable extends Multimedia {
 
     public void setPrecio(int precio) {
         this.precio= precio;
+    }
+
+    public void setAlquilado(boolean alquilado) {
+        this.alquilado = alquilado;
     }
 
     public int getPrecio() {
@@ -57,10 +60,11 @@ public abstract class Alquilable extends Multimedia {
             alquilado= "ALQUILADO";
             fechaAl=format.format(fechaAlquiler.getTime());
             fechaDev=format.format(fechaDevolucion.getTime());
+
         }else{
             alquilado= "DISPONIBLE";
-            fechaAl= null;
-            fechaDev= null;
+            fechaAl= "";
+            fechaDev= "";
 
         }
 

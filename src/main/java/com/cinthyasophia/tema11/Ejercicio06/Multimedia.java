@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-public abstract class Multimedia implements Comparable<Multimedia>{
+public abstract class Multimedia {
     protected Lib lib= new Lib();
     protected String titulo;
     protected String autor;
@@ -81,15 +81,16 @@ public abstract class Multimedia implements Comparable<Multimedia>{
                 "\nAño: " + year;
     }
 
-    @Override
-    public int compareTo(Multimedia multimedia) {
-        return this.getTitulo().compareTo(multimedia.getTitulo());
-    }
-
     public static class ComparatorYear implements Comparator<Multimedia>{
         @Override
         public int compare(Multimedia multimedia, Multimedia t1) {
             return multimedia.getYear()-t1.getYear();
+        }
+    }
+    public static class ComparatorTitulo implements Comparator<Multimedia>{
+        @Override
+        public int compare(Multimedia multimedia, Multimedia t1) {
+            return multimedia.getTitulo().compareTo(t1.getTitulo());
         }
     }
 

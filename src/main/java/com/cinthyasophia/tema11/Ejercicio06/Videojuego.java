@@ -23,6 +23,6 @@ public class Videojuego extends Alquilable {
     @Override
     public String toString() {
         return  super.toString()+
-                "Plataforma: " + plataforma;
+                "\nPlataforma: " + plataforma;
     }
 }

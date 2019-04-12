@@ -14,14 +14,14 @@ public class Videoclub {
     private final int MAYOR_EDAD=18;
     private final int REBAJA_PELICULA= 2012;
     private final int REBAJA_VIDEOJUEGO= 2010;
-    private Lib lib;
+    private Lib lib= new Lib();
     private ArrayList<Multimedia> multimedia;
     private ArrayList<Socio> socios;
     private ArrayList<Alquiler> multimediaRentado;
     private ArrayList<Alquiler> historialMultimediaRentado;
 
     public Videoclub() {
-        multimedia = new ArrayList<>();
+        multimedia = datosAleatoriosMultimedia(10,15);
         socios = datosAleatoriosSocio(20);
         multimediaRentado= new ArrayList<>();
         historialMultimediaRentado= new ArrayList<>();
@@ -78,7 +78,7 @@ public class Videoclub {
     public boolean comprobarSocio(int nif){
         for (Alquiler a: multimediaRentado) {
             if (a.getSocio().getNif()==nif){
-                if (lib.getDias(a.getMutimedia().getFechaAlquiler())>PERIODO_MAX_DIAS){
+                if (lib.obtenerDias(a.getMutimedia().getFechaAlquiler())>PERIODO_MAX_DIAS){
                     return true;
                 }
             }
@@ -87,10 +87,9 @@ public class Videoclub {
     }
     public boolean comprobarMultimedia(Multimedia m){
         for (Multimedia mul: multimedia) {
-            if (mul.equals(m)){
-                if (m.isAlquilado()){
-                    return true;
-                }
+            if (mul.equals(m)&& !m.isAlquilado()){
+                return true;
+
             }
         }
         return false;
@@ -98,50 +97,64 @@ public class Videoclub {
 
     public int calcularRecargo(Multimedia m){
         int cantidadRecargo=0;
-        if (m.getFechaAlquiler()!=null && lib.getDias(m.getFechaAlquiler())>PERIODO_MAX_DIAS){
-            cantidadRecargo = (lib.getDias(m.getFechaAlquiler()) - PERIODO_MAX_DIAS) * PRECIO_RECARGO;
+        if (lib.obtenerDias(m.getFechaAlquiler())>PERIODO_MAX_DIAS){
+            cantidadRecargo = (lib.obtenerDias(m.getFechaAlquiler()) - PERIODO_MAX_DIAS) * PRECIO_RECARGO;
         }
-
-
         return cantidadRecargo;
     }
 
-    public String alquilar(Socio socio, Multimedia m, String fechaAl){
+    public String alquilar(int nif, Multimedia m){
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
         GregorianCalendar fechaDevolucion = new GregorianCalendar();
+        GregorianCalendar fechaAl = new GregorianCalendar();
+        Socio socio= new Socio();
 
+        for (Socio s: socios) {
+            if (nif == s.getNif()){
+                socio= s;
+            }
+        }
         for (Multimedia mul: multimedia) {
             if (mul.equals(m)){
-                mul.setFechaAlquiler(fechaAl);
-                fechaDevolucion= mul.getFechaAlquiler();
+                mul.setFechaAlquiler(format.format(fechaAl.getTime()));
+                fechaDevolucion= fechaAl;
                 fechaDevolucion.add(GregorianCalendar.DAY_OF_MONTH,PERIODO_MAX_DIAS);
-                m.setFechaDevolucion(format.format(fechaDevolucion.getTime()));
-                //todo verificar lo de los dias
                 multimediaRentado.add(new Alquiler(mul,socio));
             }
         }
-        return "Multimedia rentado, fecha de devolucion:"+format.format(fechaDevolucion.getTime());
+        return "Multimedia rentado por: "+socio.getNombre()+", fecha maxima de devolucion :"+format.format(fechaDevolucion.getTime());
     }
     public String devolver(int nif, Multimedia m){
+        SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
         Socio socio;
         Multimedia multi;
         Alquiler alquiler = null;
-        for (Alquiler a: multimediaRentado) {
-            if (a.getMutimedia().getClass().equals(m.getClass())){
-                if (a.getMutimedia().equals(m)){
-                    multi=a.getMutimedia();
-                    if (a.getSocio().getNif()==nif){
-                        System.out.println(multi.toString()+"\nAlquilado a:"+a.getSocio().getNombre());
-                        multi.setPrecio(calcularRecargo(multi));
-                        System.out.println("Recargo:"+multi.getPrecio());
-                        System.out.println("Precio final:"+multi.getPrecio());
-                        socio= a.getSocio();
-                        historialMultimediaRentado.add(new Alquiler(multi,socio));
-                        alquiler=a;
-                    }
-                }
-            }
+        GregorianCalendar fechaDevolucion = new GregorianCalendar();
 
+        for (Alquiler a: multimediaRentado) {
+
+                if (a.getMutimedia().equals(m)&& a.getSocio().getNif()==nif){
+                    multi=a.getMutimedia();
+
+                    System.out.println("\nTitulo:"+multi.getTitulo()+"\nAlquilado a:"+a.getSocio().getNombre());
+
+                    multi.setPrecio(multi.getPrecio()+calcularRecargo(multi));
+
+                    System.out.println("Recargo:"+calcularRecargo(multi));
+
+                    System.out.println("Precio final:"+multi.getPrecio());
+
+                    multi.setFechaDevolucion(format.format(fechaDevolucion.getTime()));
+
+                    System.out.println("Fecha de devolucion:"+multi.getPrecio());
+
+                    socio= a.getSocio();
+
+                    historialMultimediaRentado.add(new Alquiler(multi,socio));
+
+                    alquiler=a;
+
+                }
         }
 
         if(multimediaRentado.remove(alquiler)){
@@ -152,25 +165,74 @@ public class Videoclub {
         }
 
     }
-    public void datosAleatoriosMultimedia(){
+    public ArrayList<Multimedia> datosAleatoriosMultimedia(int cantidadP, int cantidadV){
         Faker faker = new Faker(new Locale("es"));
-        faker.book().title();
-        faker.book().author();
+        ArrayList<Multimedia> multimedia= new ArrayList<>();
+        String[] duraciones= {"1h","2h 30m","1h 15m","2h","2h 27m","1h 03m","1h 45m"};
+        String titulo;
+        String autor;
+        String formato;
+        int year;
+        int precioTotal;
+        String duracion;
+        String actorP;
+        String actrizP;
+        String plataforma;
+
+        for (int i = 0; i < cantidadP; i++) {
+            titulo= faker.book().title();
+            autor= faker.book().author();
+            formato= Formato.values()[lib.aleatorio(0,Formato.values().length-1)].name();
+            year= lib.aleatorio(1950,2019);
+            duracion= duraciones[lib.aleatorio(0,duraciones.length-1)];
+            actorP= faker.gameOfThrones().character();
+            actrizP= faker.lordOfTheRings().character();
+            multimedia.add(new Pelicula(titulo,autor,formato,year,duracion,actorP,actrizP));
+        }
+
+        for (int i = 0; i <cantidadV ; i++) {
+            titulo= faker.esports().game();
+            autor= faker.funnyName().name();
+            formato= Formato.values()[lib.aleatorio(0,Formato.values().length-1)].name();
+            year=lib.aleatorio(1970,2019);
+            plataforma=Videojuego.Plataformas.values()[lib.aleatorio(0,Videojuego.Plataformas.values().length-1)].name();
+            multimedia.add(new Videojuego(titulo,autor,formato,year,plataforma));
+        }
+
+        for (Multimedia m : multimedia) {
+            precioTotal= PRECIO_BASE;
+            if (m instanceof Pelicula){
+                if (m.year < REBAJA_PELICULA){
+                    precioTotal-=1;
+                }
+
+            } else if(m instanceof Videojuego){
+                if (m.year < REBAJA_VIDEOJUEGO){
+                    precioTotal-=1;
+                }
+            }
+
+            m.setPrecio(precioTotal);
+        }
+
+        return multimedia;
     }
+
     public ArrayList<Socio> datosAleatoriosSocio(int cantidad){
         Faker faker = new Faker(new Locale("es"));
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
         ArrayList<Socio> socios= new ArrayList<>();
         String nombre;
-        GregorianCalendar fechaNac= new GregorianCalendar();
+        GregorianCalendar fechaNac;
         String fecha;
         String poblacion;
 
         for (int i = 0; i <cantidad ; i++) {
-            nombre=faker.name().name();
-            fechaNac.set(lib.aleatorio(1999,1940),lib.aleatorio(1,11),lib.aleatorio(1,29));
+            nombre= faker.name().name();
+            fechaNac = new GregorianCalendar(lib.aleatorio(1940,1999),lib.aleatorio(1,11),lib.aleatorio(1,28));
             fecha= format.format(fechaNac.getTime());
-            poblacion= faker.pokemon().location();
+            poblacion= faker.gameOfThrones().city();
+
             socios.add(new Socio(nombre,fecha,poblacion));
         }
 

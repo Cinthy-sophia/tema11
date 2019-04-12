@@ -124,7 +124,6 @@ public class Lib {
      * Devuelve la fecha en GregorianCalendar
      */
     public GregorianCalendar getFecha(String f){
-
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
         GregorianCalendar fechaN= new GregorianCalendar();
         Date d= new Date();
@@ -138,11 +137,10 @@ public class Lib {
     }
 
     /**
-     *Valida la opcion del menu.
+     *Valida la opcion del menu y devuelve la opcion que el usuario haya elegido.
      * @param opcionMin
      * @param opcionMax
      * @return
-     * Devuelve la opcion que el usuario haya elegido.
      */
     public int validarOpcion(int opcionMin, int opcionMax){
         int opcion=0;
@@ -189,7 +187,13 @@ public class Lib {
         }
         return edad;
     }
-    public int getDias(GregorianCalendar fecha){
+
+    /**
+     * Obtiene los dias que hay entre la fecha actual del sistema y la que recibe.
+     * @param fecha
+     * @return dias
+     */
+    public int obtenerDias(GregorianCalendar fecha){
         int year= fecha.get(Calendar.YEAR);
         int month= fecha.get(Calendar.MONTH);
         int day= fecha.get(Calendar.DAY_OF_MONTH);
