@@ -241,9 +241,6 @@ public class Ejercicio6 {
         boolean validado;
         String titulo;
         String autor;
-        SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
-        GregorianCalendar ahora = new GregorianCalendar();
-        String fecha;
 
         System.out.println("**ALQUILAR MULTIMEDIA**");
 
@@ -401,6 +398,10 @@ public class Ejercicio6 {
 
     }
 
+    /**
+     * Muestra los formatos disponibles y devuelve la opcion elegida por el usuario.
+     * @return opFormato
+     */
     public Formato menuFormato(){
         int opcion;
         Formato opFormato;
@@ -417,6 +418,11 @@ public class Ejercicio6 {
 
         return opFormato;
     }
+
+    /**
+     * Muestra las plataformas disponibles y devuelve la opcion elegida por el usuario.
+     * @return opPlataforma
+     */
     public Videojuego.Plataformas menuPlataformas(){
         int opcion;
         Videojuego.Plataformas opPlataforma;
@@ -433,7 +439,7 @@ public class Ejercicio6 {
 
         return opPlataforma;
     }
-
+    //Switch del menu de los listados
     public void listados(){
         int opcion;
         do {
@@ -467,12 +473,20 @@ public class Ejercicio6 {
             }
         }while(opcion!=0);
     }
+
+    /**
+     * Muestra todos los multimedias, sin ningun orden en especial.
+     */
     public void listadoTodosLosMultimedias(){
         for (Multimedia m: videoclub.getMultimedia()) {
             System.out.println(m.toString());
         }
 
     }
+
+    /**
+     * Muestra el listado de los videojuegos ordenados por año.
+     */
     public void listadoVideojuegos(){
         videoclub.getMultimedia().sort(new Multimedia.ComparatorYear());
 
@@ -484,6 +498,10 @@ public class Ejercicio6 {
         }
 
     }
+
+    /**
+     * Muestra el listado de las peliculas ordenadas por titulo.
+     */
 
     public void listadoPeliculasPorTitulo(){
 
@@ -497,6 +515,9 @@ public class Ejercicio6 {
         }
     }
 
+    /**
+     * Muestra los alquileres actuales de un socio.
+     */
     public void listadoAlquileresActualesSocio(){
         int nif;
         boolean validado;
@@ -524,19 +545,21 @@ public class Ejercicio6 {
         }
     }
 
+    /**
+     * Muestra a los socios que tienen un recargo por pagar.
+     */
     public void listadoSociosRecargosPendientes(){
         for (Alquiler a: videoclub.getMultimediaRentado()) {
-            if (a.getMutimedia().getFechaDevolucion()!=null){
-                if (videoclub.calcularRecargo(a.getMutimedia())!=0){
-                    System.out.println(a.getSocio().toString()+"\nRecargo de:"+videoclub.calcularRecargo(a.getMutimedia())+"\nMultimedia alquilado:"+a.getMutimedia().getTitulo());
-                }
+            if (a.getMutimedia().getFechaDevolucion()!=null && videoclub.calcularRecargo(a.getMutimedia())!=0){//Si la fecha no es null y el recargo no es 0, muestra los socios y sus respectivos multimedias
+                System.out.println(a.getSocio().toString()+"\nRecargo de:"+videoclub.calcularRecargo(a.getMutimedia())+"\nMultimedia alquilado:"+a.getMutimedia().getTitulo());
+
             }
         }
 
     }
 
     /**
-     * Muestra el historial de los
+     * Muestra el historial de los alquileres realizados por el socio al que se indique.
      */
     public void listadoHistoricoDeAlquileres(){
         int nif=0;
