@@ -56,6 +56,7 @@ public class Multimedia  implements Alquilar{
         this.year = year;
     }
 
+
     public boolean equals(Object o) {
         Multimedia that = (Multimedia) o;
         return Objects.equals(titulo, that.titulo) &&

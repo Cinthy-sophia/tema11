@@ -259,8 +259,8 @@ public class Ejercicio6 {
         System.out.println("**ALQUILAR MULTIMEDIA**");
 
         do {
-            System.out.println("Indique el NIF de un socio:");
             do {
+                System.out.println("Indique el NIF de un socio:");
                 try {
                     nif = lector.nextInt();
                     validado = true;
@@ -346,8 +346,8 @@ public class Ejercicio6 {
 
         System.out.println("**DEVOLVER MULTIMEDIA**");
         do {
-            System.out.println("Indique el NIF de un socio:");
             do {
+                System.out.println("Indique el NIF de un socio:");
                 try {
                     nif = lector.nextInt();
                     validado = true;
@@ -518,12 +518,23 @@ public class Ejercicio6 {
      * Muestra los alquileres actuales de un socio.
      */
     public void listadoAlquileresActualesSocio(){
-        int nif;
+        int nif=0;
         boolean validado;
         do {
-            System.out.println("Indique el NIF de un socio:");
-            nif= lector.nextInt();
-            lector.nextLine();
+            do{
+                System.out.println("Indique el NIF de un socio:");
+                try {
+                    nif = lector.nextInt();
+                    validado = true;
+
+                } catch (InputMismatchException ime) {
+                    System.out.println("Debes introducir un numero y no una letra.");
+                    validado = false;
+
+                } finally {
+                    lector.nextLine();
+                }
+            }while(!validado);
 
             validado=false;
             for (Socio s: videoclub.getSocios()) {
@@ -531,6 +542,7 @@ public class Ejercicio6 {
                     validado = true;
                 }
             }
+
             if (!validado){
                 System.out.println("Indique el NIF de un socio existente.");
             }
@@ -566,8 +578,8 @@ public class Ejercicio6 {
         videoclub.getHistorialMultimediaRentado().sort(new Alquiler.ComparatorYear());
 
         do {
-            System.out.println("Indique el NIF de un socio:");
             do {
+                System.out.println("Indique el NIF de un socio:");
                 try {
                     nif = lector.nextInt();
                     validado = true;

@@ -22,8 +22,8 @@ public class Videoclub {
 
     public Videoclub() {
         multimedia = datosAleatoriosMultimedia(10,15);
-        socios = datosAleatoriosSocio(20);
-        multimediaRentado= datosAleatoriosAlquiler(5);
+        socios = datosAleatoriosSocio(15);
+        multimediaRentado= datosAleatoriosAlquiler(7);
         historialMultimediaRentado= new ArrayList<>();
     }
 
