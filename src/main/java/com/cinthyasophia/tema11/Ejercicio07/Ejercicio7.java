@@ -7,9 +7,9 @@ public class Ejercicio7 {
 
     public int menuPrincipal(){
         int opcion;
-        System.out.println("****************");
-        System.out.println("*MENU PRINCIPAL*");
-        System.out.println("****************");
+        System.out.println("*********");
+        System.out.println("*ESTADIO*");
+        System.out.println("*********");
         System.out.println("1.Nuevo partido.");
         System.out.println("2.Gestion de entradas.");
         System.out.println("0.Salir.");
@@ -20,9 +20,9 @@ public class Ejercicio7 {
     }
     public int menuPartidos(){
         int opcion;
-        System.out.println("***************");
-        System.out.println("*MENU PARTIDOS*");
-        System.out.println("***************");
+        System.out.println("**********");
+        System.out.println("*PARTIDOS*");
+        System.out.println("**********");
         System.out.println("1.Venta de entradas.");// todo muestra la matriz con los asientos disponibles y ocupados, y pide el numero deseado
         System.out.println("2.Devolver una entrada.");
         System.out.println("3.Listado de los asientos ocupados.");
@@ -31,7 +31,7 @@ public class Ejercicio7 {
         System.out.println("0.Volver al menu principal.");
         System.out.println("****************");
 
-        opcion= lib.validarOpcion(0,2);
+        opcion= lib.validarOpcion(0,5);
         return opcion;
     }
 }
