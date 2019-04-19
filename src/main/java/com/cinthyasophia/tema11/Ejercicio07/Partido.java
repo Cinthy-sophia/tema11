@@ -5,7 +5,7 @@ import com.cinthyasophia.tema11.Util.Lib;
 import java.util.GregorianCalendar;
 
 public class Partido {
-    public enum Tipo {BAJA_AFLUENCIA, ALTA_AFLUENCIA, MEDIA_AFLUENCIA}
+    public enum TipoPartido {BAJA_AFLUENCIA, ALTA_AFLUENCIA, MEDIA_AFLUENCIA}
 
     private Lib lib= new Lib();
     private static int id;

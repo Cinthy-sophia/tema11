@@ -2,18 +2,24 @@ package com.cinthyasophia.tema11.Ejercicio07;
 
 public class Asiento {
     private int numero;
-    private char fila;
+    private String zona;
+    private int fila;
 
-    public Asiento(int numero, char fila){
+    public Asiento(int numero, String zona, int fila){
         this.numero= numero;
         this.fila= fila;
+        this.zona= zona;
     }
 
     public int getNumero() {
         return numero;
     }
 
-    public char getFila() {
+    public int getFila() {
         return fila;
+    }
+
+    public String getZona() {
+        return zona;
     }
 }
