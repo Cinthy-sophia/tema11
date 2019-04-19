@@ -3,7 +3,7 @@ package com.cinthyasophia.tema11.Ejercicio07;
 import com.cinthyasophia.tema11.Util.Lib;
 
 public class Ejercicio7 {
-    Lib lib = new Lib();
+    private Lib lib = new Lib();
 
     public Ejercicio7(){
         int opcion;
@@ -54,12 +54,15 @@ public class Ejercicio7 {
             }
         }while(opcion!=0);
      }
+     public void listadoAsientosOcupados(){
+
+     }
 
     public int menuGestionEntradas(){
         int opcion;
-        System.out.println("**********");
+        System.out.println("*********************");
         System.out.println("*GESTION DE ENTRADAS*");
-        System.out.println("**********");
+        System.out.println("*********************");
         System.out.println("1.Venta de entradas.");// todo muestra la matriz con los asientos disponibles y ocupados, y pide el numero deseado
         System.out.println("2.Devolver una entrada.");
         System.out.println("3.Listado de los asientos ocupados.");

@@ -2,6 +2,7 @@ package com.cinthyasophia.tema11.Ejercicio07;
 
 import com.cinthyasophia.tema11.Util.Lib;
 
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 public class Partido {
@@ -16,15 +17,14 @@ public class Partido {
     private String equipoVisitante;
 
     public Partido(String tipo, String fechaPartido, String equipoLocal, String equipoVisitante) {
+        ++id;
+        codPartido= id;
         this.tipo = tipo;
         this.fechaPartido = lib.getFecha(fechaPartido);
         this.equipoLocal = equipoLocal;
         this.equipoVisitante = equipoVisitante;
     }
 
-    public static int getId() {
-        return id;
-    }
 
     public int getCodPartido() {
         return codPartido;
@@ -44,5 +44,15 @@ public class Partido {
 
     public String getEquipoVisitante() {
         return equipoVisitante;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
+        return  "Partido: " + codPartido +
+                "\tTipo:" + tipo +
+                "\tFecha:" + format.format(fechaPartido.getTime()) +
+                "\nEquipo Local: " + equipoLocal+
+                "\tEquipo Visitante:" + equipoVisitante;
     }
 }
