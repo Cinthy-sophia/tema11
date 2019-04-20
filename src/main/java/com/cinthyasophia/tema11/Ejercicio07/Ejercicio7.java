@@ -30,6 +30,8 @@ public class Ejercicio7 {
     }
     public void nuevoPartido(){
         String fechaP;
+        String equipoLocal;
+        String equipoVisitante;
         boolean validado;
         do {
             System.out.println("**NUEVO PARTIDO**");
@@ -39,6 +41,9 @@ public class Ejercicio7 {
             if (!validado){
                 System.out.println("Error de datos.");
             }
+        }while(!validado);
+        do{
+
         }while(!validado);
     }
      public void gestionEntradas(){
