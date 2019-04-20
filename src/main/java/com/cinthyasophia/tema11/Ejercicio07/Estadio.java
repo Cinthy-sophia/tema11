@@ -9,11 +9,11 @@ public class Estadio {
     public Estadio(){
         partidos= new ArrayList<>();
         zonas= new ArrayList<>();
-        for (int i = 0; i < Zona.TipoZona.values().length; i++) {
-            for (Zona.TipoZona z: Zona.TipoZona.values()) {
-                zonas.add(new Zona(z.toString()));
-            }
+
+        for (Zona.TipoZona z: Zona.TipoZona.values()) {
+            zonas.add(new Zona(z.toString()));
         }
+
 
     }
 
@@ -23,5 +23,11 @@ public class Estadio {
 
     public ArrayList<Partido> getPartidos() {
         return partidos;
+    }
+
+    @Override
+    public String toString() {
+        return  zonas.toString() +
+                "\nPartidos:" + partidos.toString();
     }
 }

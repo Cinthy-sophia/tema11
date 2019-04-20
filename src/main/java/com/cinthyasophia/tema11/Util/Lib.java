@@ -8,6 +8,7 @@ import java.util.*;
 
 public class Lib {
     private Scanner lector = new Scanner(System.in);
+    private Random rnd = new Random();
     /**
      * Transforma en string el vector de enteros que reciba
      * @param vector
@@ -109,12 +110,10 @@ public class Lib {
         return vector;
     }
     public int aleatorio(int min, int max) {
-        Random r = new Random();
-        return r.nextInt(max - min +1 ) + min;
+        return rnd.nextInt(max - min +1 ) + min;
     }
     public double aleatorio(double min, double max) {
-        Random r = new Random();
-        return r.nextDouble()*(max - min);
+        return rnd.nextDouble()*(max - min);
     }
 
     /**
@@ -206,6 +205,33 @@ public class Lib {
 
         dias= p.getDays();
         return dias;
+
+    }
+    public int[] getCombinacion( int numeroFichas, int numeroCombinacion) {
+        int aux;
+        int cont;
+        int numAl;
+        int[] fichas= new int[numeroFichas];
+        int[] combinacion= new int[numeroCombinacion];
+
+        //llena el array fichas de numeros aleatorios entre en 1 y el numero de fichas que recibe como parametro
+        for (int i = 0; i < fichas.length ; i++) {
+            fichas[i]= i+1;
+        }
+
+        cont= fichas.length-1;
+
+        for (int i = 0; i <combinacion.length ; i++) {
+            numAl= rnd.nextInt(cont);
+            combinacion[i] = fichas[numAl];
+            aux=fichas[numAl];
+            fichas[numAl]= fichas[cont];
+            fichas[cont]=aux;
+            cont--;
+
+        }
+        //combinacion=lib.ordernarCombinacion(combinacion);
+        return combinacion;//Devuelve el vector con la combinacion
 
     }
 

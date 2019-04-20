@@ -5,6 +5,7 @@ public class Zona {
 
     protected final int CANTIDAD_ASIENTOS= 100;
     protected final int CANTIDAD_FILAS= 5;
+    protected final int CANTIDAD_COLUMNAS= CANTIDAD_ASIENTOS/CANTIDAD_FILAS;
 
     protected String tipo;
     protected Asiento[][] asientos;
@@ -13,13 +14,16 @@ public class Zona {
     public Zona(String tipo){
         this.tipo=tipo;
         cantidadAsientos= CANTIDAD_ASIENTOS;
-        asientos= new Asiento[CANTIDAD_FILAS][CANTIDAD_ASIENTOS/CANTIDAD_FILAS];
+        asientos= new Asiento[CANTIDAD_FILAS][CANTIDAD_COLUMNAS];
+        int col;
+        int fil;
 
-        for (int i=0; i< asientos.length; i++) {//filas
-            for (int j=0;j < asientos[i].length; j++) {//columnas
-                for (int x = 1; x <= cantidadAsientos; x++) {
-                   asientos[i][j] = new Asiento(x,tipo,++i);
-                }
+        for (int i=0; i < asientos.length; i++) {//filas
+            fil=i;
+            for (int j=0; j < asientos[i].length; j++) {//columnas
+                col=j;
+               asientos[i][j] = new Asiento(++col,tipo,++fil);
+
             }
         }
 
@@ -32,6 +36,7 @@ public class Zona {
     public Asiento[][] getAsientos() {
         return asientos;
     }
+
     public void mostrarAsientos(){
         for (Asiento[] asiento : asientos) {//filas
             for (Asiento value : asiento) {//columnas
@@ -43,7 +48,7 @@ public class Zona {
 
     @Override
     public String toString() {
-        return "Tipo:" + tipo+ "Cantidad de asientos: "+ cantidadAsientos;
+        return "\nTipo:" + tipo+"\t"+ "Cantidad de asientos: "+ cantidadAsientos;
 
     }
 
