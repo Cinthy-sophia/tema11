@@ -37,10 +37,10 @@ public class Asiento {
     public String toString() {
 
         if (ocupado){
-            return "\nAsiento: " + numero + " Z: " + zona + " F: " + fila + "\u001B[31mOCUPADO\u001B[0m";
+            return "\nAsiento: " + numero + " Zona: " + zona + " Fila: " + fila + "\u001B[31m OCUPADO \u001B[0m";
 
         }else{
-            return "\nAsiento: " + numero + " Z: " + zona + " F: " + fila + "\u001B[32mLIBRE\u001B[0m";
+            return "\nAsiento: " + numero + " Zona: " + zona + " Fila: " + fila + "\u001B[32m LIBRE \u001B[0m";
         }
     }
 }

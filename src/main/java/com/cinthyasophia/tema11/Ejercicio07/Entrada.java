@@ -15,6 +15,7 @@ public class Entrada {
         this.partido = partido;
         this.asiento = asiento;
         precio= PRECIO_BASE;
+
         if (partido.getTipo().equals(Partido.TipoPartido.ALTA_AFLUENCIA.name())){
             precio *= 130/100;
         }else if(partido.getTipo().equals(Partido.TipoPartido.BAJA_AFLUENCIA.name())){

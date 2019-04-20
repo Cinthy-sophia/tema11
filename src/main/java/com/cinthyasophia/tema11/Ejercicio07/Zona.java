@@ -20,9 +20,10 @@ public class Zona {
 
         for (int i=0; i < asientos.length; i++) {//filas
             fil=i;
+            ++fil;
             for (int j=0; j < asientos[i].length; j++) {//columnas
                 col=j;
-               asientos[i][j] = new Asiento(++col,tipo,++fil);
+                asientos[i][j] = new Asiento(++col,tipo,fil);
 
             }
         }
@@ -48,7 +49,7 @@ public class Zona {
 
     @Override
     public String toString() {
-        return "\nTipo:" + tipo+"\t"+ "Cantidad de asientos: "+ cantidadAsientos;
+        return "\nTipo:" + tipo+"\t"+ "Cantidad de asientos libres: "+ cantidadAsientos;
 
     }
 
