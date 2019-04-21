@@ -32,6 +32,6 @@ public class EntradaVIP extends Entrada implements VIP {
 
     @Override
     public String toString() {
-        return "\n*ENTRADA VIP*"+super.toString()+ " Password Taquilla: " + passwordVIP ;
+        return "\n*ENTRADA VIP*\n***************\n"+super.toString()+ " Password Taquilla: " + passwordVIP ;
     }
 }

@@ -2,11 +2,11 @@ package com.cinthyasophia.tema11.Ejercicio07;
 
 public class Asiento {
     private int numero;
-    private String zona;
+    private Zona zona;
     private int fila;
     private boolean ocupado;
 
-    public Asiento(int numero, String zona, int fila){
+    public Asiento(int numero, Zona zona, int fila){
         this.numero= numero;
         this.fila= fila;
         this.zona= zona;
@@ -29,7 +29,7 @@ public class Asiento {
         return fila;
     }
 
-    public String getZona() {
+    public Zona getZona() {
         return zona;
     }
 
@@ -37,10 +37,10 @@ public class Asiento {
     public String toString() {
 
         if (ocupado){
-            return "\nAsiento: " + numero + " Zona: " + zona + " Fila: " + fila + "\u001B[31m OCUPADO \u001B[0m";
+            return String.format("\nAsiento: %02d", numero) + " Zona: " + zona.getTipo() + " Fila: " + fila + "\u001B[31m OCUPADO \u001B[0m";
 
         }else{
-            return "\nAsiento: " + numero + " Zona: " + zona + " Fila: " + fila + "\u001B[32m LIBRE \u001B[0m";
+            return String.format("\nAsiento: %02d",numero)+ " Zona: " + zona.getTipo() + " Fila: " + fila + "\u001B[31m LIBRE \u001B[0m";
         }
     }
 }

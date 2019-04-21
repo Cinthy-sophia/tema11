@@ -17,6 +17,6 @@ public class EntradaNormal extends Entrada {
 
     @Override
     public String toString() {
-        return "\n*ENTRADA NORMAL*\n"+ super.toString()+" Premio:" + codPremio;
+        return "\n*ENTRADA NORMAL*\n***************\n"+ super.toString()+" Numero de sorteo:" + codPremio;
     }
 }

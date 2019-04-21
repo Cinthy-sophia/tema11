@@ -22,6 +22,13 @@ public class Entrada {
             precio *= 75/100;
         }
     }
+    public Entrada(){
+        ++id;
+        codEntrada=id;
+        this.partido = null;
+        this.asiento = null;
+        precio= PRECIO_BASE;
+    }
 
     public double getPrecio() {
         return precio;
@@ -42,6 +49,6 @@ public class Entrada {
     @Override
     public String toString() {
         return "Codigo:" + codEntrada +"\t"+ partido.toString() +
-                asiento.toString();
+                asiento.toString()+ "\n\u001B[1m Precio: "+precio+"\u001B[0m";
     }
 }

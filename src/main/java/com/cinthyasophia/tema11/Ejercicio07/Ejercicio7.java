@@ -29,22 +29,42 @@ public class Ejercicio7 {
         }while(opcion!=0);
     }
     public void nuevoPartido(){
+
         String fechaP;
+        String tipoPartido;
         String equipoLocal;
         String equipoVisitante;
         boolean validado;
         do {
             System.out.println("**NUEVO PARTIDO**");
-            System.out.println("Indique la fecha del partido: (dd/mm/yyyy)");
+            System.out.println("Indique la fecha del partido (dd/mm/yyyy):");
             fechaP= lector.nextLine();
-            validado= fechaP.length()>10;//todo verificar fecha
+            validado= fechaP.length() >= 10;//todo verificar fecha
             if (!validado){
-                System.out.println("Error de datos.");
+                System.out.println("Fecha no valida. Intente de nuevo y recuerde que el formato es dd/mm/yyyy.");
+            }
+        }while(!validado);
+
+        tipoPartido= menuTipoPartido().name();
+
+        do{
+            System.out.println("Indique el equipo local:");// todo enum de equipos disponibles
+            equipoLocal= lector.nextLine();
+            validado= equipoLocal.length()>= 5;
+            if(!validado){
+                System.out.println("Equipo no valido. Intente de nuevo.");
             }
         }while(!validado);
         do{
-
+            System.out.println("Indique el equipo visitante:");
+            equipoVisitante= lector.nextLine();
+            validado= equipoVisitante.length()>= 5;
+            if(!validado){
+                System.out.println("Equipo no valido. Intente de nuevo.");
+            }
         }while(!validado);
+
+        new Partido(tipoPartido,fechaP,equipoLocal,equipoVisitante);
     }
      public void gestionEntradas(){
         int opcion;
