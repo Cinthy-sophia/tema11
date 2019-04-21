@@ -40,7 +40,7 @@ public class Asiento {
             return String.format("\nAsiento: %02d", numero) + " Zona: " + zona.getTipo() + " Fila: " + fila + "\u001B[31m OCUPADO \u001B[0m";
 
         }else{
-            return String.format("\nAsiento: %02d",numero)+ " Zona: " + zona.getTipo() + " Fila: " + fila + "\u001B[31m LIBRE \u001B[0m";
+            return String.format("\nAsiento: %02d",numero)+ " Zona: " + zona.getTipo() + " Fila: " + fila + "\u001B[32m LIBRE \u001B[0m";
         }
     }
 }
