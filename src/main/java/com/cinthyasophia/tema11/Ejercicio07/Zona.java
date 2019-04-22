@@ -38,6 +38,19 @@ public class Zona {
         return asientos;
     }
 
+    public Asiento getAsiento(int numero){
+        Asiento a = null;
+        for (Asiento[] asiento : asientos) {//filas
+            for (Asiento value : asiento) {//columnas
+                if (value.getNumero()== numero){
+                    a= value;
+                }
+            }
+        }
+
+        return a;
+    }
+
     public void mostrarAsientos(){
         for (Asiento[] asiento : asientos) {//filas
             for (Asiento value : asiento) {//columnas
@@ -49,7 +62,16 @@ public class Zona {
 
     @Override
     public String toString() {
-        return "\nTipo:" + tipo+"\t"+ "Cantidad de asientos: "+ cantidadAsientos;
+        int cantidadAsientosD=0;
+        for (Asiento[] asiento : asientos) {//filas
+            for (Asiento value : asiento) {//columnas
+                if (value.isOcupado()){
+                    cantidadAsientosD++;
+                }
+            }
+        }
+
+        return "\nTipo:" + tipo+"\t"+ "Cantidad de asientos diponibles: "+ cantidadAsientosD;
 
     }
 

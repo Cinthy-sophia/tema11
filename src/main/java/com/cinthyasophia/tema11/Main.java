@@ -19,8 +19,7 @@ public class Main {
         //Ejercicio5 ejercicio5 = new Ejercicio5();
         //Ejercicio6 ejercicio6 = new Ejercicio6();
         Estadio estadio= new Estadio();
-        System.out.println(estadio.toString());
-        estadio.getZonas().get(2).mostrarAsientos();
+        estadio.x();
     }
 }
 

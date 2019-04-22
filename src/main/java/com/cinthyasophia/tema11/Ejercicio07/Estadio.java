@@ -33,19 +33,21 @@ public class Estadio {
         LocalDate fechaPar= LocalDate.of(year,month,day);
         LocalDate now = LocalDate.now();
 
+
         if (fechaPar.isBefore(now)){
-            return "La fecha del partido no es valida porque ya ha pasado.";
-        }else{
-            partidos.put(p, cantidadEntradas);
+            return "La fecha del partido no es valida porque ya ha pasado, intente de nuevo.";
+        }else {
 
-            //if () {
+            if (cantidadEntradas>zonas.get(0).CANTIDAD_ASIENTOS*zonas.size()) {
+                return "La cantidad de entradas a vender es mayor que la cantidad de asientos disponibles, intente de nuevo.";
+            } else{
+                partidos.put(p,cantidadEntradas);
                 return "Añadido correctamente.";
-            //} else{
-              //  return "Ha ocurrido un error, vuelva a intentarlo.";
 
-            //}
+            }
         }
     }
+
     public ArrayList<Zona> getZonas() {
         return zonas;
     }

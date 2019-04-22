@@ -2,6 +2,7 @@ package com.cinthyasophia.tema11.Ejercicio07;
 
 import com.cinthyasophia.tema11.Util.Lib;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Ejercicio7 {
@@ -69,13 +70,14 @@ public class Ejercicio7 {
         do{
             System.out.println("Indique cuantas entradas se van a vender para este partido:");
             cantidadEntradas= lector.nextInt();
+            lector.nextLine();
             validado= cantidadEntradas >= 1;
             if(!validado){
                 System.out.println("Cantidad de entradas no valida. Intente de nuevo.");
             }
         }while(!validado);
 
-        estadio.nuevoPartido(new Partido(tipoPartido,fechaP,equipoLocal,equipoVisitante),cantidadEntradas);
+        System.out.println(estadio.nuevoPartido(new Partido(tipoPartido,fechaP,equipoLocal,equipoVisitante),cantidadEntradas));
     }
 
      public void gestionEntradas(){
@@ -107,7 +109,26 @@ public class Ejercicio7 {
             }
         }while(opcion!=0);
      }
-    public Partido.TipoPartido menuTipoPartido(){
+
+     public void ventaEntradas(){
+        boolean validado;
+        int cantidadEntradas;
+         System.out.println("***********");
+         System.out.println("*BOLETERIA*");
+         System.out.println("***********");
+         do {
+            System.out.println("Indique la cantidad de entradas que desea comprar:");
+            cantidadEntradas= lector.nextInt();
+             lector.nextLine();
+             validado= cantidadEntradas>0;
+         }while (!validado);
+
+         System.out.println(estadio.getZonas());
+         System.out.println("Indique la zona:");
+
+
+     }
+     public Partido.TipoPartido menuTipoPartido(){
         int opcion;
         Partido.TipoPartido opTipoPartido;
         Partido.TipoPartido[] tiposPartido= Partido.TipoPartido.values();
@@ -122,7 +143,8 @@ public class Ejercicio7 {
         opTipoPartido= tiposPartido[opcion];
 
         return opTipoPartido;
-    }
+     }
+
      public void listadoAsientosOcupados(){
 
      }
