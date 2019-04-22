@@ -8,6 +8,9 @@ public class EntradaVIP extends Entrada implements VIP {
         super(partido, asiento);
         vip=true;
     }
+    public EntradaVIP(){
+        super();
+    }
 
     public boolean isVip() {
         return vip;

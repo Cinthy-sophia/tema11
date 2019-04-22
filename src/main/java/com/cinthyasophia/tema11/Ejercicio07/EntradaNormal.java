@@ -7,6 +7,10 @@ public class EntradaNormal extends Entrada {
         super(partido, asiento);
     }
 
+    public EntradaNormal(){
+        super();
+    }
+
     public int getCodPremio() {
         return codPremio;
     }

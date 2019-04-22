@@ -8,13 +8,15 @@ public class Ejercicio7 {
     private Lib lib = new Lib();
     public Scanner lector= new Scanner(System.in);
 
+    private Estadio estadio;
     public Ejercicio7(){
+        estadio= new Estadio();
         int opcion;
         do {
             opcion= menuPrincipal();
             switch (opcion){
                 case 1:
-                    //todo nuevoPartido();
+                    nuevoPartido();
                     break;
                 case 2:
                     gestionEntradas();
@@ -29,7 +31,7 @@ public class Ejercicio7 {
         }while(opcion!=0);
     }
     public void nuevoPartido(){
-
+        int cantidadEntradas;
         String fechaP;
         String tipoPartido;
         String equipoLocal;
@@ -64,8 +66,18 @@ public class Ejercicio7 {
             }
         }while(!validado);
 
-        new Partido(tipoPartido,fechaP,equipoLocal,equipoVisitante);
+        do{
+            System.out.println("Indique cuantas entradas se van a vender para este partido:");
+            cantidadEntradas= lector.nextInt();
+            validado= cantidadEntradas >= 1;
+            if(!validado){
+                System.out.println("Cantidad de entradas no valida. Intente de nuevo.");
+            }
+        }while(!validado);
+
+        estadio.nuevoPartido(new Partido(tipoPartido,fechaP,equipoLocal,equipoVisitante),cantidadEntradas);
     }
+
      public void gestionEntradas(){
         int opcion;
         do {
