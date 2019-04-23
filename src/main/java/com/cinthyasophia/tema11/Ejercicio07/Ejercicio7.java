@@ -160,19 +160,17 @@ public class Ejercicio7 {
                 lector.nextLine();
                 validado= fila<= estadio.getZonas().get(opcionE).CANTIDAD_FILAS;
             }while(!validado);
+
             do {
-                //estadio.getZonas().get(opcionE).mostrarAsientos();
                 System.out.println("Indique el numero de asiento que desea: ");
                 asiento= lector.nextInt();
                 lector.nextLine();
                 validado= asiento<= estadio.getZonas().get(opcionE).CANTIDAD_ASIENTOS;
             }while(!validado);
 
-            if(estadio.getZonas().get(opcionE).getTipo().equals("VIP")){
-                //entradaVIP
-            }else{
-                //entradaNormal
-            }
+            estadio.getZonas().get(opcionE).getAsiento(asiento).setOcupado(true);
+
+            System.out.println(estadio.nuevaEntrada(partido,estadio.getZonas().get(opcionE).getAsiento(asiento)));
         }
 
 

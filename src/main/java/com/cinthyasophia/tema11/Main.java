@@ -20,9 +20,8 @@ public class Main {
         //Ejercicio4 ejercicio4 = new Ejercicio4();
         //Ejercicio5 ejercicio5 = new Ejercicio5();
         //Ejercicio6 ejercicio6 = new Ejercicio6();
-        EntradaVIP entrada1= (EntradaVIP) new Entrada();
-        EntradaVIP entrada = entrada1;
-        entrada.isVIP();
+       Estadio e = new Estadio();
+        System.out.println(e.getCANTIDAD_TOTAL_ASIENTOS());
     }
 }
 

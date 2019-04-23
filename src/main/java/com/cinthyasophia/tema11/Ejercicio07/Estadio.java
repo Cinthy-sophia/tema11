@@ -9,24 +9,24 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Set;
 
-
 public class Estadio {
     private Lib lib = new Lib();
     private ArrayList<Zona> zonas;
-    private HashMap<Partido,Integer> partidos;
+    private HashMap<Partido,Integer> partidosYEntradas;
     private Boleteria boleteria;
     private final int CANTIDAD_TOTAL_ASIENTOS;
 
     public Estadio(){
-        partidos= new HashMap<>();
+        partidosYEntradas= new HashMap<>();
         zonas= new ArrayList<>();
-        CANTIDAD_TOTAL_ASIENTOS= zonas.get(0).CANTIDAD_ASIENTOS*zonas.size();
 
         for (Zona.TipoZona z: Zona.TipoZona.values()) {
             zonas.add(new Zona(z.toString()));
         }
+        CANTIDAD_TOTAL_ASIENTOS= zonas.get(0).CANTIDAD_ASIENTOS*zonas.size();
 
     }
+
     public String nuevoPartido(Partido p, int cantidadEntradas){
 
         if (lib.fechaIsBeforeNow(p.getFechaPartido())){
@@ -36,14 +36,17 @@ public class Estadio {
             if (cantidadEntradas>CANTIDAD_TOTAL_ASIENTOS) {
                 return "La cantidad de entradas a vender es mayor que la cantidad de asientos disponibles, intente de nuevo.";
             } else{
-                partidos.put(p,cantidadEntradas);
+                partidosYEntradas.put(p,cantidadEntradas);
                 return "Añadido correctamente.";
             }
         }
     }
-    public String nuevaEntrada(Entrada e){
+    public String nuevaEntrada(Partido p, Asiento a){
+        return boleteria.venderEntrada(p,a,CANTIDAD_TOTAL_ASIENTOS).toString();
+    }
 
-        return " ";
+    public int getCANTIDAD_TOTAL_ASIENTOS() {
+        return CANTIDAD_TOTAL_ASIENTOS;
     }
 
     public ArrayList<Zona> getZonas() {
@@ -51,16 +54,17 @@ public class Estadio {
     }
 
     public HashMap<Partido,Integer> getPartidosYEntradasVendidas() {
-        return partidos;
+        return partidosYEntradas;
     }
 
     public Set<Partido> getPartidos(){
-        return partidos.keySet();
+        return partidosYEntradas.keySet();
     }
 
     @Override
     public String toString() {
         return zonas +
-                "\nPartidos:" + partidos.toString();
+                "\nPartidos:" + partidosYEntradas.toString();
     }
 }
+
