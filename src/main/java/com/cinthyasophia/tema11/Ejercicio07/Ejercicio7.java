@@ -113,19 +113,63 @@ public class Ejercicio7 {
      public void ventaEntradas(){
         boolean validado;
         int cantidadEntradas;
-         System.out.println("***********");
-         System.out.println("*BOLETERIA*");
-         System.out.println("***********");
-         do {
+        int opcionE;
+        int fila;
+        int asiento;
+
+        System.out.println("***********");
+        System.out.println("*BOLETERIA*");
+        System.out.println("***********");
+        do {
             System.out.println("Indique la cantidad de entradas que desea comprar:");
             cantidadEntradas= lector.nextInt();
-             lector.nextLine();
-             validado= cantidadEntradas>0;
-         }while (!validado);
+            lector.nextLine();
+            validado= cantidadEntradas>0;
+        }while (!validado);
 
-         System.out.println(estadio.getZonas());
-         System.out.println("Indique la zona:");
+        for (int i = 0; i < cantidadEntradas ; i++) {
+            opcionE= menuZonas();
+            do {
+                estadio.getZonas().get(opcionE).mostrarAsientos();
+                System.out.println("Indique la fila que desea: ");
+                fila= lector.nextInt();
+                lector.nextLine();
+                validado= fila<= estadio.getZonas().get(opcionE).CANTIDAD_FILAS;
+            }while(!validado);
+            do {
+                //estadio.getZonas().get(opcionE).mostrarAsientos();
+                System.out.println("Indique el numero de asiento que desea: ");
+                asiento= lector.nextInt();
+                lector.nextLine();
+                validado= asiento<= estadio.getZonas().get(opcionE).CANTIDAD_ASIENTOS;
+            }while(!validado);
 
+            for (Asiento[] asiento : estadio.getZonas().get(opcionE).getAsiento()) {//filas
+                for (Asiento value : asiento) {//columnas
+                    if (!value.isOcupado()){
+                        cantidadAsientosD++;
+                    }
+                }
+            }
+
+
+
+        }
+
+
+     }
+     public int menuZonas(){
+         int opcion;
+         Zona.TipoZona[] tiposZonas= Zona.TipoZona.values();
+         System.out.println("*ZONAS DEL ESTADIO*");
+
+         for (int i = 0; i < tiposZonas.length; i++) {
+             System.out.println(tiposZonas[i].ordinal()+". "+tiposZonas[i].name());
+         }
+         System.out.println("Selecciona la zona:");
+         opcion= lib.validarOpcion(0,tiposZonas.length);
+
+         return opcion;
 
      }
      public Partido.TipoPartido menuTipoPartido(){

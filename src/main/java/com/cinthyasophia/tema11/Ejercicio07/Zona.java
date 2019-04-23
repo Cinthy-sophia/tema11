@@ -65,7 +65,7 @@ public class Zona {
         int cantidadAsientosD=0;
         for (Asiento[] asiento : asientos) {//filas
             for (Asiento value : asiento) {//columnas
-                if (value.isOcupado()){
+                if (!value.isOcupado()){
                     cantidadAsientosD++;
                 }
             }
