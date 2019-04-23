@@ -43,7 +43,7 @@ public class Estadio {
     }
     public String nuevaEntrada(Entrada e){
 
-
+        return " ";
     }
 
     public ArrayList<Zona> getZonas() {

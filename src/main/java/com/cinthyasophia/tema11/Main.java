@@ -8,6 +8,8 @@ package com.cinthyasophia.tema11;
 //import com.cinthyasophia.tema11.Ejercicio06.Ejercicio6;
 
 
+import com.cinthyasophia.tema11.Ejercicio07.Entrada;
+import com.cinthyasophia.tema11.Ejercicio07.EntradaVIP;
 import com.cinthyasophia.tema11.Ejercicio07.Estadio;
 
 public class Main {
@@ -18,8 +20,9 @@ public class Main {
         //Ejercicio4 ejercicio4 = new Ejercicio4();
         //Ejercicio5 ejercicio5 = new Ejercicio5();
         //Ejercicio6 ejercicio6 = new Ejercicio6();
-        Estadio estadio= new Estadio();
-        estadio.x();
+        EntradaVIP entrada1= (EntradaVIP) new Entrada();
+        EntradaVIP entrada = entrada1;
+        entrada.isVIP();
     }
 }
 

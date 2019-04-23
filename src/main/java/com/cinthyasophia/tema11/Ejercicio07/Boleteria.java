@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Boleteria {
+    private final int COMBINACION_VIP_SIZE=5;
     private Lib lib = new Lib();
     private HashMap<Partido,Integer> recaudacion;
     private int cantidadEntradasVendidas;
@@ -31,18 +32,35 @@ public class Boleteria {
     public Entrada venderEntrada(Partido p, Asiento a){
         if (a.getZona().getTipo().equals("VIP")){
             EntradaVIP entrada=(EntradaVIP) agregarPrecioFinal(new EntradaVIP(p,a));
-
+            entrada.setPasswordVIP(generarCodigoVIP());
+        }else{
+            EntradaNormal entrada;
         }
 
-        return entrada;
+        return null;
 
     }
 
     public String generarCodigoVIP(){
-        return " ";
+        String letras= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder s;
+        String combinacion = "";
+        String combinacionFinal = "";
+        int[] combinacionNum= lib.getCombinacion(9,COMBINACION_VIP_SIZE);
+        int aleatorio;
+
+        for (int i = 0; i < COMBINACION_VIP_SIZE; i++) {
+            aleatorio= lib.aleatorio(0,9);
+            s.append(lib.getCombinacion(9,1)).append(letras.charAt(aleatorio));
+            combinacion=
+        }
+        combinacionFinal.concat(Arrays.toString(combinacionNum)).concat(combinacion);
+
+        return combinacionFinal;
     }
+
     public int generarNumeroSorteo(int cantidadAsientos){
-        return lib.getCombinacion(cantidadAsientos,1)[0];
+        return Integer.valueOf(Arrays.toString(lib.getCombinacion(cantidadAsientos,1)));
 
     }
 }
