@@ -2,6 +2,7 @@ package com.cinthyasophia.tema11.Ejercicio07;
 
 import com.cinthyasophia.tema11.Util.Lib;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Boleteria {
@@ -27,9 +28,21 @@ public class Boleteria {
         return entrada;
     }
 
-    public Entrada venderEntrada(int cantidadEntradas, Partido p, Asiento a){
+    public Entrada venderEntrada(Partido p, Asiento a){
+        if (a.getZona().getTipo().equals("VIP")){
+            EntradaVIP entrada=(EntradaVIP) agregarPrecioFinal(new EntradaVIP(p,a));
 
-        new Entrada(p,a);
+        }
+
+        return entrada;
+
+    }
+
+    public String generarCodigoVIP(){
+        return " ";
+    }
+    public int generarNumeroSorteo(int cantidadAsientos){
+        return lib.getCombinacion(cantidadAsientos,1)[0];
 
     }
 }

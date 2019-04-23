@@ -2,7 +2,9 @@ package com.cinthyasophia.tema11.Ejercicio07;
 
 import com.cinthyasophia.tema11.Util.Lib;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Ejercicio7 {
@@ -10,8 +12,10 @@ public class Ejercicio7 {
     public Scanner lector= new Scanner(System.in);
 
     private Estadio estadio;
+
     public Ejercicio7(){
         estadio= new Estadio();
+
         int opcion;
         do {
             opcion= menuPrincipal();
@@ -81,12 +85,31 @@ public class Ejercicio7 {
     }
 
      public void gestionEntradas(){
+        int idPartido;
+        Partido partido;
+        for (Partido p: estadio.getPartidos()) {
+            if (!lib.fechaIsBeforeNow(p.getFechaPartido()))
+             System.out.println(p.toString());
+        }
+
+        System.out.println("Indica el numero del partido al que deseas asistir:");
+        idPartido= lector.nextInt();
+        lector.nextLine();
+
+
+        for (Partido p: estadio.getPartidos()) {
+            if (p.getCodPartido()==idPartido) {
+                partido= p;
+            }
+        }
+
+
         int opcion;
         do {
             opcion= menuGestionEntradas();
             switch (opcion){
                 case 1:
-                    //todo ventaEntradas();
+                    //todo ventaEntradas(partido);
                     break;
                 case 2:
                     //todo devolverEntrada();
@@ -110,7 +133,7 @@ public class Ejercicio7 {
         }while(opcion!=0);
      }
 
-     public void ventaEntradas(){
+     public void ventaEntradas(Partido partido){
         boolean validado;
         int cantidadEntradas;
         int opcionE;
@@ -120,6 +143,7 @@ public class Ejercicio7 {
         System.out.println("***********");
         System.out.println("*BOLETERIA*");
         System.out.println("***********");
+
         do {
             System.out.println("Indique la cantidad de entradas que desea comprar:");
             cantidadEntradas= lector.nextInt();
@@ -144,16 +168,11 @@ public class Ejercicio7 {
                 validado= asiento<= estadio.getZonas().get(opcionE).CANTIDAD_ASIENTOS;
             }while(!validado);
 
-            for (Asiento[] asiento : estadio.getZonas().get(opcionE).getAsiento()) {//filas
-                for (Asiento value : asiento) {//columnas
-                    if (!value.isOcupado()){
-                        cantidadAsientosD++;
-                    }
-                }
+            if(estadio.getZonas().get(opcionE).getTipo().equals("VIP")){
+                //entradaVIP
+            }else{
+                //entradaNormal
             }
-
-
-
         }
 
 

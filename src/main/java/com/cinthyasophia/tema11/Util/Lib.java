@@ -207,6 +207,17 @@ public class Lib {
         return dias;
 
     }
+    public boolean fechaIsBeforeNow(GregorianCalendar fecha){
+        int year= fecha.get(Calendar.YEAR);
+        int month= fecha.get(Calendar.MONTH);
+        int day= fecha.get(Calendar.DAY_OF_MONTH);
+
+        LocalDate fechaActual= LocalDate.of(year,month,day);
+        LocalDate now = LocalDate.now();
+
+        return fechaActual.isBefore(now);
+
+    }
     public int[] getCombinacion( int numeroFichas, int numeroCombinacion) {
         int aux;
         int cont;

@@ -2,7 +2,7 @@ package com.cinthyasophia.tema11.Ejercicio07;
 
 import java.util.Objects;
 
-public class Entrada {
+public class Entrada implements VIP {
     private static int id;
     private final double PRECIO_BASE= 30;
 
@@ -59,5 +59,10 @@ public class Entrada {
     public String toString() {
         return "Codigo:" + codEntrada +"\t"+ partido.toString() +
                 asiento.toString()+ "\n\u001B[1m Precio: "+precio+"\u001B[0m";
+    }
+
+    @Override
+    public boolean isVIP() {
+        return false;
     }
 }

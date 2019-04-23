@@ -1,23 +1,13 @@
 package com.cinthyasophia.tema11.Ejercicio07;
 
-public class EntradaVIP extends Entrada implements VIP {
-    private boolean vip;
+public class EntradaVIP extends Entrada {
     private String passwordVIP;
 
     public EntradaVIP(Partido partido, Asiento asiento) {
         super(partido, asiento);
-        vip=true;
     }
     public EntradaVIP(){
         super();
-    }
-
-    public boolean isVip() {
-        return vip;
-    }
-
-    public void setVip(boolean vip) {
-        this.vip = vip;
     }
 
     public String getPasswordVIP() {
@@ -30,7 +20,7 @@ public class EntradaVIP extends Entrada implements VIP {
 
     @Override
     public boolean isVIP() {
-        return vip;
+        return true;
     }
 
     @Override
