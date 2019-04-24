@@ -12,6 +12,7 @@ public class Ejercicio7 {
     public Scanner lector= new Scanner(System.in);
 
     private Estadio estadio;
+    private Boleteria boleteria;
 
     public Ejercicio7(){
         estadio= new Estadio();

@@ -64,7 +64,7 @@ public class Boleteria {
         return null;
     }
 
-    public String generarCodigoVIP(){//todo con el codigo ascii
+    private String generarCodigoVIP(){//todo con el codigo ascii
         String letras= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder s = null;
         String combinacion = "";
@@ -86,7 +86,7 @@ public class Boleteria {
         return entradasVendidas;
     }
 
-    public int generarNumeroSorteo(int cantidadAsientos){
+    private int generarNumeroSorteo(int cantidadAsientos){
         return Integer.valueOf(Arrays.toString(lib.getCombinacion(cantidadAsientos,1)));
 
     }

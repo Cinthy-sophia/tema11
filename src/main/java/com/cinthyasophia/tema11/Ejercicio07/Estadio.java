@@ -56,6 +56,11 @@ public class Estadio {
         }
         return "No ha podido ser devuelta";
     }
+
+    public int getCANTIDAD_TOTAL_ASIENTOS() {
+        return CANTIDAD_TOTAL_ASIENTOS;
+    }
+
     public void obtenerRecaudacion(){
         for (Partido partido:boleteria.getRecaudacion().keySet()) {
 
