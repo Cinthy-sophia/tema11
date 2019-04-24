@@ -31,9 +31,10 @@ public class Boleteria {
     }
 
     public Entrada venderEntrada(Partido p, Asiento a, int cantidadTotalAsientos){
+        a.getZona().getAsiento(a.getNumero()).setOcupado();
 
         if (a.getZona().getTipo().equals("VIP")){
-            EntradaVIP entradaV=(EntradaVIP) agregarPrecioFinal(new EntradaVIP(p,a));
+            EntradaVIP entradaV= (EntradaVIP) agregarPrecioFinal(new EntradaVIP(p,a));
             entradaV.setPasswordVIP(generarCodigoVIP());
             entradasVendidas.add(entradaV);
             recaudacion.put(p, entradaV.getPrecio());

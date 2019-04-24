@@ -9,11 +9,11 @@ public class Zona {
 
     protected String tipo;
     protected Asiento[][] asientos;
-    protected int cantidadAsientos;
+    protected int cantidadAsientosD;
 
     public Zona(String tipo){
         this.tipo=tipo;
-        cantidadAsientos= CANTIDAD_ASIENTOS;
+        cantidadAsientosD= CANTIDAD_ASIENTOS;
         asientos= new Asiento[CANTIDAD_FILAS][CANTIDAD_COLUMNAS];
         int col;
         int fil;
@@ -60,9 +60,17 @@ public class Zona {
         }
     }
 
+    public void setCantidadAsientosD(int cantidadAsientosD) {
+        this.cantidadAsientosD = cantidadAsientosD;
+
+    }
+
+    public int getCantidadAsientosD() {
+        return cantidadAsientosD;
+    }
+
     @Override
     public String toString() {
-        int cantidadAsientosD=0;
         for (Asiento[] asiento : asientos) {//filas
             for (Asiento value : asiento) {//columnas
                 if (!value.isOcupado()){

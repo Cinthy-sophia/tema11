@@ -2,22 +2,19 @@ package com.cinthyasophia.tema11.Ejercicio07;
 
 import com.cinthyasophia.tema11.Util.Lib;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Set;
 
 public class Estadio {
     private Lib lib = new Lib();
     private ArrayList<Zona> zonas;
-    private HashMap<Partido,Integer> partidosYEntradas;
+    private HashMap<Partido,Integer> partidos;//Muestra todos los partidos que se han jugado y las entradas que se deben vender para cada uno.
     private Boleteria boleteria;
     private final int CANTIDAD_TOTAL_ASIENTOS;
 
     public Estadio(){
-        partidosYEntradas= new HashMap<>();
+        partidos = new HashMap<>();
         zonas= new ArrayList<>();
 
         for (Zona.TipoZona z: Zona.TipoZona.values()) {
@@ -36,35 +33,42 @@ public class Estadio {
             if (cantidadEntradas>CANTIDAD_TOTAL_ASIENTOS) {
                 return "La cantidad de entradas a vender es mayor que la cantidad de asientos disponibles, intente de nuevo.";
             } else{
-                partidosYEntradas.put(p,cantidadEntradas);
+                partidos.put(p,cantidadEntradas);
                 return "Añadido correctamente.";
             }
         }
     }
     public String nuevaEntrada(Partido p, Asiento a){
-        return boleteria.venderEntrada(p,a,CANTIDAD_TOTAL_ASIENTOS).toString();
+
+        for (Partido partido: getPartidos()) {
+            if (partido.getCodPartido()==p.getCodPartido()){
+                zonas.get(a.getNumero()).setCantidadAsientosD(zonas.get(a.getNumero()).getCantidadAsientosD()-1);
+                return boleteria.venderEntrada(p,a,CANTIDAD_TOTAL_ASIENTOS).toString();
+            }
+        }
+        return "El partido que ha indicado no existe, intente de nuevo.";
+    }
+    public String regresarEntrada(int numeroEntrada){
+
     }
 
-    public int getCANTIDAD_TOTAL_ASIENTOS() {
-        return CANTIDAD_TOTAL_ASIENTOS;
-    }
 
     public ArrayList<Zona> getZonas() {
         return zonas;
     }
 
-    public HashMap<Partido,Integer> getPartidosYEntradasVendidas() {
-        return partidosYEntradas;
+    public HashMap<Partido,Integer> getPartidosYEntradas() {
+        return partidos;
     }
 
     public Set<Partido> getPartidos(){
-        return partidosYEntradas.keySet();
+        return partidos.keySet();
     }
 
     @Override
     public String toString() {
         return zonas +
-                "\nPartidos:" + partidosYEntradas.toString();
+                "\nPartidos:" + partidos.toString();
     }
 }
 
