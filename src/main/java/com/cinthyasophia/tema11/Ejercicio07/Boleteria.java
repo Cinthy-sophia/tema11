@@ -16,6 +16,7 @@ public class Boleteria {
     //
 
     public Boleteria(){
+        estadio= new Estadio();
         recaudacion= new HashMap<>();
         entradasVendidas= new ArrayList<>();
     }
