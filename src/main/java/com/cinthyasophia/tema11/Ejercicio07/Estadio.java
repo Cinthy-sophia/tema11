@@ -39,16 +39,7 @@ public class Estadio {
             }
         }
     }
-    public String nuevaEntrada(Partido p, Asiento a){
 
-        for (Partido partido: getPartidos()) {
-            if (partido.getCodPartido()==p.getCodPartido()){
-                zonas.get(a.getNumero()).setCantidadAsientosD(zonas.get(a.getNumero()).getCantidadAsientosD()-1);
-                return boleteria.venderEntrada(p,a,CANTIDAD_TOTAL_ASIENTOS).toString();
-            }
-        }
-        return "El partido que ha indicado no existe, intente de nuevo.";
-    }
     public String regresarEntrada(int numeroEntrada){
         Entrada entrada=boleteria.devolverEntrada(numeroEntrada);
         if (entrada!= null){
@@ -60,13 +51,6 @@ public class Estadio {
     public int getCANTIDAD_TOTAL_ASIENTOS() {
         return CANTIDAD_TOTAL_ASIENTOS;
     }
-
-    public void obtenerRecaudacion(){
-        for (Partido partido:boleteria.getRecaudacion().keySet()) {
-
-        }
-    }
-
 
     public ArrayList<Zona> getZonas() {
         return zonas;

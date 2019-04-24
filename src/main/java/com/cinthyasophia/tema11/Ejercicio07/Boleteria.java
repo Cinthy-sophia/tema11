@@ -9,6 +9,7 @@ import java.util.HashMap;
 public class Boleteria {
     private final int COMBINACION_VIP_SIZE=5;
     private Lib lib = new Lib();
+    private Estadio estadio;
     private HashMap<Partido,Double> recaudacion;
     private ArrayList<Entrada> entradasVendidas;
     //todo Boleteria recibe la cantidad de entradas a vender por cada partido, y las genera antes de venderlas. Ademas de generar los codigos aleatorios para ambos tipos de entradas
@@ -30,22 +31,30 @@ public class Boleteria {
         return entrada;
     }
 
-    public Entrada venderEntrada(Partido p, Asiento a, int cantidadTotalAsientos){
-        a.getZona().getAsiento(a.getNumero()).setOcupado(true);
+    public Entrada venderEntrada(int idPartido, Asiento a){
+        Zona zona= estadio.getZonas().get(a.getNumero());
 
-        if (a.getZona().getTipo().equals("VIP")){
-            EntradaVIP entradaV= (EntradaVIP) agregarPrecioFinal(new EntradaVIP(p,a));
-            entradaV.setPasswordVIP(generarCodigoVIP());
-            entradasVendidas.add(entradaV);
-            recaudacion.put(p, entradaV.getPrecio());
-            return entradaV;
-        }else{
-            EntradaNormal entradaN = (EntradaNormal) agregarPrecioFinal(new EntradaNormal(p,a));
-            entradaN.setCodPremio(generarNumeroSorteo(cantidadTotalAsientos));
-            entradasVendidas.add(entradaN);
-            recaudacion.put(p,entradaN.getPrecio());
-            return agregarPrecioFinal(new EntradaNormal(p,a));
+        for (Partido partido: estadio.getPartidos()) {
+            if (partido.getCodPartido()==idPartido){
+                zona.setCantidadAsientosD(zona.getCantidadAsientosD()-1);
+                a.getZona().getAsiento(a.getNumero()).setOcupado(true);
+
+                if (a.getZona().getTipo().equals("VIP")){
+                    EntradaVIP entradaV= (EntradaVIP) agregarPrecioFinal(new EntradaVIP(partido,a));
+                    entradaV.setPasswordVIP(generarCodigoVIP());
+                    entradasVendidas.add(entradaV);
+                    recaudacion.put(partido, entradaV.getPrecio());
+                    return entradaV;
+                }else{
+                    EntradaNormal entradaN = (EntradaNormal) agregarPrecioFinal(new EntradaNormal(partido,a));
+                    entradaN.setCodPremio(generarNumeroSorteo(estadio.getCANTIDAD_TOTAL_ASIENTOS()));
+                    entradasVendidas.add(entradaN);
+                    recaudacion.put(partido,entradaN.getPrecio());
+                    return agregarPrecioFinal(new EntradaNormal(partido,a));
+                }
+            }
         }
+        return null;
     }
 
     public HashMap<Partido, Double> getRecaudacion() {
