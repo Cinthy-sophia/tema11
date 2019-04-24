@@ -31,7 +31,7 @@ public class Boleteria {
     }
 
     public Entrada venderEntrada(Partido p, Asiento a, int cantidadTotalAsientos){
-        a.getZona().getAsiento(a.getNumero()).setOcupado();
+        a.getZona().getAsiento(a.getNumero()).setOcupado(true);
 
         if (a.getZona().getTipo().equals("VIP")){
             EntradaVIP entradaV= (EntradaVIP) agregarPrecioFinal(new EntradaVIP(p,a));
@@ -48,12 +48,23 @@ public class Boleteria {
         }
     }
 
-    public void devolverEntrada(int codEntrada){
-
-
+    public HashMap<Partido, Double> getRecaudacion() {
+        return recaudacion;
     }
 
-    public String generarCodigoVIP(){
+    public Entrada devolverEntrada(int codEntrada){
+        for (Entrada e:entradasVendidas) {
+            if (e.getCodEntrada()== codEntrada){
+                e.getAsiento().setOcupado(false);
+                recaudacion.replace(e.getPartido(),recaudacion.get(e.getPartido()),(recaudacion.get(e.getPartido())-e.getPrecio()));
+                return entradasVendidas.remove(codEntrada);
+            }
+
+        }
+        return null;
+    }
+
+    public String generarCodigoVIP(){//todo con el codigo ascii
         String letras= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder s = null;
         String combinacion = "";

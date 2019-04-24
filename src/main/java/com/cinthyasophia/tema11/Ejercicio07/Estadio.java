@@ -24,6 +24,7 @@ public class Estadio {
 
     }
 
+
     public String nuevoPartido(Partido p, int cantidadEntradas){
 
         if (lib.fechaIsBeforeNow(p.getFechaPartido())){
@@ -49,7 +50,16 @@ public class Estadio {
         return "El partido que ha indicado no existe, intente de nuevo.";
     }
     public String regresarEntrada(int numeroEntrada){
+        Entrada entrada=boleteria.devolverEntrada(numeroEntrada);
+        if (entrada!= null){
+            return entrada.toString()+"\nDevuelta con éxito";
+        }
+        return "No ha podido ser devuelta";
+    }
+    public void obtenerRecaudacion(){
+        for (Partido partido:boleteria.getRecaudacion().keySet()) {
 
+        }
     }
 
 
@@ -67,7 +77,7 @@ public class Estadio {
 
     @Override
     public String toString() {
-        return zonas +
+        return  zonas +
                 "\nPartidos:" + partidos.toString();
     }
 }
