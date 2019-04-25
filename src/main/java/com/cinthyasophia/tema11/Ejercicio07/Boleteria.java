@@ -33,10 +33,11 @@ public class Boleteria {
     }
 
     public Entrada venderEntrada(int idPartido, Asiento a){
-        Zona zona= estadio.getZonas().get(a.getNumero());
+        Zona zona= a.getZona();
 
         for (Partido partido: estadio.getPartidos()) {
             if (partido.getCodPartido()==idPartido){
+
                 zona.setCantidadAsientosD(zona.getCantidadAsientosD()-1);
                 a.getZona().getAsiento(a.getNumero()).setOcupado(true);
 

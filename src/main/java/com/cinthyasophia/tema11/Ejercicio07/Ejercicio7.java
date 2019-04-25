@@ -1,12 +1,6 @@
 package com.cinthyasophia.tema11.Ejercicio07;
 
 import com.cinthyasophia.tema11.Util.Lib;
-import org.jcp.xml.dsig.internal.SignerOutputStream;
-
-import java.io.DataOutput;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Scanner;
 
 public class Ejercicio7 {
@@ -90,46 +84,61 @@ public class Ejercicio7 {
 
      public void gestionEntradas(){
         int idPartido;
-        Partido partido;
+         int opcion;
+         boolean validado;
         for (Partido p: estadio.getPartidos()) {
-            if (!lib.fechaIsBeforeNow(p.getFechaPartido()))
-             System.out.println(p.toString());
+            if (!lib.fechaIsBeforeNow(p.getFechaPartido())) {
+                System.out.println(p.toString());
+            }
         }
 
-        System.out.println("Indica el numero del partido al que deseas asistir:");
-        idPartido= lector.nextInt();
-        lector.nextLine();
+         do {
+            System.out.println("Indica el numero del partido al que deseas asistir:");
+            idPartido= lector.nextInt();
+            lector.nextLine();
+            validado=true;
 
-        int opcion;
-        do {
-            opcion= menuGestionEntradas();
-            System.out.println("***********");
-            System.out.println("*BOLETERIA*");
-            System.out.println("***********");
-            switch (opcion){
-                case 1:
-                    ventaEntradas(idPartido);
-                    break;
-                case 2:
-                    //todo devolverEntrada();
-                    break;
-                case 3:
-                    listadoAsientos(true);
-                    break;
-                case 4:
-                    listadoAsientos(false);
-                    break;
-                case 5:
-                    recaudacionPartido();
-                    break;
-                case 0:
-                    System.out.println(lib.volverMenu());
-                    break;
-                default:
-                    System.out.println("Error.");
-                    break;
+             for (Partido p: estadio.getPartidos()) {
+                if (p.getCodPartido()==idPartido){
+                    do {
+                        System.out.println("***********");
+                        System.out.println("*BOLETERIA*");
+                        System.out.println("***********");
+                        opcion= menuGestionEntradas();
+                        switch (opcion){
+                            case 1:
+                                ventaEntradas(idPartido);
+                                break;
+                            case 2:
+                                //todo devolverEntrada();
+                                break;
+                            case 3:
+                                listadoAsientos(true);
+                                break;
+                            case 4:
+                                listadoAsientos(false);
+                                break;
+                            case 5:
+                                recaudacionPartido();
+                                break;
+                            case 0:
+                                System.out.println(lib.volverMenu());
+                                break;
+                            default:
+                                System.out.println("Error.");
+                                break;
+                        }
+                    }while(opcion!=0);
+
+                }else{
+                    validado= false;
+                    System.out.println("El partido no existe. Intente de nuevo.");
+                }
             }
-        }while(opcion!=0);
+
+        }while(!validado);
+
+
      }
 
      public void ventaEntradas(int idPartido){
@@ -140,10 +149,8 @@ public class Ejercicio7 {
         int numAsiento;
         Asiento asiento;
         Entrada entrada;
+        int numE;
 
-         System.out.println("****************");
-         System.out.println("*VENDER ENTRADA*");
-         System.out.println("****************");
         do {
             System.out.println("Indique la cantidad de entradas que desea comprar:");
             cantidadEntradas= lector.nextInt();
@@ -152,6 +159,8 @@ public class Ejercicio7 {
         }while (!validado);
 
         for (int i = 0; i < cantidadEntradas ; i++) {
+            numE=i;
+            System.out.println("ENTRADA"+ ++numE);
             opcionE= menuZonas();
             do {
                 estadio.getZonas().get(opcionE).mostrarAsientos();
@@ -162,7 +171,7 @@ public class Ejercicio7 {
             }while(!validado);
 
             do {
-                System.out.println("Indique el numero de numAsiento que desea: ");
+                System.out.println("Indique el numero de asiento que desea: ");
                 numAsiento= lector.nextInt();
                 lector.nextLine();
                 validado= numAsiento<= estadio.getZonas().get(opcionE).CANTIDAD_ASIENTOS;
@@ -170,6 +179,7 @@ public class Ejercicio7 {
 
             asiento=estadio.getZonas().get(opcionE).getAsiento(numAsiento);
             entrada= boleteria.venderEntrada(idPartido,asiento);
+
             if (entrada!=null){
                 System.out.println(entrada.toString());
             }else{
@@ -182,12 +192,9 @@ public class Ejercicio7 {
      public void devolverEntrada(){
          boolean validado;
          int numeroEntrada;
-         System.out.println("******************");
-         System.out.println("*DEVOLVER ENTRADA*");
-         System.out.println("******************");
 
          do {
-             System.out.println("Indique el numero identificador de la entrada:");
+             System.out.println("Indique el numero identificador de la entrada que desea devolver:");
              numeroEntrada= lector.nextInt();
              lector.nextLine();
              validado=numeroEntrada<estadio.getCANTIDAD_TOTAL_ASIENTOS();
@@ -206,7 +213,7 @@ public class Ejercicio7 {
      public int menuZonas(){
          int opcion;
          Zona.TipoZona[] tiposZonas= Zona.TipoZona.values();
-         System.out.println("*ZONAS DEL ESTADIO*");
+         System.out.println("**ZONAS DEL ESTADIO**");
 
          for (int i = 0; i < tiposZonas.length; i++) {
              System.out.println(tiposZonas[i].ordinal()+". "+tiposZonas[i].name());
@@ -221,7 +228,7 @@ public class Ejercicio7 {
         int opcion;
         Partido.TipoPartido opTipoPartido;
         Partido.TipoPartido[] tiposPartido= Partido.TipoPartido.values();
-        System.out.println("*TIPOS DE PARTIDO*");
+        System.out.println("**TIPOS DE PARTIDO**");
 
         for (int i = 0; i < tiposPartido.length; i++) {
             System.out.println(tiposPartido[i].ordinal()+". "+tiposPartido[i].name());
