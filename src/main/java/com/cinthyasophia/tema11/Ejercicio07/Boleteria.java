@@ -37,11 +37,10 @@ public class Boleteria {
 
         for (Partido partido: estadio.getPartidos()) {
             if (partido.getCodPartido()==idPartido){
-
                 zona.setCantidadAsientosD(zona.getCantidadAsientosD()-1);
                 a.getZona().getAsiento(a.getNumero()).setOcupado(true);
 
-                if (a.getZona().getTipo().equals("VIP")){
+                if (a.getZona().getTipo().contains("VIP")){
                     EntradaVIP entradaV= (EntradaVIP) agregarPrecioFinal(new EntradaVIP(partido,a));
                     entradaV.setPasswordVIP(generarCodigoVIP());
                     entradasVendidas.add(entradaV);

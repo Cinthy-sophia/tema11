@@ -27,17 +27,13 @@ public class Estadio {
 
     public String nuevoPartido(Partido p, int cantidadEntradas){
 
-        if (lib.fechaIsBeforeNow(p.getFechaPartido())){
-            return "La fecha del partido no es valida porque ya ha pasado, intente de nuevo.";
-        }else {
-
-            if (cantidadEntradas>CANTIDAD_TOTAL_ASIENTOS) {
-                return "La cantidad de entradas a vender es mayor que la cantidad de asientos disponibles, intente de nuevo.";
-            } else{
-                partidos.put(p,cantidadEntradas);
-                return "Añadido correctamente.";
-            }
+        if (cantidadEntradas>CANTIDAD_TOTAL_ASIENTOS) {
+            return "La cantidad de entradas a vender es mayor que la cantidad de asientos disponibles, intente de nuevo.";
+        } else{
+            partidos.put(p,cantidadEntradas);
+            return "Añadido correctamente.";
         }
+
     }
 
     public String regresarEntrada(int numeroEntrada){

@@ -44,10 +44,16 @@ public class Ejercicio7 {
             System.out.println("**NUEVO PARTIDO**");
             System.out.println("Indique la fecha del partido (dd/mm/yyyy):");
             fechaP= lector.nextLine();
-            validado= fechaP.length() >= 10;//todo verificar fecha
+            validado= fechaP.length() >= 10;
             if (!validado){
                 System.out.println("Fecha no valida. Intente de nuevo y recuerde que el formato es dd/mm/yyyy.");
             }
+
+            validado=lib.fechaIsBeforeNow(lib.getFecha(fechaP));
+            if (!validado){
+                System.out.println("La fecha del partido no es valida porque ya ha pasado, intente de nuevo.");
+            }
+
         }while(!validado);
 
         tipoPartido= menuTipoPartido().name();
