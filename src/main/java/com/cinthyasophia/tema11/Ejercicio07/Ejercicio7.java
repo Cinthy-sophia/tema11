@@ -90,33 +90,36 @@ public class Ejercicio7 {
 
      public void gestionEntradas(){
         int idPartido;
-         int opcion;
-         boolean validado;
+        int opcion;
+        boolean validado=false;
         for (Partido p: estadio.getPartidos()) {
             if (!lib.fechaIsBeforeNow(p.getFechaPartido())) {
                 System.out.println(p.toString());
             }
         }
 
-         do {
+        do {
             System.out.println("Indica el numero del partido al que deseas asistir:");
-            idPartido= lector.nextInt();
+            idPartido = lector.nextInt();
             lector.nextLine();
-            validado=true;
 
-             for (Partido p: estadio.getPartidos()) {
-                if (p.getCodPartido()==idPartido){
+            for (Partido p : estadio.getPartidos()) {
+                validado= p.getCodPartido() == idPartido;
+
+                if (!validado) {
+                    System.out.println("El partido no existe. Intente de nuevo.");
+                }else{
                     do {
                         System.out.println("***********");
                         System.out.println("*BOLETERIA*");
                         System.out.println("***********");
-                        opcion= menuGestionEntradas();
-                        switch (opcion){
+                        opcion = menuGestionEntradas();
+                        switch (opcion) {
                             case 1:
                                 ventaEntradas(idPartido);
                                 break;
                             case 2:
-                                //todo devolverEntrada();
+                                devolverEntrada();
                                 break;
                             case 3:
                                 listadoAsientos(true);
@@ -134,14 +137,11 @@ public class Ejercicio7 {
                                 System.out.println("Error.");
                                 break;
                         }
-                    }while(opcion!=0);
+                    } while (opcion != 0);
 
-                }else{
-                    validado= false;
-                    System.out.println("El partido no existe. Intente de nuevo.");
                 }
-            }
 
+            }
         }while(!validado);
 
 
@@ -156,6 +156,7 @@ public class Ejercicio7 {
         Asiento asiento;
         Entrada entrada;
         int numE;
+
 
         do {
             System.out.println("Indique la cantidad de entradas que desea comprar:");
@@ -208,11 +209,13 @@ public class Ejercicio7 {
                  System.out.println("Numero no valido. Intente de nuevo.");
              }
          }while (!validado);
+
          Entrada entrada=boleteria.devolverEntrada(numeroEntrada);
+
          if (entrada!= null){
-             System.out.println(entrada.toString()+"\nDevuelta con éxito");
+             System.out.println(entrada.toString()+"\nDevuelta con éxito.");
          }else{
-             System.out.println("No ha podido ser devuelta");
+             System.out.println("No ha podido ser devuelta, intente de nuevo.");
          }
      }
 
