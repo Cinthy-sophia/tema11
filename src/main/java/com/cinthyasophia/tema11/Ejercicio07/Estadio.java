@@ -27,21 +27,9 @@ public class Estadio {
 
     public String nuevoPartido(Partido p, int cantidadEntradas){
 
-        if (cantidadEntradas>CANTIDAD_TOTAL_ASIENTOS) {
-            return "La cantidad de entradas a vender es mayor que la cantidad de asientos disponibles, intente de nuevo.";
-        } else{
-            partidos.put(p,cantidadEntradas);
-            return "Añadido correctamente.";
-        }
+        partidos.put(p,cantidadEntradas);
+        return "Añadido correctamente.";
 
-    }
-
-    public String regresarEntrada(int numeroEntrada){
-        Entrada entrada=boleteria.devolverEntrada(numeroEntrada);
-        if (entrada!= null){
-            return entrada.toString()+"\nDevuelta con éxito";
-        }
-        return "No ha podido ser devuelta";
     }
 
     public int getCANTIDAD_TOTAL_ASIENTOS() {
@@ -60,9 +48,10 @@ public class Estadio {
         return partidos.keySet();
     }
 
+
     @Override
     public String toString() {
-        return  zonas +
+        return  "Zonas: "+zonas +
                 "\nPartidos:" + partidos.toString();
     }
 }

@@ -7,12 +7,12 @@ public class Zona {
     protected final int CANTIDAD_FILAS= 5;
     protected final int CANTIDAD_COLUMNAS= CANTIDAD_ASIENTOS/CANTIDAD_FILAS;
 
-    protected String tipo;
+    protected TipoZona tipo;
     protected Asiento[][] asientos;
     protected int cantidadAsientosD;
 
     public Zona(String tipo){
-        this.tipo=tipo;
+        this.tipo=TipoZona.valueOf(tipo);
         cantidadAsientosD= CANTIDAD_ASIENTOS;
         asientos= new Asiento[CANTIDAD_FILAS][CANTIDAD_COLUMNAS];
         int col;
@@ -30,7 +30,7 @@ public class Zona {
 
     }
 
-    public String getTipo() {
+    public TipoZona getTipo() {
         return tipo;
     }
 
@@ -54,9 +54,9 @@ public class Zona {
     public void mostrarAsientos(){
         for (Asiento[] asiento : asientos) {//filas
             for (Asiento value : asiento) {//columnas
-                System.out.print(value.toString() + "\t");
+                System.out.print(value.toString()+"\n");
             }
-            System.out.println();
+            System.out.println("\n");
         }
     }
 

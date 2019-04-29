@@ -50,9 +50,9 @@ public class Partido {
     public String toString() {
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
         return  "Numero de partido: " + codPartido +
-                "\tTipo:" + tipo +
+                "\nTipo:" + tipo +
                 "\tFecha:" + format.format(fechaPartido.getTime()) +
                 "\nEquipo Local: " + equipoLocal+
-                "\tEquipo Visitante:" + equipoVisitante;
+                "\nEquipo Visitante:" + equipoVisitante;
     }
 }

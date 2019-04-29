@@ -35,12 +35,12 @@ public class Asiento {
 
     @Override
     public String toString() {
-
+        String ocupadoS;
         if (ocupado){
-            return String.format("\nAsiento: %02d", numero) + " Zona: " + zona.getTipo() + " Fila: " + fila + "\u001B[31m OCUPADO \u001B[0m";
-
+            ocupadoS= "\u001B[31m [OCUPADO] \u001B[0m";
         }else{
-            return String.format("\nAsiento: %02d",numero)+ " Zona: " + zona.getTipo() + " Fila: " + fila + "\u001B[32m LIBRE \u001B[0m";
+            ocupadoS= "\u001B[32m [LIBRE] \u001B[0m";
         }
+        return String.format("Asiento: \u001B[1m%02d\u001B[0m ",numero)+" Zona:" + "\u001B[1m "+zona.getTipo()+"\u001B[0m" + " Fila:" + "\u001B[1m "+fila+"\u001B[0m"+ ocupadoS;
     }
 }
