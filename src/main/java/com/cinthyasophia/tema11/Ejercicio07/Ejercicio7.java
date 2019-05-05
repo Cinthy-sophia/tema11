@@ -12,8 +12,6 @@ public class Ejercicio7 {
 
     public Ejercicio7(){
         estadio= new Estadio();
-        boleteria= new Boleteria();
-
         int opcion;
         do {
             opcion= menuPrincipal();
@@ -87,62 +85,69 @@ public class Ejercicio7 {
 
      public void gestionEntradas(){
         int idPartido;
+        Partido par = null;
         int opcion;
-        boolean validado=false;
-        for (Partido p: estadio.getPartidos()) {
-            if (!lib.fechaIsBeforeNow(p.getFechaPartido())) {
-                System.out.println(p.toString());
-            }
-        }
-        if (!estadio.getPartidos().isEmpty()) {
-            do {
-                System.out.println("Indica el numero del partido al que deseas asistir:");
-                idPartido = lector.nextInt();
-                lector.nextLine();
+        boolean validado = false;
 
-                for (Partido p : estadio.getPartidos()) {
-                    validado = p.getCodPartido() == idPartido;
-                    if (!validado) {
-                        System.out.println("El partido no existe. Intente de nuevo.");
-                    } else {
-                        do {
-                            System.out.println("***********");
-                            System.out.println("*BOLETERIA*");
-                            System.out.println("***********");
-                            opcion = menuGestionEntradas();
-                            switch (opcion) {
-                                case 1:
-                                    ventaEntradas(idPartido);
-                                    break;
-                                case 2:
-                                    devolverEntrada();
-                                    break;
-                                case 3:
-                                    listadoAsientos(true);
-                                    break;
-                                case 4:
-                                    listadoAsientos(false);
-                                    break;
-                                case 5:
-                                    recaudacionPartido();
-                                    break;
-                                case 0:
-                                    System.out.println(lib.volverMenu());
-                                    break;
-                                default:
-                                    System.out.println("Error.");
-                                    break;
-                            }
-                        } while (opcion != 0);
-
-                    }
-
+        if (!estadio.getPartidos().isEmpty()){
+            for (Partido p: estadio.getPartidos()) {
+                if (!lib.fechaIsBeforeNow(p.getFechaPartido())) {
+                    System.out.println(p.toString());
                 }
-            } while (!validado);
+            }
+
         }else{
             System.out.println("No existen partidos creados.");
         }
 
+        do {
+             System.out.println("Indica el numero del partido al que deseas asistir:");
+             idPartido = lector.nextInt();
+             lector.nextLine();
+
+             for (Partido p: estadio.getPartidos()) {
+                 validado = p.getCodPartido() == idPartido;
+
+                 if (validado){
+                     par= p;
+                 }
+             }
+
+             if (!validado) {
+                 System.out.println("El partido no existe. Intente de nuevo.");
+             } else {
+                 boleteria= new Boleteria(estadio.getCANTIDAD_TOTAL_ASIENTOS(), estadio.getPartidosYEntradas().get(par));
+             }
+
+        } while (!validado);
+
+        do {
+            opcion = menuGestionEntradas();
+            switch (opcion) {
+                case 1:
+                    ventaEntradas(idPartido);
+                    break;
+                case 2:
+                    devolverEntrada();
+                    break;
+                case 3:
+                    listadoAsientos(true);
+                    break;
+                case 4:
+                    listadoAsientos(false);
+                    break;
+                case 5:
+                    recaudacionPartido();
+                    break;
+                case 0:
+                    System.out.println(lib.volverMenu());
+                    break;
+                default:
+                    System.out.println("Error.");
+                    break;
+            }
+        } while (opcion != 0);
+        System.out.println("No hay partidos por jugar.");
      }
 
      public void ventaEntradas(int idPartido){
@@ -155,7 +160,6 @@ public class Ejercicio7 {
         Entrada entrada=null;
         int numE;
 
-
         do {
             System.out.println("Indique la cantidad de entradas que desea comprar:");
             cantidadEntradas= lector.nextInt();
@@ -165,14 +169,14 @@ public class Ejercicio7 {
 
         for (int i = 0; i < cantidadEntradas ; i++) {
             numE=i;
-            System.out.println("ENTRADA "+ ++numE);
+            System.out.println("ENTRADA "+ ++numE +": ");
             opcionE= menuZonas();
             do {
                 estadio.getZonas().get(opcionE).mostrarAsientos();
                 System.out.println("Indique la fila que desea: ");
                 fila= lector.nextInt();
                 lector.nextLine();
-                validado= fila>= estadio.getZonas().get(opcionE).CANTIDAD_FILAS;
+                validado= fila > 0 && fila <= estadio.getZonas().get(opcionE).CANTIDAD_FILAS;
                 if (!validado){
                     System.out.println("Numero de fila incorrecto.");
                 }
@@ -182,7 +186,7 @@ public class Ejercicio7 {
                 System.out.println("Indique el numero de asiento que desea: ");
                 numAsiento= lector.nextInt();
                 lector.nextLine();
-                validado= numAsiento >0 && numAsiento<= estadio.getZonas().get(opcionE).CANTIDAD_ASIENTOS;
+                validado= numAsiento >0 && numAsiento <= estadio.getZonas().get(opcionE).CANTIDAD_ASIENTOS;
                 if(!validado){
                     System.out.println("Numero de asiento incorrecto.");
                 }
@@ -192,7 +196,7 @@ public class Ejercicio7 {
 
             for (Partido partido: estadio.getPartidos()) {
                 if (partido.getCodPartido() == idPartido) {
-                    entrada= boleteria.venderEntrada(partido,asiento,estadio.getCANTIDAD_TOTAL_ASIENTOS());
+                    entrada= boleteria.venderEntrada(partido,asiento);
 
                 }
             }
@@ -260,7 +264,6 @@ public class Ejercicio7 {
      }
 
      public void listadoAsientos(boolean ocupado){
-         //for (int i = 0; i <estadio.getZonas().size() ; i++) {
              for (Zona zona:estadio.getZonas()) {
                  for (Asiento[] asiento : zona.getAsientos()) {//filas
                      for (Asiento value : asiento) {//columnas
@@ -272,8 +275,6 @@ public class Ejercicio7 {
                  }
 
              }
-
-         //}
 
      }
      public void recaudacionPartido(){

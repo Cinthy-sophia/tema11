@@ -49,7 +49,7 @@ public class Partido {
     @Override
     public String toString() {
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
-        return  "Numero de partido: " + codPartido +
+        return  "\nNumero de partido: " + codPartido +
                 "\nTipo:" + tipo +
                 "\tFecha:" + format.format(fechaPartido.getTime()) +
                 "\nEquipo Local: " + equipoLocal+

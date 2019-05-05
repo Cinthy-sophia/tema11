@@ -11,12 +11,12 @@ public class Boleteria {
     private Lib lib = new Lib();
     private HashMap<Partido,Double> recaudacion;
     private ArrayList<Entrada> entradasVendidas;
-    //todo Boleteria recibe la cantidad de entradas a vender por cada partido, y las genera antes de venderlas. Ademas de generar los codigos aleatorios para ambos tipos de entradas
-    //
+    private int[] numerosPremio;
 
-    public Boleteria(){
+    public Boleteria(int cantidadAsientos, int cantidadEntradas){
         recaudacion= new HashMap<>();
         entradasVendidas= new ArrayList<>();
+        numerosPremio= generarNumerosSorteo(cantidadAsientos,cantidadEntradas);
     }
 
     public Entrada agregarPrecioFinal(Entrada entrada){
@@ -30,20 +30,20 @@ public class Boleteria {
         return entrada;
     }
 
-    public Entrada venderEntrada(Partido p, Asiento a, int cantidadAsientos){
+    public Entrada venderEntrada(Partido p, Asiento a){
         Zona zona= a.getZona();
         zona.setCantidadAsientosD(zona.getCantidadAsientosD()-1);
         a.getZona().getAsiento(a.getNumero()).setOcupado(true);
 
         if (a.getZona().getTipo().toString().equalsIgnoreCase("vip")){
             EntradaVIP entradaV= (EntradaVIP) agregarPrecioFinal(new EntradaVIP(p,a));
-            entradaV.setPasswordVIP(/*generarCodigoVIP()*/"0");
+            entradaV.setPasswordVIP(generarCodigoVIP());
             entradasVendidas.add(entradaV);
             recaudacion.put(p, entradaV.getPrecio());
             return entradaV;
         }else{
             EntradaNormal entradaN = (EntradaNormal) agregarPrecioFinal(new EntradaNormal(p,a));
-            entradaN.setCodPremio(generarNumeroSorteo(cantidadAsientos));
+            entradaN.setCodPremio(numerosPremio[numerosPremio.length-entradasVendidas.size()]);
             entradasVendidas.add(entradaN);
             recaudacion.put(p,entradaN.getPrecio());
             return agregarPrecioFinal(new EntradaNormal(p,a));
@@ -70,26 +70,38 @@ public class Boleteria {
         return entradasVendidas;
     }
 
-    private String generarCodigoVIP(){//todo con el codigo ascii
-        String letras= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder s = null;
-        String combinacion = "";
-        String combinacionFinal = "";
-        int[] combinacionNum= lib.getCombinacion(9,COMBINACION_VIP_SIZE);
-        int aleatorio;
+    private String generarCodigoVIP(){
+       EntradaVIP prueba;
+       int aleatorioL;
+       String letra;
+       int[] numeros= new int[COMBINACION_VIP_SIZE];
+       StringBuilder s;
+       String cod;
+       boolean validado= true;
+       do {
+           s= new StringBuilder();
+           aleatorioL= lib.aleatorio(65,90);
+           letra=String.valueOf(Character.toChars(aleatorioL));
+           numeros=lib.getCombinacion(100,numeros.length-1);
+           for (int numero : numeros) {
+               s.append(numero);
+           }
+           s.append(letra);
+           cod= s.toString();
 
-        for (int i = 0; i < COMBINACION_VIP_SIZE; i++) {
-            aleatorio= lib.aleatorio(0,9);
-            s.append(lib.getCombinacion(9,1)).append(letras.charAt(aleatorio));
+           for (Entrada vip: entradasVendidas) {
+               if (vip.isVIP()){
+                   prueba= (EntradaVIP) vip;
+                   validado= !prueba.getPasswordVIP().equals(cod);
 
-        }
-        combinacionFinal.concat(Arrays.toString(combinacionNum)).concat(combinacion);
-
-        return combinacionFinal;
+               }
+           }
+       }while(!validado);
+       return cod;
     }
 
-    private int generarNumeroSorteo(int cantidadAsientos){
-        return Integer.valueOf(Arrays.toString(lib.getCombinacion(cantidadAsientos,1)));
+    private int[] generarNumerosSorteo(int cantidadAsientos, int cantidadEntradasPorPartido){
+        return lib.getCombinacion(cantidadAsientos,cantidadEntradasPorPartido);
 
     }
 }
