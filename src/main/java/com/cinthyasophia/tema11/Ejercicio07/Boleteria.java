@@ -83,6 +83,7 @@ public class Boleteria {
            aleatorioL= lib.aleatorio(65,90);
            letra=String.valueOf(Character.toChars(aleatorioL));
            numeros=lib.getCombinacion(100,numeros.length-1);
+
            for (int numero : numeros) {
                s.append(numero);
            }

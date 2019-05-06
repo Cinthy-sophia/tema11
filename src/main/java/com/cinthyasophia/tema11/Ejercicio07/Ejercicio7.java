@@ -93,6 +93,7 @@ public class Ejercicio7 {
             for (Partido p: estadio.getPartidos()) {
                 if (!lib.fechaIsBeforeNow(p.getFechaPartido())) {
                     System.out.println(p.toString());
+                    validado=true;
                 }
             }
 
@@ -100,7 +101,12 @@ public class Ejercicio7 {
             System.out.println("No existen partidos creados.");
         }
 
+        if(!validado){
+            System.out.println("No hay partidos por jugar.");
+        }
+
         do {
+            validado= false;
              System.out.println("Indica el numero del partido al que deseas asistir:");
              idPartido = lector.nextInt();
              lector.nextLine();
@@ -147,7 +153,6 @@ public class Ejercicio7 {
                     break;
             }
         } while (opcion != 0);
-        System.out.println("No hay partidos por jugar.");
      }
 
      public void ventaEntradas(int idPartido){
