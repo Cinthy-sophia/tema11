@@ -13,10 +13,17 @@ public class Boleteria {
     private ArrayList<Entrada> entradasVendidas;
     private int[] numerosPremio;
 
-    public Boleteria(int cantidadAsientos, int cantidadEntradas){
+    public void setNumerosPremio(int cantidadAsientos, int cantidadEntradas) {
+        this.numerosPremio = generarNumerosSorteo(cantidadAsientos,cantidadEntradas);
+    }
+
+    public Boleteria(){
         recaudacion= new HashMap<>();
         entradasVendidas= new ArrayList<>();
-        numerosPremio= generarNumerosSorteo(cantidadAsientos,cantidadEntradas);
+        for (int i : numerosPremio = new int[]) {
+
+        }
+        ;
     }
 
     public Entrada agregarPrecioFinal(Entrada entrada){

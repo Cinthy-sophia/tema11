@@ -276,6 +276,7 @@ public class Ejercicio6 {
             }while(!validado);
 
             validado=false;
+
             for (Socio s: videoclub.getSocios()) {
                 if (s.getNif() == nif ){
                     validado = true;

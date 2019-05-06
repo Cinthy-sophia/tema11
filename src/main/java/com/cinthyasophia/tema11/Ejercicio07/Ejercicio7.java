@@ -105,17 +105,16 @@ public class Ejercicio7 {
             System.out.println("No hay partidos por jugar.");
         }
 
-        do {
-            validado= false;
+         do {
+             validado= false;
              System.out.println("Indica el numero del partido al que deseas asistir:");
              idPartido = lector.nextInt();
              lector.nextLine();
 
              for (Partido p: estadio.getPartidos()) {
-                 validado = p.getCodPartido() == idPartido;
-
-                 if (validado){
+                 if (p.getCodPartido() == idPartido){
                      par= p;
+                     validado=true;
                  }
              }
 
