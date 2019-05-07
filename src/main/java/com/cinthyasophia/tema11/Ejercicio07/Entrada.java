@@ -57,8 +57,8 @@ public class Entrada implements VIP {
 
     @Override
     public String toString() {
-        return String.format("Código: %-5s \n",codEntrada)+ partido.toString() +
-                asiento.toString()+ "\n\u001B[1m Precio: "+precio+"\u001B[0m";
+        return String.format("Código: %-5s",codEntrada)+ partido.toString()+
+                "\n"+asiento.toString()+ "\n\u001B[1mPrecio: "+precio+"\u001B[0m";
     }
 
     @Override

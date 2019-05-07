@@ -7,7 +7,8 @@ import java.util.HashMap;
 
 public class Boleteria {
     private final int COMBINACION_VIP_SIZE=5;
-    private final int COMBINACION_SORTEO_SIZE=2;
+    private final int COMBINACION_SORTEO_SIZE=1;
+    private final int CANTIDAD_FICHAS=100;
     private Lib lib = new Lib();
     private HashMap<Partido,Double> recaudacion;
     private ArrayList<Entrada> entradasVendidas;
@@ -45,7 +46,7 @@ public class Boleteria {
             entradaN.setCodPremio(generarNumerosSorteo(cantidadEntradas));
             entradasVendidas.add(entradaN);
             recaudacion.put(p,entradaN.getPrecio());
-            return agregarPrecioFinal(new EntradaNormal(p,a));
+            return entradaN;
         }
     }
 
@@ -81,7 +82,7 @@ public class Boleteria {
            s= new StringBuilder();
            aleatorioL= lib.aleatorio(65,90);
            letra=String.valueOf(Character.toChars(aleatorioL));
-           numeros=lib.getCombinacion(100,numeros.length-1);
+           numeros=lib.getCombinacion(CANTIDAD_FICHAS,numeros.length-1);
 
            for (int numero : numeros) {
                s.append(numero);

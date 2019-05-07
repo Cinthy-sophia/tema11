@@ -243,7 +243,7 @@ public class Ejercicio7 {
          System.out.println("**ZONAS DEL ESTADIO**");
 
          for (int i = 0; i < tiposZonas.length; i++) {
-             System.out.println(tiposZonas[i].ordinal()+". "+tiposZonas[i].name());
+             System.out.println(i+1 +". "+tiposZonas[i].name());
          }
          System.out.println("Selecciona la zona:");
          opcion= lib.validarOpcion(0,tiposZonas.length);
@@ -258,7 +258,7 @@ public class Ejercicio7 {
         System.out.println("**TIPOS DE PARTIDO**");
 
         for (int i = 0; i < tiposPartido.length; i++) {
-            System.out.println(tiposPartido[i].ordinal()+". "+tiposPartido[i].name());
+            System.out.println(i+1 +". "+tiposPartido[i].name());
         }
         System.out.println("Selecciona el tipo:");
         opcion= lib.validarOpcion(0,tiposPartido.length);
