@@ -69,6 +69,9 @@ public class Estadio {
             tipo= Partido.TipoPartido.values()[lib.aleatorio(0, Partido.TipoPartido.values().length-1)].name();
             fechaP= new GregorianCalendar(lib.aleatorio(2010,2025),lib.aleatorio(1,11),lib.aleatorio(1,28));
             fechaPartido=format.format(fechaP.getTime());
+            if (lib.fechaIsBeforeNow(fechaP)){
+
+            }
             equipoLocal= faker.team().sport();
             equipoVisitante= faker.team().sport();
             p.put(new Partido(tipo,fechaPartido,equipoLocal,equipoVisitante),lib.aleatorio(150,CANTIDAD_TOTAL_ASIENTOS));

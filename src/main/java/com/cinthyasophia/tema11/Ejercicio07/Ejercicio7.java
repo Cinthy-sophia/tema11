@@ -1,7 +1,11 @@
 package com.cinthyasophia.tema11.Ejercicio07;
 
 import com.cinthyasophia.tema11.Util.Lib;
+
+import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Ejercicio7 {
     private Lib lib = new Lib();
@@ -12,6 +16,7 @@ public class Ejercicio7 {
 
     public Ejercicio7(){
         estadio= new Estadio();
+        boleteria= new Boleteria();
         int opcion;
         do {
             opcion= menuPrincipal();
@@ -53,7 +58,7 @@ public class Ejercicio7 {
         tipoPartido= menuTipoPartido().name();
 
         do{
-            System.out.println("Indique el equipo local:");// todo enum de equipos disponibles
+            System.out.println("Indique el equipo local:");
             equipoLocal= lector.nextLine();
             validado= equipoLocal.length()>= 5;
             if(!validado){
@@ -79,13 +84,11 @@ public class Ejercicio7 {
                 System.out.println("Cantidad de entradas no valida. Intente de nuevo.");
             }
         }while(!validado);
-
         System.out.println(estadio.nuevoPartido(new Partido(tipoPartido,fechaP,equipoLocal,equipoVisitante),cantidadEntradas));
     }
 
      public void gestionEntradas(){
         int idPartido;
-        Partido par = null;
         int opcion;
         boolean validado = false;
 
@@ -113,15 +116,12 @@ public class Ejercicio7 {
 
              for (Partido p: estadio.getPartidos()) {
                  if (p.getCodPartido() == idPartido){
-                     par= p;
                      validado=true;
                  }
              }
 
              if (!validado) {
                  System.out.println("El partido no existe. Intente de nuevo.");
-             } else {
-                 boleteria= new Boleteria(estadio.getCANTIDAD_TOTAL_ASIENTOS(), estadio.getPartidosYEntradas().get(par));
              }
 
         } while (!validado);
@@ -190,7 +190,7 @@ public class Ejercicio7 {
                 System.out.println("Indique el numero de asiento que desea: ");
                 numAsiento= lector.nextInt();
                 lector.nextLine();
-                validado= numAsiento >0 && numAsiento <= estadio.getZonas().get(opcionE).CANTIDAD_ASIENTOS;
+                validado= numAsiento >0 && numAsiento <= estadio.getZonas().get(opcionE).CANTIDAD_ASIENTOS && !estadio.getZonas().get(opcionE).getAsiento(numAsiento).isOcupado();
                 if(!validado){
                     System.out.println("Numero de asiento incorrecto.");
                 }
@@ -200,7 +200,8 @@ public class Ejercicio7 {
 
             for (Partido partido: estadio.getPartidos()) {
                 if (partido.getCodPartido() == idPartido) {
-                    entrada= boleteria.venderEntrada(partido,asiento);
+
+                    entrada= boleteria.venderEntrada(partido,asiento,estadio.getPartidosYEntradas().get(partido));
 
                 }
             }
@@ -268,20 +269,35 @@ public class Ejercicio7 {
      }
 
      public void listadoAsientos(boolean ocupado){
-             for (Zona zona:estadio.getZonas()) {
-                 for (Asiento[] asiento : zona.getAsientos()) {//filas
-                     for (Asiento value : asiento) {//columnas
-                         if (value.isOcupado()==ocupado){
-                             System.out.print(value.toString());
-                         }
-                     }
-                     System.out.println();
+        int opcion;
+        opcion= menuZonas();
+
+        for (Asiento[] asiento : estadio.getZonas().get(opcion).getAsientos()) {//filas
+            for (Asiento value : asiento) {//columnas
+                if (value.isOcupado()==ocupado){
+                    System.out.println(value.toString());
+                }
+            }
+            System.out.println();
+        }
+
+     }
+     public void recaudacionPartido(){
+         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
+
+         if (boleteria.getRecaudacion().isEmpty()){
+             System.out.println("No hay partidos jugados.");
+         }
+
+         for (Partido p: boleteria.getRecaudacion().keySet()) {
+             for (double rec: boleteria.getRecaudacion().values()) {
+                 if (lib.fechaIsBeforeNow(p.getFechaPartido())){
+                     System.out.println("El partido "+p.getCodPartido()+" jugado en la fecha "+format.format(p.getFechaPartido().getTime())+" ha recaudado: "+rec);
                  }
 
              }
 
-     }
-     public void recaudacionPartido(){
+         }
 
      }
 

@@ -54,9 +54,9 @@ public class Zona {
     public void mostrarAsientos(){
         for (Asiento[] asiento : asientos) {//filas
             for (Asiento value : asiento) {//columnas
-                System.out.print(value.toString()+"\n");
+                System.out.println(value.toString());
             }
-            System.out.println("\n");
+            System.out.print("\n");
         }
     }
 

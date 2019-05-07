@@ -3,27 +3,19 @@ package com.cinthyasophia.tema11.Ejercicio07;
 import com.cinthyasophia.tema11.Util.Lib;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Boleteria {
     private final int COMBINACION_VIP_SIZE=5;
+    private final int COMBINACION_SORTEO_SIZE=2;
     private Lib lib = new Lib();
     private HashMap<Partido,Double> recaudacion;
     private ArrayList<Entrada> entradasVendidas;
-    private int[] numerosPremio;
-
-    public void setNumerosPremio(int cantidadAsientos, int cantidadEntradas) {
-        this.numerosPremio = generarNumerosSorteo(cantidadAsientos,cantidadEntradas);
-    }
 
     public Boleteria(){
         recaudacion= new HashMap<>();
         entradasVendidas= new ArrayList<>();
-        for (int i : numerosPremio = new int[]) {
 
-        }
-        ;
     }
 
     public Entrada agregarPrecioFinal(Entrada entrada){
@@ -37,7 +29,7 @@ public class Boleteria {
         return entrada;
     }
 
-    public Entrada venderEntrada(Partido p, Asiento a){
+    public Entrada venderEntrada(Partido p, Asiento a, int cantidadEntradas){
         Zona zona= a.getZona();
         zona.setCantidadAsientosD(zona.getCantidadAsientosD()-1);
         a.getZona().getAsiento(a.getNumero()).setOcupado(true);
@@ -50,7 +42,7 @@ public class Boleteria {
             return entradaV;
         }else{
             EntradaNormal entradaN = (EntradaNormal) agregarPrecioFinal(new EntradaNormal(p,a));
-            entradaN.setCodPremio(numerosPremio[numerosPremio.length-entradasVendidas.size()]);
+            entradaN.setCodPremio(generarNumerosSorteo(cantidadEntradas));
             entradasVendidas.add(entradaN);
             recaudacion.put(p,entradaN.getPrecio());
             return agregarPrecioFinal(new EntradaNormal(p,a));
@@ -100,7 +92,10 @@ public class Boleteria {
            for (Entrada vip: entradasVendidas) {
                if (vip.isVIP()){
                    prueba= (EntradaVIP) vip;
-                   validado= !prueba.getPasswordVIP().equals(cod);
+                   if (prueba.getPasswordVIP().equals(cod)){
+                       validado= false;
+
+                   }
 
                }
            }
@@ -108,8 +103,25 @@ public class Boleteria {
        return cod;
     }
 
-    private int[] generarNumerosSorteo(int cantidadAsientos, int cantidadEntradasPorPartido){
-        return lib.getCombinacion(cantidadAsientos,cantidadEntradasPorPartido);
+    private int generarNumerosSorteo(int cantidadEntradasPorPartido){
+        EntradaNormal p;
+        boolean validado= true;
+        int num;
+        do {
+            num=lib.getCombinacion(cantidadEntradasPorPartido,COMBINACION_SORTEO_SIZE)[0];
+            for (Entrada normal: entradasVendidas) {
+                if (!normal.isVIP()){
+                    p= (EntradaNormal) normal;
+                    if (p.getCodPremio()==num){
+                        validado= false;
+
+                    }
+
+                }
+            }
+        }while(!validado);
+
+        return num;
 
     }
 }
