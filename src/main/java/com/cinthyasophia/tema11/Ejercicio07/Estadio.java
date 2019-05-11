@@ -9,7 +9,7 @@ import java.util.*;
 public class Estadio {
     private Lib lib = new Lib();
     private ArrayList<Zona> zonas;
-    private HashMap<Partido,Integer> partidos;//Muestra todos los partidos que se han jugado y las entradas que se deben vender para cada uno.
+    private ArrayList<Partido> partidos;//Muestra todos los partidos que se han jugado y las entradas que se deben vender para cada uno.
     private final int CANTIDAD_TOTAL_ASIENTOS;
 
     public Estadio(){
@@ -24,9 +24,9 @@ public class Estadio {
     }
 
 
-    public String nuevoPartido(Partido p, int cantidadEntradas){
+    public String nuevoPartido(Partido p){
 
-        partidos.put(p,cantidadEntradas);
+        partidos.add(p);
         return "Añadido correctamente.";
 
     }
@@ -39,12 +39,8 @@ public class Estadio {
         return zonas;
     }
 
-    public HashMap<Partido,Integer> getPartidosYEntradas() {
+    public ArrayList<Partido> getPartidos(){
         return partidos;
-    }
-
-    public Set<Partido> getPartidos(){
-        return partidos.keySet();
     }
 
 
@@ -54,8 +50,8 @@ public class Estadio {
                 "\nPartidos:" + partidos.toString();
     }
 
-    public HashMap<Partido,Integer> datosAleatoriosPartidos(int cant){
-        HashMap<Partido,Integer> p= new HashMap<>();
+    public ArrayList<Partido> datosAleatoriosPartidos(int cant){
+        ArrayList<Partido> p= new ArrayList<>();
 
         Faker faker = new Faker(new Locale("es"));
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
@@ -64,17 +60,21 @@ public class Estadio {
         String fechaPartido;
         String equipoLocal;
         String equipoVisitante;
+        int cantidadEntradas;
+        Partido part;
 
         for (int i = 0; i < cant; i++) {
             tipo= Partido.TipoPartido.values()[lib.aleatorio(0, Partido.TipoPartido.values().length-1)].name();
             fechaP= new GregorianCalendar(lib.aleatorio(2010,2025),lib.aleatorio(1,11),lib.aleatorio(1,28));
             fechaPartido=format.format(fechaP.getTime());
-            if (lib.fechaIsBeforeNow(fechaP)){
-
-            }
             equipoLocal= faker.team().sport();
             equipoVisitante= faker.team().sport();
-            p.put(new Partido(tipo,fechaPartido,equipoLocal,equipoVisitante),lib.aleatorio(150,CANTIDAD_TOTAL_ASIENTOS));
+            cantidadEntradas=lib.aleatorio(150,CANTIDAD_TOTAL_ASIENTOS);
+            part=new Partido(tipo,fechaPartido,equipoLocal,equipoVisitante,lib.aleatorio(150,CANTIDAD_TOTAL_ASIENTOS));
+            if (lib.fechaIsBeforeNow(fechaP)){
+                part.setRecaudacion('+',lib.aleatorio(50.0, (double) cantidadEntradas));
+            }
+            p.add(part);
         }
         return p;
     }

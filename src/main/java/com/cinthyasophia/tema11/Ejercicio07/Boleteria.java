@@ -10,11 +10,9 @@ public class Boleteria {
     private final int COMBINACION_SORTEO_SIZE=1;
     private final int CANTIDAD_FICHAS=100;
     private Lib lib = new Lib();
-    private HashMap<Partido,Double> recaudacion;
     private ArrayList<Entrada> entradasVendidas;
 
     public Boleteria(){
-        recaudacion= new HashMap<>();
         entradasVendidas= new ArrayList<>();
 
     }
@@ -35,30 +33,28 @@ public class Boleteria {
         zona.setCantidadAsientosD(zona.getCantidadAsientosD()-1);
         a.getZona().getAsiento(a.getNumero()).setOcupado(true);
 
-        if (a.getZona().getTipo().toString().equalsIgnoreCase("vip")){
+        if (zona.getTipo().toString().equalsIgnoreCase("vip")){
             EntradaVIP entradaV= (EntradaVIP) agregarPrecioFinal(new EntradaVIP(p,a));
             entradaV.setPasswordVIP(generarCodigoVIP());
             entradasVendidas.add(entradaV);
-            recaudacion.put(p, entradaV.getPrecio());
+            p.setRecaudacion('+',entradaV.getPrecio());
             return entradaV;
         }else{
             EntradaNormal entradaN = (EntradaNormal) agregarPrecioFinal(new EntradaNormal(p,a));
             entradaN.setCodPremio(generarNumerosSorteo(cantidadEntradas));
             entradasVendidas.add(entradaN);
-            recaudacion.put(p,entradaN.getPrecio());
+            p.setRecaudacion('+',entradaN.getPrecio());
             return entradaN;
         }
     }
 
-    public HashMap<Partido, Double> getRecaudacion() {
-        return recaudacion;
-    }
-
     public Entrada devolverEntrada(int codEntrada){
+        Partido p;
         for (Entrada e: entradasVendidas) {
             if (e.getCodEntrada()== codEntrada){
                 e.getAsiento().setOcupado(false);
-                recaudacion.replace(e.getPartido(),recaudacion.get(e.getPartido()),(recaudacion.get(e.getPartido())-e.getPrecio()));
+                p= e.getPartido();
+                p.setRecaudacion('-',e.getPrecio());
                 return entradasVendidas.remove(codEntrada);
             }
 

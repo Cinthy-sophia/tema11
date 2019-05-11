@@ -4,6 +4,7 @@ import com.cinthyasophia.tema11.Util.Lib;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -84,38 +85,37 @@ public class Ejercicio7 {
                 System.out.println("Cantidad de entradas no valida. Intente de nuevo.");
             }
         }while(!validado);
-        System.out.println(estadio.nuevoPartido(new Partido(tipoPartido,fechaP,equipoLocal,equipoVisitante),cantidadEntradas));
+        System.out.println(estadio.nuevoPartido(new Partido(tipoPartido,fechaP,equipoLocal,equipoVisitante,cantidadEntradas)));
     }
 
      public void gestionEntradas(){
         int idPartido;
         int opcion;
+        Partido partido=null;
         boolean validado = false;
 
         if (!estadio.getPartidos().isEmpty()){
             for (Partido p: estadio.getPartidos()) {
-                if (!lib.fechaIsBeforeNow(p.getFechaPartido())) {
-                    System.out.println(p.toString());
-                    validado=true;
-                }
+                System.out.println(p.toString());
+                System.out.println("Entradas disponibles: "+(p.getCantidadEntradas()-boleteria.getEntradasVendidas().size()));
             }
 
         }else{
             System.out.println("No existen partidos creados.");
         }
 
-        if(!validado){
-            System.out.println("No hay partidos por jugar.");
-        }
 
          do {
-             validado= false;
              System.out.println("Indica el numero del partido al que deseas asistir:");
              idPartido = lector.nextInt();
              lector.nextLine();
 
              for (Partido p: estadio.getPartidos()) {
                  if (p.getCodPartido() == idPartido){
+                     partido=p;
+                     if(lib.fechaIsBeforeNow(p.getFechaPartido())){
+                         System.out.println("Ha escogido un partido anterior a la fecha actual, solo podrá verificar la recaudacion del partido.");
+                     }
                      validado=true;
                  }
              }
@@ -130,7 +130,7 @@ public class Ejercicio7 {
             opcion = menuGestionEntradas();
             switch (opcion) {
                 case 1:
-                    ventaEntradas(idPartido);
+                    ventaEntradas(partido);
                     break;
                 case 2:
                     devolverEntrada();
@@ -142,7 +142,7 @@ public class Ejercicio7 {
                     listadoAsientos(false);
                     break;
                 case 5:
-                    recaudacionPartido();
+                    recaudacionPartido(partido);
                     break;
                 case 0:
                     System.out.println(lib.volverMenu());
@@ -154,14 +154,14 @@ public class Ejercicio7 {
         } while (opcion != 0);
      }
 
-     public void ventaEntradas(int idPartido){
+     public void ventaEntradas(Partido partido){
         boolean validado;
         int cantidadEntradas;
         int opcionE;
         int fila;
         int numAsiento;
         Asiento asiento;
-        Entrada entrada=null;
+        Entrada entrada;
         int numE;
 
         do {
@@ -198,13 +198,8 @@ public class Ejercicio7 {
 
             asiento=estadio.getZonas().get(opcionE).getAsiento(numAsiento);
 
-            for (Partido partido: estadio.getPartidos()) {
-                if (partido.getCodPartido() == idPartido) {
+            entrada= boleteria.venderEntrada(partido,asiento,partido.getCantidadEntradas());
 
-                    entrada= boleteria.venderEntrada(partido,asiento,estadio.getPartidosYEntradas().get(partido));
-
-                }
-            }
 
             if (entrada!=null){
                 System.out.println(entrada.toString());
@@ -218,6 +213,7 @@ public class Ejercicio7 {
      public void devolverEntrada(){
          boolean validado;
          int numeroEntrada;
+
          do {
              System.out.println("Indique el numero identificador de la entrada que desea devolver:");
              numeroEntrada= lector.nextInt();
@@ -251,23 +247,6 @@ public class Ejercicio7 {
          return opcion;
 
      }
-     public Partido.TipoPartido menuTipoPartido(){
-        int opcion;
-        Partido.TipoPartido opTipoPartido;
-        Partido.TipoPartido[] tiposPartido= Partido.TipoPartido.values();
-        System.out.println("**TIPOS DE PARTIDO**");
-
-        for (int i = 0; i < tiposPartido.length; i++) {
-            System.out.println(i+1 +". "+tiposPartido[i].name());
-        }
-        System.out.println("Selecciona el tipo:");
-        opcion= lib.validarOpcion(0,tiposPartido.length);
-
-        opTipoPartido= tiposPartido[opcion];
-
-        return opTipoPartido;
-     }
-
      public void listadoAsientos(boolean ocupado){
         int opcion;
         opcion= menuZonas();
@@ -282,24 +261,30 @@ public class Ejercicio7 {
         }
 
      }
-     public void recaudacionPartido(){
+
+    public void recaudacionPartido(Partido partido){
          SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
 
-         if (boleteria.getRecaudacion().isEmpty()){
-             System.out.println("No hay partidos jugados.");
-         }
-
-         for (Partido p: boleteria.getRecaudacion().keySet()) {
-             for (double rec: boleteria.getRecaudacion().values()) {
-                 if (lib.fechaIsBeforeNow(p.getFechaPartido())){
-                     System.out.println("El partido "+p.getCodPartido()+" jugado en la fecha "+format.format(p.getFechaPartido().getTime())+" ha recaudado: "+rec);
-                 }
-
-             }
-
-         }
+         System.out.println("El partido "+partido.getCodPartido()+" jugado en la fecha "+format.format(partido.getFechaPartido().getTime())+" ha recaudado: "+partido.getRecaudacion());
 
      }
+
+    public Partido.TipoPartido menuTipoPartido(){
+        int opcion;
+        Partido.TipoPartido opTipoPartido;
+        Partido.TipoPartido[] tiposPartido= Partido.TipoPartido.values();
+        System.out.println("**TIPOS DE PARTIDO**");
+
+        for (int i = 0; i < tiposPartido.length; i++) {
+            System.out.println(i+1 +". "+tiposPartido[i].name());
+        }
+        System.out.println("Selecciona el tipo:");
+        opcion= lib.validarOpcion(0,tiposPartido.length);
+
+        opTipoPartido= tiposPartido[opcion];
+
+        return opTipoPartido;
+    }
 
     public int menuGestionEntradas(){
         int opcion;

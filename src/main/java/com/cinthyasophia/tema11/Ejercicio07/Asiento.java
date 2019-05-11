@@ -17,7 +17,7 @@ public class Asiento {
         return ocupado;
     }
 
-    public void setOcupado(boolean ocupado) {
+    protected void setOcupado(boolean ocupado) {
         this.ocupado = ocupado;
     }
 
