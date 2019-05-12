@@ -218,12 +218,12 @@ public class Lib {
         return fechaActual.isBefore(now);
 
     }
-    public int[] getCombinacion( int numeroFichas, int numeroCombinacion) {
+    public int[] getCombinacion( int numeroFichas, int sizeCombinacion) {
         int aux;
         int cont;
         int numAl;
         int[] fichas= new int[numeroFichas];
-        int[] combinacion= new int[numeroCombinacion];
+        int[] combinacion= new int[sizeCombinacion];
 
         //llena el array fichas de numeros aleatorios entre en 1 y el numero de fichas que recibe como parametro
         for (int i = 0; i < fichas.length ; i++) {

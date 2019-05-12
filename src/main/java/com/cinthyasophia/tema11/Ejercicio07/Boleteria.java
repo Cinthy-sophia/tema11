@@ -11,9 +11,11 @@ public class Boleteria {
     private final int CANTIDAD_FICHAS=100;
     private Lib lib = new Lib();
     private ArrayList<Entrada> entradasVendidas;
+    private ArrayList<GeneradorSorteo> generadorSorteo;
 
     public Boleteria(){
         entradasVendidas= new ArrayList<>();
+        generadorSorteo= new ArrayList<>();
 
     }
 
@@ -28,10 +30,19 @@ public class Boleteria {
         return entrada;
     }
 
-    public Entrada venderEntrada(Partido p, Asiento a, int cantidadEntradas){
+    public Entrada venderEntrada(Partido p, Asiento a){
         Zona zona= a.getZona();
-        zona.setCantidadAsientosD(zona.getCantidadAsientosD()-1);
-        a.getZona().getAsiento(a.getNumero()).setOcupado(true);
+        zona.setCantidadAsientosD(p.getCantidadEntradas());
+        a.setOcupado(true);
+        GeneradorSorteo gS;
+        for (GeneradorSorteo g: generadorSorteo) {
+            if (g.getPartido().getCodPartido()== p.getCodPartido()){
+
+            }else{
+                generadorSorteo=new GeneradorSorteo(p);
+
+            }
+        }
 
         if (zona.getTipo().toString().equalsIgnoreCase("vip")){
             EntradaVIP entradaV= (EntradaVIP) agregarPrecioFinal(new EntradaVIP(p,a));
@@ -41,7 +52,7 @@ public class Boleteria {
             return entradaV;
         }else{
             EntradaNormal entradaN = (EntradaNormal) agregarPrecioFinal(new EntradaNormal(p,a));
-            entradaN.setCodPremio(generarNumerosSorteo(cantidadEntradas));
+            entradaN.setCodPremio(generadorSorteo.getNumSorteo(entradaN.getCodEntrada()));
             entradasVendidas.add(entradaN);
             p.setRecaudacion('+',entradaN.getPrecio());
             return entradaN;

@@ -45,12 +45,12 @@ public class Main {
 
         part.setRecaudacion('+', lib.aleatorio(50.0, (double) cantidadEntradas));
 
-        System.out.println(part.getRecaudacion());
+        System.out.println(Math.floor(part.getRecaudacion()));
         part.setRecaudacion('-',20);
-        System.out.println(part.getRecaudacion());
-        part.setRecaudacion('+',20);
+        System.out.println(Math.floor(part.getRecaudacion()));
+        part.setRecaudacion('+',5);
         System.out.println(part.toString());
-        System.out.println(part.getRecaudacion());
+        System.out.println(Math.floor(part.getRecaudacion()));
 
 
     }

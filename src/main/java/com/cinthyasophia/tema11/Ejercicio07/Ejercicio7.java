@@ -93,6 +93,8 @@ public class Ejercicio7 {
         int opcion;
         Partido partido=null;
         boolean validado = false;
+        boolean partidoOld= false;
+        String yaJugado= "Partido ya jugado, solo puede verificar la recaudacion.";
 
         if (!estadio.getPartidos().isEmpty()){
             for (Partido p: estadio.getPartidos()) {
@@ -106,7 +108,7 @@ public class Ejercicio7 {
 
 
          do {
-             System.out.println("Indica el numero del partido al que deseas asistir:");
+             System.out.println("Indique el numero del partido al que desea asistir:");
              idPartido = lector.nextInt();
              lector.nextLine();
 
@@ -114,14 +116,15 @@ public class Ejercicio7 {
                  if (p.getCodPartido() == idPartido){
                      partido=p;
                      if(lib.fechaIsBeforeNow(p.getFechaPartido())){
-                         System.out.println("Ha escogido un partido anterior a la fecha actual, solo podrá verificar la recaudacion del partido.");
+                         System.out.println("Has escogido un partido anterior a la fecha actual, solo podrás verificar la recaudacion del partido.");
+                        partidoOld=true;
                      }
                      validado=true;
                  }
              }
 
              if (!validado) {
-                 System.out.println("El partido no existe. Intente de nuevo.");
+                 System.out.println("El partido no existe. Intenta de nuevo.");
              }
 
         } while (!validado);
@@ -130,19 +133,39 @@ public class Ejercicio7 {
             opcion = menuGestionEntradas();
             switch (opcion) {
                 case 1:
-                    ventaEntradas(partido);
+                    if (partidoOld){
+                        System.out.println(yaJugado);
+                    }else{
+                        ventaEntradas(partido);
+                    }
                     break;
                 case 2:
-                    devolverEntrada();
+                    if (partidoOld){
+
+                        System.out.println(yaJugado);
+                    }else{
+
+                        devolverEntrada();
+                    }
                     break;
                 case 3:
-                    listadoAsientos(true);
+                    if (partidoOld){
+                        System.out.println(yaJugado);
+                    }else{
+                        listadoAsientos(true);
+                    }
                     break;
                 case 4:
-                    listadoAsientos(false);
+                    if (partidoOld){
+                        System.out.println(yaJugado);
+                    }else{
+                        listadoAsientos(false);
+                    }
                     break;
                 case 5:
+
                     recaudacionPartido(partido);
+
                     break;
                 case 0:
                     System.out.println(lib.volverMenu());
@@ -165,7 +188,7 @@ public class Ejercicio7 {
         int numE;
 
         do {
-            System.out.println("Indique la cantidad de entradas que desea comprar:");
+            System.out.println("Indica la cantidad de entradas que deseas comprar:");
             cantidadEntradas= lector.nextInt();
             lector.nextLine();
             validado= cantidadEntradas>0;
@@ -177,7 +200,7 @@ public class Ejercicio7 {
             opcionE= menuZonas();
             do {
                 estadio.getZonas().get(opcionE).mostrarAsientos();
-                System.out.println("Indique la fila que desea: ");
+                System.out.println("Indica la fila que deseas: ");
                 fila= lector.nextInt();
                 lector.nextLine();
                 validado= fila > 0 && fila <= estadio.getZonas().get(opcionE).CANTIDAD_FILAS;
@@ -187,7 +210,7 @@ public class Ejercicio7 {
             }while(!validado);
 
             do {
-                System.out.println("Indique el numero de asiento que desea: ");
+                System.out.println("Indica el numero de asiento que deseas: ");
                 numAsiento= lector.nextInt();
                 lector.nextLine();
                 validado= numAsiento >0 && numAsiento <= estadio.getZonas().get(opcionE).CANTIDAD_ASIENTOS && !estadio.getZonas().get(opcionE).getAsiento(numAsiento).isOcupado();
@@ -198,13 +221,13 @@ public class Ejercicio7 {
 
             asiento=estadio.getZonas().get(opcionE).getAsiento(numAsiento);
 
-            entrada= boleteria.venderEntrada(partido,asiento,partido.getCantidadEntradas());
+            entrada= boleteria.venderEntrada(partido,asiento);
 
 
             if (entrada!=null){
                 System.out.println(entrada.toString());
             }else{
-               System.out.println("La entrada no ha podido ser creada. Vuelva a intentarlo.");
+               System.out.println("La entrada no ha podido ser creada. Vuelve a intentarlo.");
             }
         }
 
@@ -215,7 +238,7 @@ public class Ejercicio7 {
          int numeroEntrada;
 
          do {
-             System.out.println("Indique el numero identificador de la entrada que desea devolver:");
+             System.out.println("Indica el numero identificador de la entrada que deseas devolver:");
              numeroEntrada= lector.nextInt();
              lector.nextLine();
              validado=numeroEntrada<=estadio.getCANTIDAD_TOTAL_ASIENTOS();
@@ -263,9 +286,8 @@ public class Ejercicio7 {
      }
 
     public void recaudacionPartido(Partido partido){
-         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
 
-         System.out.println("El partido "+partido.getCodPartido()+" jugado en la fecha "+format.format(partido.getFechaPartido().getTime())+" ha recaudado: "+partido.getRecaudacion());
+         System.out.println(partido.toString()+"\nHa recaudado: "+Math.floor(partido.getRecaudacion()));
 
      }
 

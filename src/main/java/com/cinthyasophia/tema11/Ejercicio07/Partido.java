@@ -34,7 +34,7 @@ public class Partido {
     }
 
 
-    public void setRecaudacion(char operacion, double recaudacion) {
+    protected void setRecaudacion(char operacion, double recaudacion) {
         if (operacion=='+'){
             this.recaudacion += recaudacion;
         }else if (operacion == '-'){
@@ -74,6 +74,6 @@ public class Partido {
                 "\nFecha: " + format.format(fechaPartido.getTime()) +
                 "\nEquipo Local: " + equipoLocal+
                 "\nEquipo Visitante: " + equipoVisitante +
-                "\nEntrada a vender: " + cantidadEntradas;
+                "\nEntradas a vender: " + cantidadEntradas;
     }
 }
