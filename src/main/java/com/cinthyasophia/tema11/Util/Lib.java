@@ -241,7 +241,7 @@ public class Lib {
             cont--;
 
         }
-        combinacion=ordernarCombinacion(combinacion);
+        //combinacion=ordernarCombinacion(combinacion);
         return combinacion;//Devuelve el vector con la combinacion
 
     }

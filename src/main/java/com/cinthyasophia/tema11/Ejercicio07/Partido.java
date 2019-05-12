@@ -73,7 +73,7 @@ public class Partido {
                 "\nTipo: " + tipo +
                 "\nFecha: " + format.format(fechaPartido.getTime()) +
                 "\nEquipo Local: " + equipoLocal+
-                "\nEquipo Visitante: " + equipoVisitante +
-                "\nEntradas a vender: " + cantidadEntradas;
+                "\nEquipo Visitante: " + equipoVisitante;
+
     }
 }

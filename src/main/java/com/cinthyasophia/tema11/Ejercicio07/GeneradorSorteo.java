@@ -9,7 +9,8 @@ public class GeneradorSorteo extends Generador {
 
     public GeneradorSorteo(Partido partido){
         this.partido= partido;
-        numerosSorteo= generarNumerosSorteo(partido.getCantidadEntradas(),partido.getCantidadEntradas());
+        numerosSorteo= new ArrayList<>();
+        numerosSorteo= generarNumerosSorteo(partido.getCantidadEntradas(),partido.getCantidadEntradas()-1);
     }
 
     public Partido getPartido() {

@@ -50,8 +50,7 @@ public class Entrada implements VIP {
     @Override
     public boolean equals(Object o) {
         Entrada entrada = (Entrada) o;
-        return Double.compare(entrada.precio, precio) == 0 &&
-                Objects.equals(partido, entrada.partido) &&
+        return  Objects.equals(partido, entrada.partido) &&
                 Objects.equals(asiento, entrada.asiento);
     }
 

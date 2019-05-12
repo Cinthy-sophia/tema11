@@ -136,7 +136,7 @@ public class Videoclub {
      * @return String
      */
     public String alquilar(int nif, Multimedia m){
-        multimediaRentado= new ArrayList<>();
+       //multimediaRentado= new ArrayList<>();
         SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
         GregorianCalendar fechaDevolucion = new GregorianCalendar();
         GregorianCalendar fechaAl = new GregorianCalendar();
