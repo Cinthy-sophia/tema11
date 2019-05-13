@@ -207,6 +207,12 @@ public class Lib {
         return dias;
 
     }
+
+    /**
+     * Devuelve un boolean indicando si la fecha que recibe por parametro es antes de la fecha actual.
+     * @param fecha
+     * @return boolean
+     */
     public boolean fechaIsBeforeNow(GregorianCalendar fecha){
         int year= fecha.get(Calendar.YEAR);
         int month= fecha.get(Calendar.MONTH);

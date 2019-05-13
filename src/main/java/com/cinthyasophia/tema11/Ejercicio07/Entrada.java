@@ -1,5 +1,7 @@
 package com.cinthyasophia.tema11.Ejercicio07;
 
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class Entrada implements VIP {
@@ -7,28 +9,34 @@ public class Entrada implements VIP {
     private final double PRECIO_BASE= 30;
 
     protected int codEntrada;
+    protected GregorianCalendar fechaVenta;
     protected Partido partido;
     protected Asiento asiento;
     protected double precio;
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
     public Entrada(Partido partido, Asiento asiento) {
         ++id;
         codEntrada=id;
         this.partido = partido;
         this.asiento = asiento;
         precio= PRECIO_BASE;
+        fechaVenta= new GregorianCalendar();
 
     }
+
     public Entrada(){
         ++id;
         codEntrada=id;
         this.partido = null;
         this.asiento = null;
         precio= PRECIO_BASE;
+        fechaVenta= new GregorianCalendar();
+    }
+
+    public GregorianCalendar getFechaVenta() {
+        return fechaVenta;
+    }
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public double getPrecio() {
@@ -56,8 +64,10 @@ public class Entrada implements VIP {
 
     @Override
     public String toString() {
-        return String.format("Código: %-5s",codEntrada)+ partido.toString()+
-                "\n"+asiento.toString()+ "\n\u001B[1mPrecio: "+precio+"\u001B[0m";
+        SimpleDateFormat format= new SimpleDateFormat("dd/MM/yyyy");
+
+        return String.format("Numero identificador: %-5s",codEntrada)+ partido.toString()+
+                "\n"+asiento.toString()+"\nFecha de venta: "+format.format(fechaVenta.getTime());
     }
 
     @Override

@@ -10,6 +10,9 @@ public class Ejercicio7 {
 
     private Estadio estadio;
 
+    /**
+     * Switch principal
+     */
     public Ejercicio7(){
         estadio= new Estadio();
         int opcion;
@@ -31,6 +34,10 @@ public class Ejercicio7 {
             }
         }while(opcion!=0);
     }
+
+    /**
+     * Le pide los datos necesarios al usuario y los verifica. Al final crea un partido nuevo.
+     */
     public void nuevoPartido(){
         int cantidadEntradas;
         String fechaP;
@@ -79,9 +86,13 @@ public class Ejercicio7 {
                 System.out.println("Cantidad de entradas no valida. Intente de nuevo.");
             }
         }while(!validado);
+
         System.out.println(estadio.nuevoPartido(new Partido(tipoPartido,fechaP,equipoLocal,equipoVisitante,cantidadEntradas)));
     }
 
+    /**
+     * Le pregunta al usuario el partido al que desea gestionar y luego le muestra las opciones a elegir.
+     */
      public void gestionEntradas(){
         int idPartido;
         int opcion;
@@ -124,6 +135,7 @@ public class Ejercicio7 {
 
         } while (!validado);
 
+         //Switch gestion de entradas.
         do {
             opcion = menuGestionEntradas();
             switch (opcion) {
@@ -157,9 +169,7 @@ public class Ejercicio7 {
                     }
                     break;
                 case 5:
-
                     recaudacionPartido(partido);
-
                     break;
                 case 0:
                     System.out.println(lib.volverMenu());
@@ -171,6 +181,11 @@ public class Ejercicio7 {
         } while (opcion != 0);
      }
 
+    /**
+     * Recibe el partido del que se desea vender las entradas. Y luego le pregunta al usuario los datos principales y
+     * los verifica para poder venderle las entradas, envia los datos al Estadio y este regresa la entrada. Al final se imprime la entrada.
+     * @param partido
+     */
      public void ventaEntradas(Partido partido){
         boolean validado;
         int cantidadEntradas;
@@ -184,7 +199,7 @@ public class Ejercicio7 {
             System.out.println("Indica la cantidad de entradas que deseas comprar:");
             cantidadEntradas= lector.nextInt();
             lector.nextLine();
-            validado= cantidadEntradas>0;
+            validado= cantidadEntradas>0 && cantidadEntradas<=partido.getCantidadEntradas();
         }while (!validado);
 
         for (int i = 0; i < cantidadEntradas ; i++) {
@@ -220,6 +235,12 @@ public class Ejercicio7 {
 
 
      }
+
+    /**
+     * Recibe el partido del que se desea vender las entradas. Le pide al usuario el codigo de la entrada y
+     * lo envia al estadio, al final imprime un mensaje indicando si se pudo devolver o no
+     * @param partido
+     */
      public void devolverEntrada(Partido partido){
          boolean validado;
          int numeroEntrada;
@@ -236,9 +257,14 @@ public class Ejercicio7 {
          System.out.println(estadio.regresarEntrada(numeroEntrada));
      }
 
+    /**
+     * Recibe un boolean indicando que asientos debe mostrar. Si es false, muestra los asientos libres, si es true,
+     * muestra los asientos ocupados.
+     * @param ocupado
+     */
      public void listadoAsientos(boolean ocupado){
         int opcion;
-        opcion= menuZonas();
+        opcion= menuZonas(); // Primero le pregunta al usuario la zona que desea ver
 
         for (Asiento[] asiento : estadio.getZonas().get(opcion).getAsientos()) {//filas
             for (Asiento value : asiento) {//columnas
@@ -250,12 +276,21 @@ public class Ejercicio7 {
         }
 
      }
+
+    /**
+     * Recibe el partido indicado por el ususario y muestra la recaudacion que ha logrado.
+     * @param partido
+     */
     public void recaudacionPartido(Partido partido){
 
          System.out.println(partido.toString()+"\nHa recaudado: "+Math.floor(partido.getRecaudacion()));
 
-     }
+    }
 
+    /**
+     * Muestra las zonas existentes y regresa el numero de la zona escogida por el usuario.
+     * @return int
+     */
     public int menuZonas(){
         int opcion;
         Zona.TipoZona[] tiposZonas= Zona.TipoZona.values();
@@ -271,12 +306,16 @@ public class Ejercicio7 {
 
     }
 
+    /**
+     * Muestra los tipos de partido y regresa el tipo escogido por el usuario.
+     * @return
+     */
     public Partido.TipoPartido menuTipoPartido(){
         int opcion;
         Partido.TipoPartido opTipoPartido;
         Partido.TipoPartido[] tiposPartido= Partido.TipoPartido.values();
-        System.out.println("**TIPOS DE PARTIDO**");
 
+        System.out.println("**TIPOS DE PARTIDO**");
         for (int i = 0; i < tiposPartido.length; i++) {
             System.out.println(tiposPartido[i].ordinal()+". "+tiposPartido[i].name());
         }
@@ -306,9 +345,9 @@ public class Ejercicio7 {
     }
     public int menuPrincipal(){
         int opcion;
-        System.out.println("*********");
-        System.out.println("*ESTADIO*");
-        System.out.println("*********");
+        System.out.println("*************");
+        System.out.println("*ENTRADA VIP*");
+        System.out.println("*************");
         System.out.println("1.Nuevo partido.");
         System.out.println("2.Gestion de entradas.");
         System.out.println("0.Salir.");

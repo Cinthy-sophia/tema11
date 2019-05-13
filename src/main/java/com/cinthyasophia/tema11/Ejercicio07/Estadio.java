@@ -12,7 +12,7 @@ public class Estadio {
     private ArrayList<Zona> zonas;
     private GeneradorVIP generadorCodigo;
     private ArrayList<GeneradorSorteo> sorteosDePartidos;
-    private ArrayList<Partido> partidos;//Muestra todos los partidos que se han jugado y las entradas que se deben vender para cada uno.
+    private ArrayList<Partido> partidos;
 
     public Estadio(){
         zonas= new ArrayList<>();
@@ -24,19 +24,38 @@ public class Estadio {
         boleteria= new Boleteria();
         sorteosDePartidos= new ArrayList<>();
 
-        for (Partido p: partidos) {
-            sorteosDePartidos.add(new GeneradorSorteo(p));
+        if(!partidos.isEmpty()){
+            for (Partido p: partidos) {
+                sorteosDePartidos.add(new GeneradorSorteo(p));
+            }
         }
         generadorCodigo= new GeneradorVIP();
     }
 
-
+    /**
+     * Crea un nuevo partido y lo añade al ArrayList, y luego genera los numeros de sorteo para las entradas que se venderan.
+     * @param p
+     * @return String
+     */
     public String nuevoPartido(Partido p){
-        partidos.add(p);
-        sorteosDePartidos.add(new GeneradorSorteo(p));
-        return "Añadido correctamente.";
+        if (partidos.add(p)){
+            sorteosDePartidos.add(new GeneradorSorteo(p));
+            return "Añadido correctamente.";
+
+
+        }else{
+            return "No ha podido ser añadido, intente de nuevo.";
+        }
+
 
     }
+
+    /**
+     * Recibe el partido y el asiento y crea la entrada y la devueve como String, sino muestra un mensaje de error.
+     * @param p
+     * @param a
+     * @return String
+     */
     public String venderEntrada(Partido p, Asiento a){
         Entrada e;
         int numSorteo=0;
@@ -59,6 +78,13 @@ public class Estadio {
             return "La entrada no ha podido ser creada. Vuelve a intentarlo.";
         }
     }
+
+    /**
+     * Recibe el codigo de la entrada, la busca y la envia a boleteria. Devuelve un String indicando si la entrada pudo ser devuelta o no,
+     * ademas de regresar tambien el codigo de sorteo.
+     * @param codEntrada
+     * @return String
+     */
     public String regresarEntrada(int codEntrada){
         int codSorteo=0;
         Entrada entrada= null;
@@ -67,6 +93,9 @@ public class Estadio {
                 if (e instanceof EntradaNormal){
                     entrada= e;
                     codSorteo= ((EntradaNormal) e).getCodPremio();
+                }else if (e instanceof EntradaVIP){
+                    entrada= e;
+                    codSorteo= 0;
                 }
             }
         }
@@ -74,8 +103,10 @@ public class Estadio {
             for (GeneradorSorteo g: sorteosDePartidos) {
                 if (entrada!=null && entrada.getPartido().getCodPartido()== g.getPartido().getCodPartido()){
                     if(g.returnNumSorteo(codSorteo)){
-                        return "La entrada con el codigo: "+codEntrada +" devuelta con éxito.";
+                        return "La entrada con el codigo "+codEntrada +" devuelta con éxito.";
 
+                    } else if (entrada.isVIP()){
+                        return "La entrada con el codigo "+codEntrada +" devuelta con éxito.";
                     }
 
                 }
@@ -108,6 +139,11 @@ public class Estadio {
                 "\nPartidos:" + partidos.toString();
     }
 
+    /**
+     * Crea partidos aleatorios para realizar pruebas.
+     * @param cant
+     * @return ArrayList<Partido>
+     */
     public ArrayList<Partido> datosAleatoriosPartidos(int cant){
         ArrayList<Partido> p= new ArrayList<>();
 

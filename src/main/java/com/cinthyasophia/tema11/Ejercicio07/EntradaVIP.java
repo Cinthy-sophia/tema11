@@ -25,6 +25,6 @@ public class EntradaVIP extends Entrada {
 
     @Override
     public String toString() {
-        return "\n***************\n*ENTRADA VIP*\n***************\n"+super.toString()+ "\n\nPassword Taquilla: " + passwordVIP ;
+        return "\n*************\n*ENTRADA VIP*\n*************\n"+super.toString()+ "\nPassword Taquilla: " + passwordVIP +"\n\u001B[1mPrecio: "+precio+"\u001B[0m";
     }
 }

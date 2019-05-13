@@ -17,13 +17,24 @@ public class GeneradorSorteo extends Generador {
         return partido;
     }
 
+    /**
+     * Obtiene un numero de la combinacion generada y lo devuelve.
+     * @param codEntrada
+     * @return int
+     */
     protected int getNumSorteo(int codEntrada){
         return numerosSorteo.remove(codEntrada);
 
     }
+
+    /**
+     * Recibe el numero de sorteo de la entrada, lo comprueba y lo reingresa a la combinacion.
+     * @param numSorteo
+     * @return
+     */
     protected boolean returnNumSorteo(int numSorteo){
-        for (int i:numerosSorteo) {
-            if (i== numSorteo){
+        for (int i : numerosSorteo) {
+            if (i== numSorteo || numSorteo<=0){
                 return false;
             }
 

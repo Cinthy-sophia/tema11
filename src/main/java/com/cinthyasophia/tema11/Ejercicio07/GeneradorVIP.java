@@ -7,6 +7,11 @@ public class GeneradorVIP extends Generador {
     public GeneradorVIP(){
        super();
     }
+
+    /**
+     * Genera la contraseña para que el usuario pueda acceder a las zonas VIP.
+     * @return String
+     */
     protected String generarCodigoVIP(){
         int aleatorioL;
         String letra;
@@ -17,7 +22,7 @@ public class GeneradorVIP extends Generador {
         s= new StringBuilder();
         aleatorioL= lib.aleatorio(65,90);
         letra=String.valueOf(Character.toChars(aleatorioL));
-        numeros=lib.getCombinacion(CANTIDAD_FICHAS,numeros.length-1);
+        numeros= bombo(CANTIDAD_FICHAS,numeros.length-1);
 
         for (int numero : numeros) {
             s.append(numero);

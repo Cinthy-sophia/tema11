@@ -1,21 +1,20 @@
 package com.cinthyasophia.tema11.Ejercicio07;
 
-import com.cinthyasophia.tema11.Util.Lib;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Boleteria {
-    private Lib lib = new Lib();
     private ArrayList<Entrada> entradasVendidas;
-    private ArrayList<GeneradorSorteo> generadorSorteo;
 
     public Boleteria() {
         entradasVendidas = new ArrayList<>();
-        generadorSorteo = new ArrayList<>();
-
     }
 
+    /**
+     * Se encarga de agregarle el precio final a las entradas segun el tipo de partido que se juega.
+     * Recibe una entrada y regresa la misma con el precio anadido.
+     * @param entrada
+     * @return entrada
+     */
     public Entrada agregarPrecioFinal(Entrada entrada) {
 
         if (entrada.getPartido().getTipo().equals(Partido.TipoPartido.ALTA_AFLUENCIA.name())) {
@@ -27,6 +26,13 @@ public class Boleteria {
         return entrada;
     }
 
+    /**
+     * Recibe el partido y el asiento y regresa la entrada segun la zona del asiento.
+     * Tambien la guarda como entrada vendida.
+     * @param p
+     * @param a
+     * @return Entrada
+     */
     public Entrada venderEntrada(Partido p, Asiento a) {
         Entrada e;
 
@@ -42,6 +48,11 @@ public class Boleteria {
         return e;
     }
 
+    /**
+     * Recibe el codigo de la entrada y si se encuentra entre las entradas vendidas, le resta a la recaudacion del partido y la retira de las entradas vendidas.
+     * @param codEntrada
+     * @return boolean
+     */
     public boolean devolverEntrada(int codEntrada) {
         Partido p;
         for (Entrada e : entradasVendidas) {
