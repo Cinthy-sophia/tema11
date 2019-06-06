@@ -37,11 +37,11 @@ public class Zona {
         return asientos;
     }
 
-    public Asiento getAsiento(int numero){
+    public Asiento getAsiento(int numeroAsiento, int numeroFila){
         Asiento a = null;
         for (Asiento[] asiento : asientos) {//filas
             for (Asiento value : asiento) {//columnas
-                if (value.getNumero()== numero){
+                if (value.getNumero()== numeroAsiento && value.getFila()== numeroFila){
                     a= value;
                 }
             }

@@ -46,16 +46,8 @@ public class Ejercicio7 {
         String equipoVisitante;
         boolean validado;
         System.out.println("**NUEVO PARTIDO**");
-        do {
-            System.out.println("Indique la fecha del partido (dd/mm/yyyy):");
-            fechaP= lector.nextLine();
-            validado= fechaP.length() >= 10&& !lib.fechaIsBeforeNow(lib.getFecha(fechaP));
 
-            if (!validado){
-                System.out.println("Fecha no valida. Intente de nuevo y recuerde que el formato es dd/mm/yyyy.");
-            }
-
-        }while(!validado);
+        fechaP= lib.validarFecha();
 
         tipoPartido= menuTipoPartido().name();
 
@@ -221,13 +213,13 @@ public class Ejercicio7 {
                 System.out.println("Indica el numero de asiento que deseas: ");
                 numAsiento= lector.nextInt();
                 lector.nextLine();
-                validado= numAsiento > 0 && numAsiento <= estadio.getCantidadTotalDeAsientosPorZona() && estadio.getZonas().get(opcionE).getAsiento(numAsiento)!=null && !estadio.getZonas().get(opcionE).getAsiento(numAsiento).isOcupado();
+                validado= numAsiento > 0 && numAsiento <= estadio.getCantidadTotalDeAsientosPorZona() && estadio.getZonas().get(opcionE).getAsiento(numAsiento,fila)!=null && !estadio.getZonas().get(opcionE).getAsiento(numAsiento,fila).isOcupado();
                 if(!validado){
                     System.out.println("Numero de asiento incorrecto.");
                 }
             }while(!validado);
 
-            asiento=estadio.getZonas().get(opcionE).getAsiento(numAsiento);
+            asiento=estadio.getZonas().get(opcionE).getAsiento(numAsiento,fila);
 
             System.out.println(estadio.venderEntrada(partido,asiento));
 

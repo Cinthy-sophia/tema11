@@ -252,5 +252,21 @@ public class Lib {
 
     }
 
+    public String validarFecha(){
+        boolean validado;
+        String fecha;
+        do {
+            fecha= lector.nextLine();
+            validado= fecha.length() >= 10&& !fechaIsBeforeNow(getFecha(fecha));
+
+            if (!validado){
+                System.out.println("Fecha no valida. Intente de nuevo y recuerde que el formato es dd/mm/yyyy.");
+            }
+
+        }while(!validado);
+
+        return fecha;
+    }
+
 
 }
